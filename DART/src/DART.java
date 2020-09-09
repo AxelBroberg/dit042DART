@@ -8,11 +8,11 @@ public class DART {
         char mainMenu; //Initializes a char variable that the user uses to choose who he is, Manager, Employee, Customer or to exit the system
         String correctAnswers = "MECX"; //A string that contains all of the menu choices
         mainMenu = input.next().charAt(0); //Scanner input to a char variable
-        validateChar11(mainMenu, correctAnswers); //Calls the function validateChar
+        validateChar(mainMenu, correctAnswers); //Calls the function validateChar
         System.out.println("Success!"); //For testing purposes
     }
 
-    public static char validateChar11(char x, String correct){ //Creates a function that has the purpose to check if the input is correct
+    public static char validateChar(char x, String correct){ //Creates a function that has the purpose to check if the input is correct
         Scanner valChar = new Scanner(System.in); //Creates a new Scanner, which is only used inside of this function
         loop1: //Used so we can exit the entire while loop
         while(true) {
