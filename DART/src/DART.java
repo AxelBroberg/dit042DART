@@ -44,15 +44,18 @@ public class DART {
 
     public static char validateChar(char x, String correct){ //Creates a function that has the purpose to check if the input is correct
         Scanner valChar = new Scanner(System.in); //Creates a new Scanner, which is only used inside of this function
-        loop1: //Used so we can exit the entire while loop
-        while(true) {
+        boolean loop = true;
+        while(loop) {
             for (int i = 0; i < correct.length(); i++) { //A for loop that loops the same amount of times as the length of the correct(correctAnswers) string
                 if (x == correct.charAt(i)) { //An if statement that is used to check whether the character x(mainMenu) is in the correct(correctAnswers) string
-                    break loop1; //Exits the while loop @ loop1
+                    i=correct.length(); //Exits the while loop @ loop1
+                    loop = false; //Stops the while from going any more times
                 }
             }
-            System.out.println("Invalid input, try again.");
-            x = valChar.next().charAt(0); //Makes the user input their menu choice again, if the earlier choice wasn't a valid character
+            if(loop){
+                System.out.println("Invalid input, try again.");
+                x = valChar.next().charAt(0); //Makes the user input their menu choice again, if the earlier choice wasn't a valid character
+            }
         }
         return x; //Returns a char from the function
     }
