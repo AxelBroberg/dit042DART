@@ -10,6 +10,7 @@ public class DART {
             String correctAnswers = "MECX"; //A string that contains all of the menu choices
             mainMenu = input.next().charAt(0); //Scanner input to a char variable
             screenChoice(validateChar(mainMenu, correctAnswers));
+            if(exitProgram()) programRunning = false;
         }
     }
 
@@ -109,7 +110,7 @@ public class DART {
         return choice;
     }
 
-    public static void exitProgram(){
-        System.exit(0);
+    public static boolean exitProgram(){
+        return true;
     }
 }
