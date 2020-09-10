@@ -13,11 +13,6 @@ public class DART {
         }
     }
 
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
     public static void screenChoice(char x){
         switch (x) {
             case 'M' -> {
@@ -34,7 +29,6 @@ public class DART {
     }
 
     public static char customerScreen(){
-        clearScreen();
         Scanner inputCustomer = new Scanner(System.in);
         char choice = '1';
         String screens = "123";
@@ -64,7 +58,6 @@ public class DART {
     }
 
     public static void userStoryPrint11(){ //Wall of text function
-        clearScreen();
         System.out.println("Main Menu:");
         System.out.println("Welcome to DART, your good old game rental system. The competition has no steam to keep up!");
         System.out.println("Please specify your role by entering one of the options given:");
@@ -75,7 +68,6 @@ public class DART {
     }
 
     public static char managerScreen(){
-        clearScreen();
         Scanner inputManager = new Scanner(System.in);
         char choice;
         String screens = "123";
@@ -98,7 +90,6 @@ public class DART {
     }
 
     public static char employeeScreen(){
-        clearScreen();
         Scanner inputEmployee = new Scanner(System.in);
         char choice;
         String screens = "1234567";
