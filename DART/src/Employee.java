@@ -4,53 +4,39 @@ import java.util.Scanner;
 
 public class Employee {
 
-    private static int count = 1;
-    int employeeID;
-    String employeeName;
-    int birthYear;
-    double employeeSalary;
-    String employeeAddress;
-    static ArrayList<Employee> employeeArrayList = new ArrayList<Employee>();
+    int ID;
+    int birthyear;
+    String address;
+    double grossSalary;
+    String name;
+    static ArrayList<Employee> employeeArrayList = new ArrayList();
 
-    public Employee(String name){
-        this.employeeName = name;
-    }
-    public String getName(){ return employeeName; }
+    Employee(String name){ this.name = name; }
 
-    public void setEmployeeID(){ employeeID=count++; }
-    public int getEmployeeID(){ return employeeID; }
+    public void setBirthyear(int birthyear){ this.birthyear = birthyear; }
+    public int getBirthyear(){ return birthyear; }
 
-    public void setBirthYear(int year){
-        birthYear = year;
-    }
-    public int getBirthYear(){ return birthYear; }
+    public void setAddress(String address){ this.address = address; }
+    public String getAddress(){ return address; }
 
-    public void setMonthlySalary(double salary){
-        employeeSalary = salary;
-    }
-    public double getMonthlySalary(){ return employeeSalary; }
+    public void setGrossSalary(double grossSalary){ this.grossSalary = grossSalary; }
+    public double getGrossSalary(){ return grossSalary; }
 
-    public void setAddress(String address) { employeeAddress = address; }
-    public String getEmployeeAddress(){ return employeeAddress; }
-
-    public void printEmployee(){
-        System.out.print(getEmployeeID() + " : ");
-        System.out.print(getName() + " - ");
-        System.out.print(getBirthYear() + " (");
-        System.out.print(Year.now().getValue()-getBirthYear() + "): ");
-        System.out.println(getMonthlySalary() + "SEK");
-    }
+    public void setID(int ID){ this.ID = ID; }
+    public int getID(){ return ID; }
 
     public static void registerEmployee(){
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter employee name: ");Employee emp = new Employee(input.nextLine()); emp.setEmployeeID();
-        System.out.println("Employee will get ID: " + emp.getEmployeeID());
-        System.out.print("Enter employee birth-year: "); emp.setBirthYear(input.nextInt());
-        System.out.print("Enter employee monthly salary: "); emp.setMonthlySalary(input.nextDouble());
+        System.out.println("Enter employee name: "); Employee emp = new Employee(input.nextLine());
+        System.out.println("Enter employee ID: "); emp.setID(input.nextInt());
+        System.out.println("Enter employee birth year: "); emp.setBirthyear(input.nextInt());
+        input.nextLine();
         System.out.println("Enter employee address: "); emp.setAddress(input.nextLine());
+        System.out.println("Enter employee gross salary: "); emp.setGrossSalary(input.nextDouble());
 
-        employeeArrayList.add(emp);
+        System.out.print("You have added employee: ");
         emp.printEmployee();
+        employeeArrayList.add(emp);
         Screens.managerScreen();
     }
 
@@ -60,23 +46,35 @@ public class Employee {
     }
 
     public static void removeEmployee(){
-
         Scanner input = new Scanner(System.in);
         System.out.println("Employees: ");
         employeeArrayList.forEach(Employee::printEmployee);
-        System.out.print("Enter the ID of employee you want to remove:");
+        System.out.print("Enter the ID of employee you want to remove: ");
 
-        String nEmployee;
-        char[] employeeList = new char[employeeArrayList.size()];
+        char[] employeeAmount = new char[employeeArrayList.size()];
 
-        for (int i = 1; i < employeeArrayList.size(); i++) {
-            employeeList[i] = (char) i;
+        for(int i = 0; i < employeeArrayList.size(); i++){
+            employeeAmount[i] = (char) i;
         }
 
-        employeeArrayList.removeIf(emp -> emp.employeeID == (int) DART.validateChar((char) input.nextInt(), String.valueOf(employeeList)));
+        String amount = String.valueOf(employeeAmount);
+
+
+            DART.validateChar(input.nextLine().charAt(0), amount)
+        });
+
+
+
+
+        //Remove  Employees  based on their IDs  / If the specified ID is not found, the system should print the message: “Employee with id <ID> not found”.
     }
 
-    // As a manager, I want to create employees in my system in order to handle customer operations.
-    // An Employee has a unique employee id, a name, a birth year, an address and a monthly gross salary, all of them are needed to create an employee.
-    // When printing an Employee, the following information is shows:
+    public void printEmployee(){
+        System.out.print(getID() + " ");
+        System.out.print(this.name +  " - " );
+        System.out.print(getBirthyear() +  " ( ");
+        System.out.print(Year.now().getValue()-getBirthyear() + " ): " );
+        System.out.println(getGrossSalary() + " SEK");
+    }
+
 }

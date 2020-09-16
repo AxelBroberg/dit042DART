@@ -5,7 +5,7 @@ public class DART {
         Scanner input = new Scanner(System.in);
         boolean programRunning = true;
         while(programRunning) {
-            textWalls.userStoryPrint(); //Prints the question to User Story 1.1, I do this in a second function because I don't want to see a wall of text here
+            Screens.userStoryPrint(); //Prints the question to User Story 1.1, I do this in a second function because I don't want to see a wall of text here
             char mainMenu; //Initializes a char variable that the user uses to choose who he is, Manager, Employee, Customer or to exit the system
             String correctAnswers = "MECX"; //A string that contains all of the menu choices
             mainMenu = input.next().charAt(0); //Scanner input to a char variable
