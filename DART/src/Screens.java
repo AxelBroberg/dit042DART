@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 public class Screens {
     public static char customerScreen(){
         Scanner inputCustomer = new Scanner(System.in);
@@ -17,13 +18,22 @@ public class Screens {
     public static char managerScreen(){
         Scanner inputManager = new Scanner(System.in);
         char choice;
-        String screens = "123";
+        String screens = "1234";
         System.out.println("Manager Screen - Type one of the options below:");
         System.out.println("1. Add an employee");
         System.out.println("2. View all employees");
-        System.out.println("3. Return to Main Menu");
+        System.out.println("3. Remove an employee");
+        System.out.println("4. Return to Main Menu");
         choice = inputManager.next().charAt(0);
         DART.validateChar(choice, screens);
+        switch (choice) {
+            case '1' -> Employee.registerEmployee();
+            case '2' -> Employee.viewAllEmployee();
+            case '3' -> Employee.removeEmployee();
+            case '4' -> {
+                return choice;
+            }
+        }
         return choice;
     }
 
