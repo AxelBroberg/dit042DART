@@ -8,6 +8,7 @@ public class Employee {
     int birthyear;
     String address;
     double grossSalary;
+    double netSalary;
     String name;
     static ArrayList<Employee> employeeArrayList = new ArrayList();
 
@@ -21,6 +22,9 @@ public class Employee {
 
     public void setGrossSalary(double grossSalary){ this.grossSalary = grossSalary; }
     public double getGrossSalary(){ return grossSalary; }
+
+    public void setNetSalary(double netSalary){ this.netSalary = netSalary; }
+    public double getNetSalary(){ return netSalary; }
 
     public void setID(int ID){ this.ID = ID; }
     public int getID(){ return ID; }
@@ -47,26 +51,25 @@ public class Employee {
 
     public static void removeEmployee(){
         Scanner input = new Scanner(System.in);
+        boolean removed = false;
+        int i;
         System.out.println("Employees: ");
         employeeArrayList.forEach(Employee::printEmployee);
         System.out.print("Enter the ID of employee you want to remove: ");
 
-        char[] employeeAmount = new char[employeeArrayList.size()];
-
-        for(int i = 0; i < employeeArrayList.size(); i++){
-            employeeAmount[i] = (char) i;
+        int removeID = input.nextInt();
+        for(i = 0; i < employeeArrayList.size(); i++){
+            if(employeeArrayList.get(i).ID == removeID){
+                employeeArrayList.remove(i);
+                System.out.println("Successfully removed!");
+                removed = true;
+                i = employeeArrayList.size();
+            }
+        }
+        if(!removed){
+            System.out.println("Employee with id " + i + " not found.");
         }
 
-        String amount = String.valueOf(employeeAmount);
-
-
-            DART.validateChar(input.nextLine().charAt(0), amount)
-        });
-
-
-
-
-        //Remove  Employees  based on their IDs  / If the specified ID is not found, the system should print the message: “Employee with id <ID> not found”.
     }
 
     public void printEmployee(){
@@ -76,5 +79,36 @@ public class Employee {
         System.out.print(Year.now().getValue()-getBirthyear() + " ): " );
         System.out.println(getGrossSalary() + " SEK");
     }
+
+    public static void calcNetSalary(){
+        Scanner input = new Scanner(System.in);
+        boolean found = false;
+        int i;
+        System.out.print("Enter ID of employee to calculate net salary: "); int ID = input.nextInt(); //FIX
+
+        for(i = 0; i < employeeArrayList.size(); i++) {
+            if (employeeArrayList.get(i).ID == ID) {
+                if (employeeArrayList.get(i).getGrossSalary() >= 100000) {
+                    employeeArrayList.get(i).setNetSalary(employeeArrayList.get(i).getGrossSalary() * 0.7);
+                } else {
+                    employeeArrayList.get(i).setNetSalary(employeeArrayList.get(i).getGrossSalary());
+                }
+                found = true;
+                break;
+            }
+            if (!found) {
+                System.out.println("Employee with id " + i + " not found.");
+            }
+        }
+
+        System.out.println(employeeArrayList.get(i).getNetSalary());
+
+        Screens.managerScreen();
+    }
+
+    /*
+Employees that receive less than 100,000.00 SEK per year pay no taxes. Their net salary is their full gross salary
+Employees that receive an amount greater than or equal to 100,000.00 SEK per year pay 30% of their gross salary as taxes.
+     */
 
 }
