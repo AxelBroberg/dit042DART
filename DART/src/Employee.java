@@ -32,11 +32,11 @@ public class Employee {
 
     public static void registerEmployee(){
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter employee name: "); Employee emp = new Employee(input.nextLine());
-        System.out.println("Enter employee ID: "); emp.setID(input.nextInt());
-        System.out.println("Enter employee birth year: "); emp.setBirthyear(input.nextInt());
+        System.out.print("Enter employee name: "); Employee emp = new Employee(input.nextLine());
+        System.out.print("Enter employee ID: "); emp.setID(input.nextInt());
+        System.out.print("Enter employee birth year: "); emp.setBirthyear(input.nextInt());
         input.nextLine();
-        System.out.println("Enter employee address: "); emp.setAddress(input.nextLine());
+        System.out.print("Enter employee address: "); emp.setAddress(input.nextLine());
         System.out.println("Enter employee gross salary: "); emp.setGrossSalary(input.nextDouble());
 
         System.out.print("You have added employee: ");
@@ -79,7 +79,7 @@ public class Employee {
         System.out.print(getBirthyear() +  " ( ");
         System.out.print(Year.now().getValue()-getBirthyear() + " ): " );
         System.out.println("Gross salary: " + getGrossSalary() + " SEK");
-        if(getNetSalary()!=0) System.out.println("Net salary: " + getNetSalary() + " SEK");
+        if(getNetSalary()!=0) System.out.println(" Net salary: " + getNetSalary() + " SEK");
     }
 
     public static void calcNetSalary(){

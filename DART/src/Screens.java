@@ -22,6 +22,9 @@ public class Screens {
         System.out.println("3. Return to Main Menu");
         choice = inputCustomer.nextLine().charAt(0);
         DART.validateChar(choice, screens);
+        switch(choice) {
+
+        }
         return choice;
     }
 
@@ -63,6 +66,16 @@ public class Screens {
         System.out.println("7. Return to Main Menu");
         choice = inputEmployee.next().charAt(0);
         DART.validateChar(choice, screens);
+        switch (choice) {
+            case '1' -> Games.registerGame();
+            case '2' -> Games.removeGame();
+            case '3' -> Customer.registerCustomer();
+            case '4' -> Customer.removeCustomer();
+            case '6' -> Games.viewAllGames();
+            case '7' -> {
+                return choice;
+            }
+        }
         return choice;
     }
 }
