@@ -1,10 +1,12 @@
+
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Employee {
 
-    int ID;
+    String ID;
     int birthyear;
     String address;
     double grossSalary;
@@ -27,13 +29,13 @@ public class Employee {
     public void setNetSalary(double netSalary){ this.netSalary = netSalary; }
     public double getNetSalary(){ return netSalary; }
 
-    public void setID(int ID){ this.ID = ID; }
-    public int getID(){ return ID; }
+    public void setID(){ ID = randomID.randomizeID(); }
+    public String getID(){ return ID; }
 
     public static void registerEmployee(){
         Scanner input = new Scanner(System.in);
         System.out.print("Enter employee name: "); Employee emp = new Employee(input.nextLine());
-        System.out.print("Enter employee ID: "); emp.setID(input.nextInt());
+        emp.setID(); System.out.println("Random ID <" + emp.getID() + "> was assigned.");
         System.out.print("Enter employee birth year: "); emp.setBirthyear(input.nextInt());
         input.nextLine();
         System.out.print("Enter employee address: "); emp.setAddress(input.nextLine());
@@ -58,7 +60,7 @@ public class Employee {
         employeeArrayList.forEach(Employee::printEmployee);
         System.out.print("Enter the ID of employee you want to remove: ");
 
-        int removeID = input.nextInt();
+        String removeID = input.nextLine();
         for(i = 0; i < employeeArrayList.size(); i++){
             if(employeeArrayList.get(i).ID == removeID){
                 employeeArrayList.remove(i);
@@ -86,7 +88,7 @@ public class Employee {
         Scanner input = new Scanner(System.in);
         boolean found = false;
         int i;
-        System.out.print("Enter ID of employee to calculate net salary: "); int ID = input.nextInt(); //FIX
+        System.out.print("Enter ID of employee to calculate net salary: "); String ID = input.nextLine(); //FIX
 
         for(i = 0; i < employeeArrayList.size(); i++) {
             if (employeeArrayList.get(i).ID == ID) {
@@ -112,7 +114,7 @@ public class Employee {
         int bonus = 0;
         boolean found = false;
         int i;
-        System.out.print("Enter ID of employee to see what bonus employee is eligible to: "); int ID = input.nextInt(); //FIX
+        System.out.print("Enter ID of employee to see what bonus employee is eligible to: "); String ID = input.nextLine(); //FIX
 
         for(i = 0; i < employeeArrayList.size(); i++) {
             if (employeeArrayList.get(i).ID == ID) {

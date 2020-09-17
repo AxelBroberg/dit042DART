@@ -16,12 +16,10 @@ public class DART {
     public static void screenChoice(char x){
         switch (x) {
             case 'M' -> {
-                if (password("admin1234"))
-                    Screens.managerScreen();
+                if (password("admin1234")) Screens.managerScreen();
             }
             case 'E' -> {
-                if (password("password123"))
-                    Screens.employeeScreen();
+                if (password("password123")) Screens.employeeScreen();
             }
             case 'C' -> Screens.customerScreen();
             case 'X' -> exitProgram();
