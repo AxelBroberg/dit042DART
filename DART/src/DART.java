@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class DART {
     public static void main(String[] args){
+
         Scanner input = new Scanner(System.in);
         boolean programRunning = true;
         while(programRunning) {

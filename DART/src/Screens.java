@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Screens {
+    private static double totalProfit;
 
     public static void userStoryPrint(){ //Wall of text function
         System.out.println("Main Menu:");
@@ -24,7 +25,7 @@ public class Screens {
         DART.validateChar(choice, screens);
         switch(choice) {
             case '1' -> Customer.rentGame();
-            case '2' -> Customer.returnGame();
+            case '2' -> totalProfit += Customer.returnGame();
         }
         return choice;
     }
@@ -73,6 +74,7 @@ public class Screens {
             case '2' -> Games.removeGame();
             case '3' -> Customer.registerCustomer();
             case '4' -> Customer.removeCustomer();
+            case '5' -> System.out.println("Total profit is: " + totalProfit);
             case '6' -> Games.empViewAllGames();
             case '8' -> Games.fillGames();
             case '7' -> {

@@ -8,7 +8,6 @@ public class Customer {
     private static ArrayList<Games> customerGames = new ArrayList();
 
 
-
     private static ArrayList<Customer> customerList = new ArrayList();
 
     Customer(String name){ this.name = name; };
@@ -94,7 +93,7 @@ public class Customer {
         customerGames.forEach(Games::printGame);
     }
 
-    public static void returnGame(){
+    public static double returnGame(){
         Scanner input = new Scanner(System.in);
         boolean returned = false;
         System.out.println("Current game library: ");
@@ -114,14 +113,16 @@ public class Customer {
                     returned = true;
 
                     System.out.println("Amount to pay: " + (Games.gameList.get(i).dailyRent * daysGamed) + " SEK");
-                    Employee.setTotalRentProfit(Games.gameList.get(i).dailyRent * daysGamed);
+                    //DART.totalRentProfit = (Games.gameList.get(i).dailyRent * daysGamed);
+                    return Games.gameList.get(i).dailyRent * daysGamed;
 
-                    i = Games.gameList.size();
+                    //i = Games.gameList.size();
                 } else {
                     System.out.println("Game is not available");
                 }
             }
         }
+        return 0;
     }
 
 

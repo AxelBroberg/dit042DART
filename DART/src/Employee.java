@@ -13,7 +13,6 @@ public class Employee {
     double netSalary;
     String name;
     int bonus;
-    double totalRentProfit;
     static ArrayList<Employee> employeeArrayList = new ArrayList();
 
     Employee(String name){ this.name = name; }
@@ -33,13 +32,6 @@ public class Employee {
     public void setID(){ ID = randomID.randomizeID(); }
     public String getID(){ return ID; }
 
-    public static void setTotalRentProfit(double profit){
-        this.totalRentProfit = getTotalRentProfit() + profit;
-    }
-
-    public double getTotalRentProfit(){
-        return totalRentProfit;
-    }
 
 
     public static void registerEmployee(){
