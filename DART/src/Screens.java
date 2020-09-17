@@ -23,7 +23,8 @@ public class Screens {
         choice = inputCustomer.nextLine().charAt(0);
         DART.validateChar(choice, screens);
         switch(choice) {
-
+            case '1' -> Customer.rentGame();
+            case '2' -> Customer.returnGame();
         }
         return choice;
     }
@@ -55,7 +56,7 @@ public class Screens {
     public static char employeeScreen(){
         Scanner inputEmployee = new Scanner(System.in);
         char choice;
-        String screens = "1234567";
+        String screens = "12345678";
         System.out.println("Employee Screen - Type one of the options below:");
         System.out.println("1. Register a game");
         System.out.println("2. Remove a game");
@@ -64,6 +65,7 @@ public class Screens {
         System.out.println("5. Show total rent profit");
         System.out.println("6. View all games");
         System.out.println("7. Return to Main Menu");
+        System.out.println("8. Fill games");
         choice = inputEmployee.next().charAt(0);
         DART.validateChar(choice, screens);
         switch (choice) {
@@ -71,7 +73,8 @@ public class Screens {
             case '2' -> Games.removeGame();
             case '3' -> Customer.registerCustomer();
             case '4' -> Customer.removeCustomer();
-            case '6' -> Games.viewAllGames();
+            case '6' -> Games.empViewAllGames();
+            case '8' -> Games.fillGames();
             case '7' -> {
                 return choice;
             }

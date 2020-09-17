@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Games {
     String title;
-    int ID;
+    String ID;
     String genre;
     double dailyRent;
     boolean status = true;
@@ -11,8 +11,8 @@ public class Games {
 
     Games(String title){ this.title = title; }
 
-    public void setID (int ID){ this.ID = ID; }
-    public int getID (){ return ID; }
+    public void setID(){ ID = randomID.randomizeID(); }
+    public String getID (){ return ID; }
 
     public void setGenre (String genre){ this.genre = genre; }
     public String getGenre (){ return genre; }
@@ -26,7 +26,7 @@ public class Games {
     public static void registerGame(){
         Scanner input = new Scanner(System.in);
         System.out.print("Enter game title: "); Games g = new Games(input.nextLine());
-        System.out.print("Enter game ID: "); g.setID(input.nextInt());
+        g.setID(); System.out.println("Random ID <" + g.getID() + "> was assigned.");
         System.out.print("Enter game genre: "); g.setGenre(input.nextLine());
         System.out.print("Enter game daily rent fee: "); g.setDailyRent(input.nextDouble());
         g.setStatus(true);
@@ -39,7 +39,11 @@ public class Games {
 
     public static void viewAllGames(){
         gameList.forEach(Games::printGame);
-        Screens.customerScreen();
+    }
+
+    public static void empViewAllGames(){
+        gameList.forEach(Games::printGame);
+        Screens.employeeScreen();
     }
 
     public static void removeGame(){
@@ -50,9 +54,9 @@ public class Games {
         gameList.forEach(Games::printGame);
         System.out.print("Enter the ID of the game you want to remove: ");
 
-        int removeID = input.nextInt();
+        String removeID = input.nextLine();
         for(i = 0; i < gameList.size(); i++){
-            if(gameList.get(i).ID == removeID){
+            if(gameList.get(i).ID.equals(removeID)){
                 gameList.remove(i);
                 System.out.println("Successfully removed!");
                 removed = true;
@@ -71,6 +75,30 @@ public class Games {
         System.out.print(getDailyRent() + ". ");
         System.out.println("Status: " + status);
     }
+
+    public static void fillGames(){
+        String[] gameName = {"The Last of us Part 2", "The Witcher 3 Wild Hunt", "Red Dead Redemption 2"};
+        String[] genre = {"action", "comedy", "family"};
+        double[] price = {12, 13, 14};
+        for(int i = 0; i < gameName.length; i++){
+            autoRegisterGame(gameName[i], genre[i], price[i]);
+        }
+        Screens.employeeScreen();
+    }
+
+    public static void autoRegisterGame(String title, String genre, double price){
+        System.out.print("Enter game title: "); Games g = new Games(title);
+        g.setID(); System.out.println("Random ID <" + g.getID() + "> was assigned.");
+        System.out.print("Enter game genre: "); g.setGenre(genre);
+        System.out.print("Enter game daily rent fee: "); g.setDailyRent(price);
+        g.setStatus(true);
+
+        System.out.print("You have added game: ");
+        g.printGame();
+        gameList.add(g);
+
+    }
+
 
 
 }

@@ -13,6 +13,7 @@ public class Employee {
     double netSalary;
     String name;
     int bonus;
+    double totalRentProfit;
     static ArrayList<Employee> employeeArrayList = new ArrayList();
 
     Employee(String name){ this.name = name; }
@@ -31,6 +32,15 @@ public class Employee {
 
     public void setID(){ ID = randomID.randomizeID(); }
     public String getID(){ return ID; }
+
+    public static void setTotalRentProfit(double profit){
+        this.totalRentProfit = getTotalRentProfit() + profit;
+    }
+
+    public double getTotalRentProfit(){
+        return totalRentProfit;
+    }
+
 
     public static void registerEmployee(){
         Scanner input = new Scanner(System.in);
@@ -62,7 +72,7 @@ public class Employee {
 
         String removeID = input.nextLine();
         for(i = 0; i < employeeArrayList.size(); i++){
-            if(employeeArrayList.get(i).ID == removeID){
+            if(employeeArrayList.get(i).ID.equals(removeID)){
                 employeeArrayList.remove(i);
                 System.out.println("Successfully removed!");
                 removed = true;
@@ -91,7 +101,7 @@ public class Employee {
         System.out.print("Enter ID of employee to calculate net salary: "); String ID = input.nextLine(); //FIX
 
         for(i = 0; i < employeeArrayList.size(); i++) {
-            if (employeeArrayList.get(i).ID == ID) {
+            if (employeeArrayList.get(i).ID.equals(ID)) {
                 if (employeeArrayList.get(i).getGrossSalary() >= 100000) {
                     employeeArrayList.get(i).setNetSalary(employeeArrayList.get(i).getGrossSalary() * 0.7);
                 } else {
@@ -117,7 +127,7 @@ public class Employee {
         System.out.print("Enter ID of employee to see what bonus employee is eligible to: "); String ID = input.nextLine(); //FIX
 
         for(i = 0; i < employeeArrayList.size(); i++) {
-            if (employeeArrayList.get(i).ID == ID) {
+            if (employeeArrayList.get(i).ID.equals(ID)) {
                 if ((Year.now().getValue()-employeeArrayList.get(i).getBirthyear()) < 22) { bonus = 4000; }
                 else if ((Year.now().getValue()-employeeArrayList.get(i).getBirthyear()) < 30) { bonus = 6000; }
                 else { bonus = 7500; }
