@@ -36,6 +36,7 @@ public class Employee {
 
     public static void registerEmployee(){
         Scanner input = new Scanner(System.in);
+
         System.out.print("Enter employee name: "); Employee emp = new Employee(input.nextLine());
         emp.setID(); System.out.println("Random ID <" + emp.getID() + "> was assigned.");
         System.out.print("Enter employee birth year: "); emp.setBirthyear(input.nextInt());
@@ -71,10 +72,8 @@ public class Employee {
                 i = employeeArrayList.size();
             }
         }
-        if(!removed){
-            System.out.println("Employee with id " + i + " not found.");
-        }
-
+        if(!removed) System.out.println("Employee with id " + i + " not found.");
+        Screens.managerScreen();
     }
 
     public void printEmployee(){
@@ -89,6 +88,7 @@ public class Employee {
     public static void calcNetSalary(){
         final double GROSS_SALARY_TAX = 0.7;
         final int TAX_CONDITION = 100000;
+
         Scanner input = new Scanner(System.in);
         boolean found = false;
         int i;
@@ -106,9 +106,7 @@ public class Employee {
             }
         }
         if (!found) { System.out.println("Employee with id " + i + " not found."); }
-
         System.out.println(employeeArrayList.get(i).getNetSalary());
-
         Screens.managerScreen();
     }
 
@@ -132,10 +130,8 @@ public class Employee {
                 break;
             }
         }
-        if (!found) { System.out.println("Employee with id " + i + " not found."); }
-
+        if (!found) System.out.println("Employee with id " + i + " not found.");
         System.out.println("Employee bonus is: " + bonus);
-
         Screens.managerScreen();
     }
 
