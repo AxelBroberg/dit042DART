@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Games {
-    String title;
+    private String title;
+    private String genre;
     String ID;
-    String genre;
     double dailyRent;
     boolean status = true;
     static ArrayList<Games> gameList = new ArrayList();

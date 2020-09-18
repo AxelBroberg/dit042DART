@@ -5,13 +5,13 @@ import java.util.Scanner;
 
 public class Employee {
 
-    String ID;
-    int birthyear;
-    String address;
-    double grossSalary;
-    double netSalary;
-    String name;
-    static ArrayList<Employee> employeeArrayList = new ArrayList();
+    private String ID;
+    private int birthyear;
+    private String address;
+    private double grossSalary;
+    private double netSalary;
+    private String name;
+    private static ArrayList<Employee> employeeArrayList = new ArrayList();
 
     Employee(String name){ this.name = name; }
 
