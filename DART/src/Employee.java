@@ -87,6 +87,8 @@ public class Employee {
     }
 
     public static void calcNetSalary(){
+        final double GROSS_SALARY_TAX = 0.7;
+        final int TAX_CONDITION = 100000;
         Scanner input = new Scanner(System.in);
         boolean found = false;
         int i;
@@ -94,8 +96,8 @@ public class Employee {
 
         for(i = 0; i < employeeArrayList.size(); i++) {
             if (employeeArrayList.get(i).ID.equals(ID)) {
-                if (employeeArrayList.get(i).getGrossSalary() >= 100000) {
-                    employeeArrayList.get(i).setNetSalary(employeeArrayList.get(i).getGrossSalary() * 0.7);
+                if (employeeArrayList.get(i).getGrossSalary() >= TAX_CONDITION) {
+                    employeeArrayList.get(i).setNetSalary(employeeArrayList.get(i).getGrossSalary() * GROSS_SALARY_TAX);
                 } else {
                     employeeArrayList.get(i).setNetSalary(employeeArrayList.get(i).getGrossSalary());
                 }
@@ -111,6 +113,8 @@ public class Employee {
     }
 
     public static void bonus(){
+        final int BONUS[] = new int[]{4000, 6000, 7500};
+        final int YEAR_CONDITION[] = new int[]{22, 30};
 
         Scanner input = new Scanner(System.in);
         int bonus = 0;
@@ -120,9 +124,9 @@ public class Employee {
 
         for(i = 0; i < employeeArrayList.size(); i++) {
             if (employeeArrayList.get(i).ID.equals(ID)) {
-                if ((Year.now().getValue()-employeeArrayList.get(i).getBirthyear()) < 22) { bonus = 4000; }
-                else if ((Year.now().getValue()-employeeArrayList.get(i).getBirthyear()) < 30) { bonus = 6000; }
-                else { bonus = 7500; }
+                if ((Year.now().getValue()-employeeArrayList.get(i).getBirthyear()) < YEAR_CONDITION[0]) { bonus = BONUS[0]; }
+                else if ((Year.now().getValue()-employeeArrayList.get(i).getBirthyear()) < YEAR_CONDITION[1]) { bonus = BONUS[1]; }
+                else bonus = BONUS[2];
                 employeeArrayList.get(i).setNetSalary(employeeArrayList.get(i).getNetSalary() + bonus);
                 found = true;
                 break;
