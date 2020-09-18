@@ -17,7 +17,7 @@ class randomID
         return (String) IDCheck.get(IDCheck.size() -1);
     }
 
-    private static char[] _base62chars ="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
+    private static final char[] _base62chars ="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
     private static Random _random = new Random();
 

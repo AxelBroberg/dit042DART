@@ -2,7 +2,6 @@
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.UUID;
 
 public class Employee {
 
@@ -12,7 +11,6 @@ public class Employee {
     double grossSalary;
     double netSalary;
     String name;
-    int bonus;
     static ArrayList<Employee> employeeArrayList = new ArrayList();
 
     Employee(String name){ this.name = name; }
@@ -111,8 +109,8 @@ public class Employee {
     }
 
     public static void bonus(){
-        final int BONUS[] = new int[]{4000, 6000, 7500};
-        final int YEAR_CONDITION[] = new int[]{22, 30};
+        final int[] BONUS = new int[]{4000, 6000, 7500};
+        final int[] YEAR_CONDITION = new int[]{22, 30};
 
         Scanner input = new Scanner(System.in);
         int bonus = 0;

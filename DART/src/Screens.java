@@ -15,7 +15,7 @@ public class Screens {
 
     public static char customerScreen(){
         Scanner inputCustomer = new Scanner(System.in);
-        char choice = '1';
+        char choice;
         String screens = "123";
         System.out.println("Customer Screen - Type one of the options below:");
         System.out.println("1. Rent a game");
@@ -26,6 +26,9 @@ public class Screens {
         switch(choice) {
             case '1' -> Customer.rentGame();
             case '2' -> totalProfit += Customer.returnGame();
+            case '3' -> {
+                return choice;
+            }
         }
         return choice;
     }
@@ -38,8 +41,9 @@ public class Screens {
         System.out.println("1. Add an employee");
         System.out.println("2. View all employees");
         System.out.println("3. Remove an employee");
-        System.out.println("4. Calculate net salary of employee: ");
-        System.out.println("5. Return to Main Menu");
+        System.out.println("4. Calculate net salary of employee");
+        System.out.println("5. Calculate and give bonus to employee");
+        System.out.println("6. Return to Main Menu");
         choice = inputManager.next().charAt(0);
         DART.validateChar(choice, screens);
         switch (choice) {
@@ -47,7 +51,8 @@ public class Screens {
             case '2' -> Employee.viewAllEmployee();
             case '3' -> Employee.removeEmployee();
             case '4' -> Employee.calcNetSalary();
-            case '5' -> {
+            case '5' -> Employee.bonus();
+            case '6' -> {
                 return choice;
             }
         }
@@ -65,8 +70,9 @@ public class Screens {
         System.out.println("4. Remove a customer");
         System.out.println("5. Show total rent profit");
         System.out.println("6. View all games");
-        System.out.println("7. Return to Main Menu");
-        System.out.println("8. Fill games");
+        System.out.println("7. View all customers");
+        System.out.println("8. Return to Main Menu");
+        System.out.println("9. Fill games");
         choice = inputEmployee.next().charAt(0);
         DART.validateChar(choice, screens);
         switch (choice) {
@@ -76,8 +82,9 @@ public class Screens {
             case '4' -> Customer.removeCustomer();
             case '5' -> System.out.println("Total profit is: " + totalProfit);
             case '6' -> Games.empViewAllGames();
-            case '8' -> Games.fillGames();
-            case '7' -> {
+            case '7' -> Customer.viewAllCustomer();
+            case '9' -> Games.fillGames();
+            case '8' -> {
                 return choice;
             }
         }

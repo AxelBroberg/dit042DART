@@ -8,7 +8,7 @@ public class Customer {
     private static ArrayList<Games> customerGames = new ArrayList();
     private static ArrayList<Customer> customerList = new ArrayList();
 
-    Customer(String name){ this.name = name; };
+    Customer(String name){ this.name = name; }
 
     public void setID(){ ID = randomID.randomizeID(); }
     public String getID(){ return ID; }
@@ -56,7 +56,6 @@ public class Customer {
 
     public static void rentGame(){
         Scanner input = new Scanner(System.in);
-        boolean rented = false;
         System.out.println("Current game library: ");
         Games.viewAllGames();
         System.out.println("What game do you want to rent? ");
@@ -68,7 +67,6 @@ public class Customer {
                     addGame(Games.gameList.get(i));
                     Games.gameList.get(i).setStatus(false);
                     System.out.println("Successfully rented");
-                    rented = true;
                     i = Games.gameList.size();
                 } else {
                     System.out.println("Game is not available");
@@ -82,7 +80,6 @@ public class Customer {
 
     public static double returnGame(){
         Scanner input = new Scanner(System.in);
-        boolean returned = false;
         int daysGamed = input.nextInt();
 
         System.out.println("Current game library: ");
@@ -97,8 +94,6 @@ public class Customer {
                     removeGame(Games.gameList.get(i));
                     Games.gameList.get(i).setStatus(true);
                     System.out.println("Successfully returned");
-                    returned = true;
-
                     System.out.println("Amount to pay: " + (Games.gameList.get(i).dailyRent * daysGamed) + " SEK");
                     return Games.gameList.get(i).dailyRent * daysGamed;
                 } else System.out.println("Game is not available");

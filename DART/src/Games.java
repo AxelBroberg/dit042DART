@@ -73,7 +73,7 @@ public class Games {
         System.out.print(this.title + " [");
         System.out.print(getGenre() + "]. ");
         System.out.print(getDailyRent() + ". ");
-        System.out.println("Status: " + status);
+        System.out.println("Status: " + getStatus());
     }
 
     public static void fillGames(){
