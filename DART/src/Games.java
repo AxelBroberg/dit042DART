@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.Duration;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,6 +11,9 @@ public class Games {
     double dailyRent;
     boolean status = true;
     static ArrayList<Games> gameList = new ArrayList();
+    static LocalDate rentDate;
+    static LocalDate returnDate;
+
 
     Games(String title){ this.title = title; }
 
@@ -23,6 +29,12 @@ public class Games {
     public void setStatus (boolean status){ this.status = status; }
     public boolean getStatus(){ return status; }
 
+    public static void setRentDate(){ rentDate = LocalDate.now(); }
+    public static LocalDate getRentDate(){ return rentDate; }
+
+    public static void setReturnDate(){ returnDate = LocalDate.now(); }
+    public static LocalDate getReturnDate(){ return returnDate; }
+
     public static void registerGame(){
         Scanner input = new Scanner(System.in);
         System.out.print("Enter game title: "); Games g = new Games(input.nextLine());
@@ -30,6 +42,8 @@ public class Games {
         System.out.print("Enter game genre: "); g.setGenre(input.nextLine());
         System.out.print("Enter game daily rent fee: "); g.setDailyRent(input.nextDouble());
         g.setStatus(true);
+        setRentDate();
+        setReturnDate();
 
         System.out.print("You have added game: ");
         g.printGame();
@@ -80,6 +94,7 @@ public class Games {
         String[] gameName = {"The Last of us Part 2", "The Witcher 3 Wild Hunt", "Red Dead Redemption 2"};
         String[] genre = {"action", "comedy", "family"};
         double[] price = {12, 13, 14};
+
         for(int i = 0; i < gameName.length; i++){
             autoRegisterGame(gameName[i], genre[i], price[i]);
         }
@@ -92,6 +107,8 @@ public class Games {
         System.out.print("Enter game genre: "); g.setGenre(genre);
         System.out.print("Enter game daily rent fee: "); g.setDailyRent(price);
         g.setStatus(true);
+        setRentDate();
+        setReturnDate();
 
         System.out.print("You have added game: ");
         g.printGame();
@@ -99,6 +116,8 @@ public class Games {
 
     }
 
-
-
+    public static Period calcTimeDiff(){
+        Period daysBetween = Period.between(Games.getRentDate(), Games.getReturnDate());
+        return daysBetween;
+    }
 }

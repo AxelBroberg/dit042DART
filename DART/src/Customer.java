@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -5,6 +8,7 @@ public class Customer {
 
     private String ID;
     private String name;
+    private static double rent;
     private static ArrayList<Games> customerGames = new ArrayList();
     private static ArrayList<Customer> customerList = new ArrayList();
 
@@ -66,6 +70,7 @@ public class Customer {
                 if(Games.gameList.get(i).status) {
                     addGame(Games.gameList.get(i));
                     Games.gameList.get(i).setStatus(false);
+                    Games.setRentDate();
                     System.out.println("Successfully rented");
                     i = Games.gameList.size();
                 } else {
@@ -80,22 +85,23 @@ public class Customer {
 
     public static double returnGame(){
         Scanner input = new Scanner(System.in);
-        int daysGamed = input.nextInt();
+        //int daysGamed = input.nextInt();
 
         System.out.println("Current game library: ");
         viewAllRentedGames();
         System.out.println("What game do you want to return? ");
         String rentID = input.nextLine();
-        System.out.println("How long have you had this game? ");
 
         for(int i = 0; i < Games.gameList.size(); i++){
             if(Games.gameList.get(i).ID.equals(rentID)){
                 if(!Games.gameList.get(i).status) {
                     removeGame(Games.gameList.get(i));
                     Games.gameList.get(i).setStatus(true);
-                    System.out.println("Successfully returned");
-                    System.out.println("Amount to pay: " + (Games.gameList.get(i).dailyRent * daysGamed) + " SEK");
-                    return Games.gameList.get(i).dailyRent * daysGamed;
+                    Games.setReturnDate();
+                    System.out.println("Successfully returned.");
+                    rent = Games.gameList.get(i).getDailyRent()*(ChronoUnit.DAYS.between(Games.gameList.get(i).getRentDate(), Games.gameList.get(i).getReturnDate()));
+                    System.out.println("The cost for renting the game for " + ChronoUnit.DAYS.between(Games.gameList.get(i).getRentDate(), Games.gameList.get(i).getReturnDate()) + " days is: " + rent);
+                    return rent;
                 } else System.out.println("Game is not available");
             }
         }
