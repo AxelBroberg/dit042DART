@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Customer {
 
     private String ID; //creates String variable named 'ID'
-    private final String name; //creates String variable named 'name'
+    private String name; //creates String variable named 'name'
     private static ArrayList<Games> customerGames = new ArrayList(); //creates ArrayList named 'customerGames' containing Games
-    private static ArrayList<Customer> customerList = new ArrayList(); //creates ArrayList named 'customerList' containing Games
+    private static ArrayList<Customer> customerList = new ArrayList(); //creates ArrayList named 'customerList' containing Customers
 
     Customer(String name){ this.name = name; } //Creates a constructor with takes a name
 
@@ -27,7 +27,8 @@ public class Customer {
         customerList.add(c); // adds the object 'c' to the ArrayList
         Screens.employeeScreen(); // returns the user to the employee screen
     }
-    public static void viewAllCustomer(){ customerList.forEach(Customer::printCustomer);Screens.employeeScreen(); } // for each Customer in the 'customerList', it will execute printCustomer
+    public static void viewAllCustomer(){
+        customerList.forEach(Customer::printCustomer); Screens.employeeScreen(); } // for each Customer in the 'customerList', it will execute printCustomer
 
     public void printCustomer(){ System.out.print(getID() + " : " + this.name); } // prints ID of the customer and then the name
 
@@ -64,7 +65,18 @@ public class Customer {
                 if(Games.gameList.get(i).getStatus()) { // if the game is available
                     addGame(Games.gameList.get(i));
                     Games.gameList.get(i).setStatus(false); // makes the game no longer available from the stores game library
-                    Games.setRentDate();  // executes setRentDate from class Games
+
+
+
+                    try {
+                        System.out.print("What is the return date? (YYYY-MM-DD)");
+                        Games.gameList.get(i).setRentDate(input.nextLine());
+                    } catch (Exception e) {
+                        System.out.println("Wrong format, assuming return date is today.");
+                        Games.gameList.get(i).setAutomaticRentDate();
+                    }
+
+
                     System.out.println("Successfully rented");
                     i = Games.gameList.size();
                 } else {
@@ -72,13 +84,14 @@ public class Customer {
                 }
             }
         }
+        Screens.customerScreen();
     }
+
 
     public static void viewAllRentedGames() { customerGames.forEach(Games::printGame); } // method that prints all the customers games | for each Games in the customerGames list, it will print the game
 
     public static long calcDays(int i){ // a method that returns days between game was rented and returned
-        return ChronoUnit.DAYS.between(Games.gameList.get(i).getRentDate(), // Calculates & returns the day difference
-                Games.gameList.get(i).getReturnDate());
+        return ChronoUnit.DAYS.between(Games.gameList.get(i).getRentDate(), Games.gameList.get(i).getReturnDate());
     }
 
     // Chronounit: https://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
@@ -96,7 +109,17 @@ public class Customer {
                 if(!Games.gameList.get(i).getStatus()) {
                     removeGame(Games.gameList.get(i));
                     Games.gameList.get(i).setStatus(true);
-                    Games.setReturnDate();
+
+
+                    try {
+                        System.out.print("What is the return date? (YYYY-MM-DD)");
+                        Games.gameList.get(i).setReturnDate(input.nextLine());
+                    } catch (Exception e) {
+                        System.out.println("Wrong format, assuming return date is today.");
+                        Games.gameList.get(i).setAutomaticReturnDate();
+                    }
+
+
                     System.out.println("Successfully returned.");
                     rent = Games.gameList.get(i).getDailyRent() * calcDays(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
                     System.out.println("The cost for renting the game for " + calcDays(i) + " days is: " + rent);
@@ -105,7 +128,7 @@ public class Customer {
                 } else System.out.println("Game is not available");
             }
         }
-        Screens.employeeScreen();
+        Screens.customerScreen();
         return 0;
     }
 }
