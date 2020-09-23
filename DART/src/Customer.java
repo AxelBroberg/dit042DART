@@ -81,6 +81,8 @@ public class Customer {
                 Games.gameList.get(i).getReturnDate());
     }
 
+    // Chronounit: https://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
+
     public static double returnGame(){ // a method to return games to the store
         double rent; //initializes a variable local to the method
         Scanner input = new Scanner(System.in);

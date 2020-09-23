@@ -12,6 +12,7 @@ public class Bread {
             screenChoice(validateChar(mainMenu, correctAnswers));
         }
     }
+
     public static void screenChoice(char x){
         switch (x) {
             case 'm','M' -> {
@@ -24,6 +25,7 @@ public class Bread {
             case 'x','X' -> exitProgram();
         }
     }
+
     public static char validateChar(char x, String correct){ //Creates a function that has the purpose to check if the input is correct
         Scanner valChar = new Scanner(System.in); //Creates a new Scanner, which is only used inside of this function
         boolean programRunning = true; //Used so we can exit the entire while loop
@@ -41,6 +43,7 @@ public class Bread {
         }
         return x; //Returns a char from the function
     }
+
     public static boolean password(String correctPassword){
         boolean correct = false;
         System.out.println("Enter password: ");
@@ -49,6 +52,7 @@ public class Bread {
         if (password.equals(correctPassword)) correct = true;
         return correct;
     }
+
     public static void exitProgram(){
         System.exit(0);
         programRunning = false;
