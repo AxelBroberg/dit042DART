@@ -33,7 +33,9 @@ class randomID
 
     public static String GetBase62(int length)
     {
-        var sb = new StringBuilder(length); // Creates a StringBuilder (which is like a char array, but it can be modified?)
+        var sb = new StringBuilder(length);
+        // Creates a StringBuilder (which is like an arraylist, but for characters?)
+        // https://docs.oracle.com/javase/tutorial/java/data/buffers.html
         for (int i=0; i<length; i++)
             sb.append(_base62chars[_random.nextInt(62)]); // Adds a random character from the _base62chars array to the sb variable
         return sb.toString(); // Returns the sb variable as a string

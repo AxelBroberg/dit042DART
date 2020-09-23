@@ -14,7 +14,7 @@ public class Games {
     static ArrayList<Games> gameList = new ArrayList();
 
 
-    Games(String title){ this.title = title; }
+    Games(String title){ this.title = title; } // CONSTRUCTOR
 
     public void setID(){ ID = randomID.randomizeID(); }
     public String getID (){ return ID; }
@@ -28,27 +28,33 @@ public class Games {
     public void setStatus (boolean status){ this.status = status; }
     public boolean getStatus(){ return status; }
 
-    public static void setRentDate(){ rentDate = LocalDate.now(); }
+    public static void setRentDate(String rentADate){ rentDate = LocalDate.parse(rentADate); } // Method for assigning a date input to the rentDate variable
+    public static void setAutomaticRentDate(){ rentDate = LocalDate.now(); } //Method for automatically assigning a date to the rentDate variable
     public static LocalDate getRentDate(){ return rentDate; }
 
-    public static void setReturnDate(){ returnDate = LocalDate.now(); }
+    public static void setReturnDate(String returnADate){ returnDate = LocalDate.parse(returnADate); } // Method for assigning a date input to the returnDate variable
+    public static void setAutomaticReturnDate(){ returnDate = LocalDate.now(); } //Method for automatically assigning a date to the returnDate variable
     public static LocalDate getReturnDate(){ return returnDate; }
+
+
 
     public static void registerGame(){
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter game title: "); Games g = new Games(input.nextLine());
+        System.out.print("Enter game title: "); Games g = new Games(input.nextLine()); // OBJECT CREATION
         g.setID(); System.out.println("Random ID <" + g.getID() + "> was assigned.");
         System.out.print("Enter game genre: "); g.setGenre(input.nextLine());
         System.out.print("Enter game daily rent fee: "); g.setDailyRent(input.nextDouble());
         g.setStatus(true);
-        setRentDate(); // Sets the rent date to now so that it is available in the object, to be changed later
-        setReturnDate(); // Sets the return date to now so that it is available in the object, to be changed later
+        setAutomaticRentDate(); // Sets the rent date to now so that it is available in the object, to be changed later
+        setAutomaticReturnDate(); // Sets the return date to now so that it is available in the object, to be changed later
 
         System.out.print("You have added game: ");
         g.printGame();
         gameList.add(g);
         Screens.employeeScreen();
     }
+
+
 
     public static void viewAllGames(){
         gameList.forEach(Games::printGame);
@@ -112,8 +118,8 @@ public class Games {
         g.setGenre(genre);
         g.setDailyRent(price);
         g.setStatus(true);
-        setRentDate();
-        setReturnDate();
+        setAutomaticRentDate(); // Sets the rent date to now so that it is available in the object, to be changed later
+        setAutomaticReturnDate(); // Sets the return date to now so that it is available in the object, to be changed later
 
         System.out.print("You have added game: ");
         g.printGame();

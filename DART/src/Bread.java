@@ -33,7 +33,6 @@ public class Bread {
             for (int i = 0; i < correct.length(); i++) { //A for loop that loops the same amount of times as the length of the correct(correctAnswers) string
                 if (x == correct.charAt(i)) { //An if statement that is used to check whether the character x(mainMenu) is in the correct(correctAnswers) string
                     programRunning = false;
-                    return x;
                 }
             }
             if(programRunning) {
@@ -55,6 +54,5 @@ public class Bread {
 
     public static void exitProgram(){
         System.exit(0);
-        programRunning = false;
     }
 }

@@ -90,7 +90,8 @@ public class Employee {
         Scanner input = new Scanner(System.in);
         boolean found = false;
         int i;
-        System.out.print("Enter ID of employee to calculate net salary: "); String ID = input.nextLine(); //FIX
+        System.out.print("Enter ID of employee to calculate net salary: ");
+        String ID = input.nextLine();
 
         for(i = 0; i < employeeArrayList.size(); i++) {
             if (employeeArrayList.get(i).ID.equals(ID)) {
@@ -116,7 +117,8 @@ public class Employee {
         int bonus = 0;
         boolean found = false;
         int i;
-        System.out.print("Enter ID of employee to see what bonus employee is eligible to: "); String ID = input.nextLine(); //FIX
+        System.out.print("Enter ID of employee to see what bonus employee is eligible to: ");
+        String ID = input.nextLine();
 
         for(i = 0; i < employeeArrayList.size(); i++) {
             if (employeeArrayList.get(i).ID.equals(ID)) {
@@ -132,17 +134,4 @@ public class Employee {
         System.out.println("Employee bonus is: " + bonus);
         Screens.managerScreen();
     }
-
-    /*
-
-        Employees receive a bonus based on their age.
-        This bonus is not taxable, meaning that is directly added to the monthly net salary of the employee.
-        The bonus and age brackets are:
-
-        Age < 22 years will receive 4000 SEK
-        Between 22 and 30 years will receive 6000 SEK
-        Older than 30 years will receive 7500 SEK
-
-     */
-
 }
