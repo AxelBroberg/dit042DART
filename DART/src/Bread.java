@@ -1,32 +1,29 @@
 import java.util.Scanner;
+public class Bread {
 
-public class DART {
     static boolean programRunning = true;
     public static void main(String[] args){
-
         Scanner input = new Scanner(System.in);
         while(programRunning) {
-            Screens.userStoryPrint(); //Prints the question to User Story 1.1, I do this in a second function because I don't want to see a wall of text here
+            Screens.mainMenu(); //Prints the question to User Story 1.1, I do this in a second function because I don't want to see a wall of text here
             char mainMenu; //Initializes a char variable that the user uses to choose who he is, Manager, Employee, Customer or to exit the system
             String correctAnswers = "MECXmecx"; //A string that contains all of the menu choices
             mainMenu = input.next().charAt(0); //Scanner input to a char variable
             screenChoice(validateChar(mainMenu, correctAnswers));
         }
     }
-
     public static void screenChoice(char x){
         switch (x) {
-            case 'M' -> {
+            case 'm','M' -> {
                 if (password("admin1234")) Screens.managerScreen();
             }
-            case 'E' -> {
+            case 'e','E' -> {
                 if (password("password123")) Screens.employeeScreen();
             }
-            case 'C' -> Screens.customerScreen();
-            case 'X' -> exitProgram();
+            case 'c','C' -> Screens.customerScreen();
+            case 'x','X' -> exitProgram();
         }
     }
-
     public static char validateChar(char x, String correct){ //Creates a function that has the purpose to check if the input is correct
         Scanner valChar = new Scanner(System.in); //Creates a new Scanner, which is only used inside of this function
         boolean programRunning = true; //Used so we can exit the entire while loop
@@ -44,9 +41,6 @@ public class DART {
         }
         return x; //Returns a char from the function
     }
-
-
-
     public static boolean password(String correctPassword){
         boolean correct = false;
         System.out.println("Enter password: ");
@@ -55,9 +49,6 @@ public class DART {
         if (password.equals(correctPassword)) correct = true;
         return correct;
     }
-
-
-
     public static void exitProgram(){
         System.exit(0);
         programRunning = false;

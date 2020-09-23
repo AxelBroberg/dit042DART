@@ -6,6 +6,11 @@ Such as: "123e4567-e89b-12d3-a456-556642440000"
 We found this difficult to read, and hard for the user to input by themselves.
 Because of this we created a generator which creates a 6 character long id, which is unique.
 */
+
+/*
+https://stackoverflow.com/questions/9543715/generating-human-readable-usable-short-but-unique-ids
+ */
+
 class randomID
 {
     private static final ArrayList<String> IDCheck = new ArrayList<>(); // Declares an ArrayList holding strings, which will be used to check for duplicates

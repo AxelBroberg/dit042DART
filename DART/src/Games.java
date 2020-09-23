@@ -86,7 +86,13 @@ public class Games {
         System.out.print(this.title + " [");
         System.out.print(getGenre() + "]. ");
         System.out.print(getDailyRent() + ". ");
-        System.out.println("Status: " + getStatus());
+        System.out.print("Status: " );
+        if (getStatus()){
+            System.out.println("Available");
+        }
+        else{
+            System.out.println("Unavailable");
+        }
     }
 
     public static void fillGames(){ // Method for adding games, used for testing purposes
@@ -101,10 +107,10 @@ public class Games {
     }
 
     public static void autoRegisterGame(String title, String genre, double price){ // Method for adding games, used for testing purposes
-        System.out.print("Enter game title: "); Games g = new Games(title);
-        g.setID(); System.out.println("Random ID <" + g.getID() + "> was assigned.");
-        System.out.print("Enter game genre: "); g.setGenre(genre);
-        System.out.print("Enter game daily rent fee: "); g.setDailyRent(price);
+        Games g = new Games(title);
+        g.setID();
+        g.setGenre(genre);
+        g.setDailyRent(price);
         g.setStatus(true);
         setRentDate();
         setReturnDate();

@@ -27,9 +27,7 @@ public class Customer {
         customerList.add(c); // adds the object 'c' to the ArrayList
         Screens.employeeScreen(); // returns the user to the employee screen
     }
-
-
-    public static void viewAllCustomer(){ customerList.forEach(Customer::printCustomer); } // for each Customer in the 'customerList', it will execute printCustomer
+    public static void viewAllCustomer(){ customerList.forEach(Customer::printCustomer);Screens.employeeScreen(); } // for each Customer in the 'customerList', it will execute printCustomer
 
     public void printCustomer(){ System.out.print(getID() + " : " + this.name); } // prints ID of the customer and then the name
 

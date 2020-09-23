@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Screens {
     private static double totalProfit;
 
-    public static void userStoryPrint(){ //Wall of text function
+    public static void mainMenu(){ //Wall of text function
         System.out.println("Main Menu:");
         System.out.println("Welcome to DART, your good old game rental system. The competition has no steam to keep up!");
         System.out.println("Please specify your role by entering one of the options given:");
@@ -22,7 +22,7 @@ public class Screens {
         System.out.println("2. Return a game");
         System.out.println("3. Return to Main Menu");
         choice = inputCustomer.nextLine().charAt(0);
-        DART.validateChar(choice, screens);
+        Bread.validateChar(choice, screens);
         switch(choice) {
             case '1' -> Customer.rentGame();
             case '2' -> totalProfit += Customer.returnGame();
@@ -30,7 +30,6 @@ public class Screens {
             }
         }
     }
-
     public static void managerScreen(){
         Scanner inputManager = new Scanner(System.in);
         char choice;
@@ -43,7 +42,7 @@ public class Screens {
         System.out.println("5. Calculate and give bonus to employee");
         System.out.println("6. Return to Main Menu");
         choice = inputManager.next().charAt(0);
-        DART.validateChar(choice, screens);
+        Bread.validateChar(choice, screens);
         switch (choice) {
             case '1' -> Employee.registerEmployee();
             case '2' -> Employee.viewAllEmployee();
@@ -58,7 +57,7 @@ public class Screens {
     public static void employeeScreen(){
         Scanner inputEmployee = new Scanner(System.in);
         char choice;
-        String screens = "12345678";
+        String screens = "123456789";
         System.out.println("Employee Screen - Type one of the options below:");
         System.out.println("1. Register a game");
         System.out.println("2. Remove a game");
@@ -67,10 +66,10 @@ public class Screens {
         System.out.println("5. Show total rent profit");
         System.out.println("6. View all games");
         System.out.println("7. View all customers");
-        System.out.println("8. Return to Main Menu");
-        System.out.println("9. Fill games");
+        System.out.println("8. Fill games");
+        System.out.println("9. Return to Main Menu");
         choice = inputEmployee.next().charAt(0);
-        DART.validateChar(choice, screens);
+        Bread.validateChar(choice, screens);
         switch (choice) {
             case '1' -> Games.registerGame();
             case '2' -> Games.removeGame();
@@ -79,8 +78,8 @@ public class Screens {
             case '5' -> System.out.println("Total profit is: " + totalProfit);
             case '6' -> Games.empViewAllGames();
             case '7' -> Customer.viewAllCustomer();
-            case '9' -> Games.fillGames();
-            case '8' -> {
+            case '8' -> Games.fillGames();
+            case '9' -> {
             }
         }
     }
