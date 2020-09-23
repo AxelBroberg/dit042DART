@@ -13,7 +13,7 @@ public class Screens {
         System.out.println("4. Enter “X” to exit system ");
     }
 
-    public static char customerScreen(){
+    public static void customerScreen(){
         Scanner inputCustomer = new Scanner(System.in);
         char choice;
         String screens = "123";
@@ -27,13 +27,11 @@ public class Screens {
             case '1' -> Customer.rentGame();
             case '2' -> totalProfit += Customer.returnGame();
             case '3' -> {
-                return choice;
             }
         }
-        return choice;
     }
 
-    public static char managerScreen(){
+    public static void managerScreen(){
         Scanner inputManager = new Scanner(System.in);
         char choice;
         String screens = "123456";
@@ -53,13 +51,11 @@ public class Screens {
             case '4' -> Employee.calcNetSalary();
             case '5' -> Employee.bonus();
             case '6' -> {
-                return choice;
             }
         }
-        return choice;
     }
 
-    public static char employeeScreen(){
+    public static void employeeScreen(){
         Scanner inputEmployee = new Scanner(System.in);
         char choice;
         String screens = "12345678";
@@ -85,9 +81,7 @@ public class Screens {
             case '7' -> Customer.viewAllCustomer();
             case '9' -> Games.fillGames();
             case '8' -> {
-                return choice;
             }
         }
-        return choice;
     }
 }

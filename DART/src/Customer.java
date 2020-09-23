@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Customer {
 
     private String ID; //creates String variable named 'ID'
-    private String name; //creates String variable named 'name'
+    private final String name; //creates String variable named 'name'
     private static ArrayList<Games> customerGames = new ArrayList(); //creates ArrayList named 'customerGames' containing Games
     private static ArrayList<Customer> customerList = new ArrayList(); //creates ArrayList named 'customerList' containing Games
 
@@ -19,14 +19,14 @@ public class Customer {
 
     public static void registerCustomer(){ // method that registers a customer
         Scanner input = new Scanner(System.in);
-        System.out.println("Creating customer. Please type customer's: \n Name: "); Customer c = new Customer(input.nextLine()); // prints two lines, and creates a Customer object 'c' with an imput
+        System.out.println("Creating customer. Please type customer's: \n Name: "); Customer c = new Customer(input.nextLine());
+        // prints two lines, and creates a Customer object 'c' with an input
         c.setID(); System.out.println("Random ID <" + c.getID() + "> was assigned."); // sets a random id & then prints it
         System.out.println("You have added customer: ");
         c.printCustomer(); // prints all information about the customer created
         customerList.add(c); // adds the object 'c' to the ArrayList
         Screens.employeeScreen(); // returns the user to the employee screen
     }
-
 
 
     public static void viewAllCustomer(){ customerList.forEach(Customer::printCustomer); } // for each Customer in the 'customerList', it will execute printCustomer
@@ -62,8 +62,8 @@ public class Customer {
 
         String rentID = input.nextLine(); //Declares a String variable, which is used to remove customers
         for(int i = 0; i < Games.gameList.size(); i++){
-            if(Games.gameList.get(i).ID.equals(rentID)){
-                if(Games.gameList.get(i).status) { // if the game is available
+            if(Games.gameList.get(i).getID().equals(rentID)){
+                if(Games.gameList.get(i).getStatus()) { // if the game is available
                     addGame(Games.gameList.get(i));
                     Games.gameList.get(i).setStatus(false); // makes the game no longer available from the stores game library
                     Games.setRentDate();  // executes setRentDate from class Games
@@ -79,8 +79,8 @@ public class Customer {
     public static void viewAllRentedGames() { customerGames.forEach(Games::printGame); } // method that prints all the customers games | for each Games in the customerGames list, it will print the game
 
     public static long calcDays(int i){ // a method that returns days between game was rented and returned
-        long days = ChronoUnit.DAYS.between(Games.gameList.get(i).getRentDate(), Games.gameList.get(i).getReturnDate()); // calculates the amount of days in between when the game was rented and when it was returned
-        return days;
+        return ChronoUnit.DAYS.between(Games.gameList.get(i).getRentDate(), // Calculates & returns the day difference
+                Games.gameList.get(i).getReturnDate());
     }
 
     public static double returnGame(){ // a method to return games to the store
@@ -92,8 +92,8 @@ public class Customer {
 
         String rentID = input.nextLine();
         for(int i = 0; i < Games.gameList.size(); i++){
-            if(Games.gameList.get(i).ID.equals(rentID)){
-                if(!Games.gameList.get(i).status) {
+            if(Games.gameList.get(i).getID().equals(rentID)){
+                if(!Games.gameList.get(i).getStatus()) {
                     removeGame(Games.gameList.get(i));
                     Games.gameList.get(i).setStatus(true);
                     Games.setReturnDate();

@@ -1,18 +1,17 @@
 import java.time.LocalDate;
-import java.time.Duration;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Games {
     private String title;
     private String genre;
-    String ID;
-    double dailyRent;
-    boolean status = true;
+    private String ID;
+    private double dailyRent;
+    private boolean status = true;
+    private static LocalDate rentDate;
+    private static LocalDate returnDate;
+
     static ArrayList<Games> gameList = new ArrayList();
-    static LocalDate rentDate;
-    static LocalDate returnDate;
 
 
     Games(String title){ this.title = title; }
@@ -42,8 +41,8 @@ public class Games {
         System.out.print("Enter game genre: "); g.setGenre(input.nextLine());
         System.out.print("Enter game daily rent fee: "); g.setDailyRent(input.nextDouble());
         g.setStatus(true);
-        setRentDate();
-        setReturnDate();
+        setRentDate(); // Sets the rent date to now so that it is available in the object, to be changed later
+        setReturnDate(); // Sets the return date to now so that it is available in the object, to be changed later
 
         System.out.print("You have added game: ");
         g.printGame();
@@ -90,7 +89,7 @@ public class Games {
         System.out.println("Status: " + getStatus());
     }
 
-    public static void fillGames(){
+    public static void fillGames(){ // Method for adding games, used for testing purposes
         String[] gameName = {"The Last of us Part 2", "The Witcher 3 Wild Hunt", "Red Dead Redemption 2"};
         String[] genre = {"action", "comedy", "family"};
         double[] price = {12, 13, 14};
@@ -101,7 +100,7 @@ public class Games {
         Screens.employeeScreen();
     }
 
-    public static void autoRegisterGame(String title, String genre, double price){
+    public static void autoRegisterGame(String title, String genre, double price){ // Method for adding games, used for testing purposes
         System.out.print("Enter game title: "); Games g = new Games(title);
         g.setID(); System.out.println("Random ID <" + g.getID() + "> was assigned.");
         System.out.print("Enter game genre: "); g.setGenre(genre);
@@ -114,10 +113,5 @@ public class Games {
         g.printGame();
         gameList.add(g);
 
-    }
-
-    public static Period calcTimeDiff(){
-        Period daysBetween = Period.between(Games.getRentDate(), Games.getReturnDate());
-        return daysBetween;
     }
 }
