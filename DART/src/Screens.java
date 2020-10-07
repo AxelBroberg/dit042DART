@@ -2,6 +2,20 @@ import java.util.Scanner;
 
 public class Screens {
     private static double totalProfit;
+    Scanner input = new Scanner(System.in);
+
+    public static void screenChoice(char x){
+        switch (x) {
+            case 'm','M' -> {
+                if (Tools.password("admin1234")) managerScreen();
+            }
+            case 'e','E' -> {
+                if (Tools.password("password123")) employeeScreen();
+            }
+            case 'c','C' -> customerScreen();
+            case 'x','X' -> DartMain.exitProgram();
+        }
+    }
 
     public static void mainMenu(){ //Wall of text function
         System.out.println("Main Menu:");
@@ -31,6 +45,27 @@ public class Screens {
         }
     }
 
+    public static void managerScreen(){
+        String screens = "123456";
+        System.out.println("Manager Screen - Type one of the options below:");
+        System.out.println("1. Add an employee");
+        System.out.println("2. View all employees");
+        System.out.println("3. Remove an employee");
+        System.out.println("4. Calculate net salary of employee");
+        System.out.println("5. Calculate and give bonus to employee");
+        System.out.println("6. Return to Main Menu");
+        char choice = Tools.getChar("");
+        Tools.validateChar(choice, screens);
+        switch (choice) {
+            case '1' -> ManagerController.registerEmployee();
+            case '2' -> ManagerController.viewAllEmployee();
+            case '3' -> ManagerController.removeEmployee();
+            case '4' -> ManagerController.calcNetSalary();
+            case '5' -> ManagerController.bonus();
+            case '6' -> {
+            }
+        }
+    }
 
     public static void employeeScreen(){
         Scanner inputEmployee = new Scanner(System.in);

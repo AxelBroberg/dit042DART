@@ -11,7 +11,7 @@ public class DartMain {
             char mainMenu; //Initializes a char variable that the user uses to choose who he is, Manager, Employee, Customer or to exit the system
             String correctAnswers = "MECXmecx"; //A string that contains all of the menu choices
             mainMenu = input.next().charAt(0); //Scanner input to a char variable
-            screenChoice(Tools.validateChar(mainMenu, correctAnswers));
+            Screens.screenChoice(Tools.validateChar(mainMenu, correctAnswers));
         }
     }
 

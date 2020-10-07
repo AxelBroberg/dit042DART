@@ -12,6 +12,34 @@ Because of this we created a generator which creates a 6 character long id, whic
 https://stackoverflow.com/questions/9543715/generating-human-readable-usable-short-but-unique-ids
  */
 public class Tools {
+    private static Scanner input = new Scanner(System.in);
+
+    public static String getString(String message){
+        System.out.println(message);
+        String userInput = input.nextLine();
+        return userInput;
+    }
+
+    public static char getChar(String message){
+        System.out.println(message);
+        char userInput = input.next().charAt(0);
+        return userInput;
+    }
+
+    public static int getInt(String message){
+        System.out.println(message);
+        int userInput = input.nextInt();
+        input.nextLine();
+        return userInput;
+    }
+
+    public static double getDouble(String message){
+        System.out.println(message);
+        double userInput = input.nextDouble();
+        input.nextLine();
+        return userInput;
+    }
+
     private static final ArrayList<String> IDCheck = new ArrayList<>(); // Declares an ArrayList holding strings, which will be used to check for duplicates
 
     public static String randomizeID(){
