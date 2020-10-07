@@ -15,6 +15,7 @@ public class Tools {
     private static Scanner input = new Scanner(System.in);
 
     public static String getString(String message){
+        Scanner input = new Scanner(System.in);
         System.out.println(message);
         String userInput = input.nextLine();
         return userInput;

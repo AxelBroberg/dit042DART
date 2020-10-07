@@ -5,16 +5,16 @@ public class ManagerController {
     static ArrayList<Manager> employeeArrayList = new ArrayList();
 
     public static void registerEmployee() {
-        Manager emp = new Manager(
+        Manager employee = new Manager(
             Tools.getString("Enter employee name: "),
             Tools.getString("Enter employee address: "),
             Tools.getInt("Enter employee birth year: "),
             Tools.getDouble("Enter employee gross salary: "));
-        System.out.println("Random ID <" + emp.getID() + "> was assigned.");
+        System.out.println("Random ID <" + employee.getID() + "> was assigned.");
 
         System.out.print("You have added employee: ");
-        emp.toString();
-        employeeArrayList.add(emp);
+        employee.toString();
+        employeeArrayList.add(employee);
         Screens.managerScreen();
     }
 

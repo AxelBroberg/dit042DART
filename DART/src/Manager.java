@@ -17,7 +17,7 @@ public class Manager {
         this.address = address;
         this.birthyear = birthyear;
         this.grossSalary = grossSalary;
-        ID = Tools.randomizeID();
+        this.ID = Tools.randomizeID();
     }
 
     public void setBirthyear(int birthyear){ this.birthyear = birthyear; }
@@ -40,5 +40,6 @@ public class Manager {
         if(getNetSalary()!=0) s = s + " Net salary: " + getNetSalary() + " SEK";
         s = s + END_OF_LINE;
         return s;
+
     }
 }

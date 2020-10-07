@@ -38,8 +38,8 @@ public class Screens {
         choice = inputCustomer.nextLine().charAt(0);
         Tools.validateChar(choice, screens);
         switch(choice) {
-            case '1' -> Customer.rentGame();
-            case '2' -> totalProfit += Customer.returnGame();
+            case '1' -> CustomerController.rentGame();
+            case '2' -> totalProfit += CustomerController.returnGame();
             case '3' -> {
             }
         }
@@ -84,14 +84,14 @@ public class Screens {
         choice = inputEmployee.next().charAt(0);
         Tools.validateChar(choice, screens);
         switch (choice) {
-            case '1' -> Game.registerGame();
-            case '2' -> Game.removeGame();
-            case '3' -> Employee.registerCustomer();
-            case '4' -> Employee.removeCustomer();
+            case '1' -> EmployeeController.registerGame();
+            case '2' -> EmployeeController.removeGame();
+            case '3' -> EmployeeController.registerCustomer();
+            case '4' -> EmployeeController.removeCustomer();
             case '5' -> System.out.println("Total profit is: " + totalProfit);
-            case '6' -> Game.empViewAllGames();
-            case '7' -> Employee.viewAllCustomer();
-            case '8' -> Game.fillGames();
+            case '6' -> GameController.empViewAllGames();
+            case '7' -> EmployeeController.viewAllCustomer();
+            case '8' -> EmployeeController.fillGames();
             case '9' -> {
             }
         }
