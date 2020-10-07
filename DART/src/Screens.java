@@ -22,7 +22,7 @@ public class Screens {
         System.out.println("2. Return a game");
         System.out.println("3. Return to Main Menu");
         choice = inputCustomer.nextLine().charAt(0);
-        Bread.validateChar(choice, screens);
+        Tools.validateChar(choice, screens);
         switch(choice) {
             case '1' -> Customer.rentGame();
             case '2' -> totalProfit += Customer.returnGame();
@@ -30,29 +30,7 @@ public class Screens {
             }
         }
     }
-    public static void managerScreen(){
-        Scanner inputManager = new Scanner(System.in);
-        char choice;
-        String screens = "123456";
-        System.out.println("Manager Screen - Type one of the options below:");
-        System.out.println("1. Add an employee");
-        System.out.println("2. View all employees");
-        System.out.println("3. Remove an employee");
-        System.out.println("4. Calculate net salary of employee");
-        System.out.println("5. Calculate and give bonus to employee");
-        System.out.println("6. Return to Main Menu");
-        choice = inputManager.next().charAt(0);
-        Bread.validateChar(choice, screens);
-        switch (choice) {
-            case '1' -> Employee.registerEmployee();
-            case '2' -> Employee.viewAllEmployee();
-            case '3' -> Employee.removeEmployee();
-            case '4' -> Employee.calcNetSalary();
-            case '5' -> Employee.bonus();
-            case '6' -> {
-            }
-        }
-    }
+
 
     public static void employeeScreen(){
         Scanner inputEmployee = new Scanner(System.in);
@@ -69,16 +47,16 @@ public class Screens {
         System.out.println("8. Fill games");
         System.out.println("9. Return to Main Menu");
         choice = inputEmployee.next().charAt(0);
-        Bread.validateChar(choice, screens);
+        Tools.validateChar(choice, screens);
         switch (choice) {
-            case '1' -> Games.registerGame();
-            case '2' -> Games.removeGame();
-            case '3' -> Customer.registerCustomer();
-            case '4' -> Customer.removeCustomer();
+            case '1' -> Game.registerGame();
+            case '2' -> Game.removeGame();
+            case '3' -> Employee.registerCustomer();
+            case '4' -> Employee.removeCustomer();
             case '5' -> System.out.println("Total profit is: " + totalProfit);
-            case '6' -> Games.empViewAllGames();
-            case '7' -> Customer.viewAllCustomer();
-            case '8' -> Games.fillGames();
+            case '6' -> Game.empViewAllGames();
+            case '7' -> Employee.viewAllCustomer();
+            case '8' -> Game.fillGames();
             case '9' -> {
             }
         }

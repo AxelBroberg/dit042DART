@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Games {
+public class Game {
     private String title;
     private String genre;
     private String ID;
@@ -11,12 +11,11 @@ public class Games {
     private static LocalDate rentDate;
     private static LocalDate returnDate;
 
-    static ArrayList<Games> gameList = new ArrayList();
 
 
-    Games(String title){ this.title = title; } // CONSTRUCTOR
+    Game(String title){ this.title = title; } // CONSTRUCTOR
 
-    public void setID(){ ID = randomID.randomizeID(); }
+    public void setID(){ ID = Tools.randomizeID(); }
     public String getID (){ return ID; }
 
     public void setGenre (String genre){ this.genre = genre; }
@@ -40,7 +39,7 @@ public class Games {
 
     public static void registerGame(){
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter game title: "); Games g = new Games(input.nextLine()); // OBJECT CREATION
+        System.out.print("Enter game title: "); Game g = new Game(input.nextLine()); // OBJECT CREATION
         g.setID(); System.out.println("Random ID <" + g.getID() + "> was assigned.");
         System.out.print("Enter game genre: "); g.setGenre(input.nextLine());
         System.out.print("Enter game daily rent fee: "); g.setDailyRent(input.nextDouble());
@@ -57,11 +56,11 @@ public class Games {
 
 
     public static void viewAllGames(){
-        gameList.forEach(Games::printGame);
+        gameList.forEach(Game::printGame);
     }
 
     public static void empViewAllGames(){
-        gameList.forEach(Games::printGame);
+        gameList.forEach(Game::printGame);
         Screens.employeeScreen();
     }
 
@@ -70,7 +69,7 @@ public class Games {
         boolean removed = false;
         int i;
         System.out.println("Games: ");
-        gameList.forEach(Games::printGame);
+        gameList.forEach(Game::printGame);
         System.out.print("Enter the ID of the game you want to remove: ");
 
         String removeID = input.nextLine();
@@ -113,7 +112,7 @@ public class Games {
     }
 
     public static void autoRegisterGame(String title, String genre, double price){ // Method for adding games, used for testing purposes
-        Games g = new Games(title);
+        Game g = new Game(title);
         g.setID();
         g.setGenre(genre);
         g.setDailyRent(price);

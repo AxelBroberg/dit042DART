@@ -3,7 +3,7 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Employee {
+public class Manager {
 
     private String ID;
     private int birthyear;
@@ -11,9 +11,8 @@ public class Employee {
     private double grossSalary;
     private double netSalary;
     private String name;
-    private static ArrayList<Employee> employeeArrayList = new ArrayList();
 
-    Employee(String name){ this.name = name; }
+    Manager(String name){ this.name = name; }
 
     public void setBirthyear(int birthyear){ this.birthyear = birthyear; }
     public int getBirthyear(){ return birthyear; }
@@ -27,15 +26,16 @@ public class Employee {
     public void setNetSalary(double netSalary){ this.netSalary = netSalary; }
     public double getNetSalary(){ return netSalary; }
 
-    public void setID(){ ID = randomID.randomizeID(); }
+    public void setID(){ ID = Tools.randomizeID(); }
     public String getID(){ return ID; }
 
 
 
-    public static void registerEmployee(){
-        Scanner input = new Scanner(System.in);
 
-        System.out.print("Enter employee name: "); Employee emp = new Employee(input.nextLine());
+
+    public static void registerEmployee(Scanner input){
+
+        System.out.print("Enter employee name: "); Manager emp = new Manager(input.nextLine());
         emp.setID(); System.out.println("Random ID <" + emp.getID() + "> was assigned.");
         System.out.print("Enter employee birth year: "); emp.setBirthyear(input.nextInt());
         input.nextLine();
@@ -44,12 +44,12 @@ public class Employee {
 
         System.out.print("You have added employee: ");
         emp.printEmployee();
-        employeeArrayList.add(emp);
+        Controller.employeeArrayList.add(emp);
         Screens.managerScreen();
     }
 
     public static void viewAllEmployee(){
-        employeeArrayList.forEach(Employee::printEmployee);
+        Controller.employeeArrayList.forEach(Manager::printEmployee);
         Screens.managerScreen();
     }
 
@@ -58,7 +58,7 @@ public class Employee {
         boolean removed = false;
         int i;
         System.out.println("Employees: ");
-        employeeArrayList.forEach(Employee::printEmployee);
+        employeeArrayList.forEach(Manager::printEmployee);
         System.out.print("Enter the ID of employee you want to remove: ");
 
         String removeID = input.nextLine();
@@ -134,4 +134,6 @@ public class Employee {
         System.out.println("Employee bonus is: " + bonus);
         Screens.managerScreen();
     }
+
+
 }
