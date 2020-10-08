@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class EmployeeController {
     static ArrayList<Customer> customerList = new ArrayList(); //creates ArrayList named 'customerList' containing Customers
+    static ArrayList<String> upgradeRequestsID = new ArrayList();
 
     public static void registerCustomer(){ // method that registers a customer
         Customer c = new Customer(Tools.getString("Creating customer. Please type customer's: " + System.lineSeparator() + " Name: "));
@@ -14,10 +15,44 @@ public class EmployeeController {
 }
 
     public static void viewAllCustomer(){
-        for (Customer employee : customerList) {
-            System.out.println(employee.toString());
+        for (Customer customer : customerList) {
+            System.out.println(customer.toString());
         }
         Screens.employeeScreen(); } // for each Customer in the 'customerList', it will execute printCustomer
+
+    public static void viewAllUpgRequest(){
+        for (Customer customer : customerList) {
+            if(upgradeRequestsID.contains(customer.getID())){
+                System.out.println(customer.toString());
+            }
+        }
+        Screens.employeeScreen();
+    }
+
+
+    public static void upgradeCustomer(){ // method that removes customers
+        boolean upgraded = false;
+        int i;
+        String upgID = Tools.getString("Enter the ID of the customer you want to upgrade: ");
+        for(i = 0; i < customerList.size(); i++){
+            if(customerList.get(i).getID().equals(upgID)){
+                customerList.get(i).upgradeMembership();
+                System.out.println("Successfully upgraded!");
+                upgraded = true;
+                //Removed the id from the request list
+                for(int j = 0; j < upgradeRequestsID.size(); j++){
+                    if(upgradeRequestsID.get(j).equals(upgID)){
+                        upgradeRequestsID.remove(j);
+                        j = upgradeRequestsID.size();
+                    }
+
+                i = customerList.size(); // sets variable 'i' to the same size as customerList, which will make the for loop not loop again
+            }
+        }
+        if(!upgraded) System.out.println("Customer with id " + upgID + " not found.");
+        Screens.employeeScreen();
+    }
+
 
     public static void removeCustomer(){ // method that removes customers
         Scanner input = new Scanner(System.in);

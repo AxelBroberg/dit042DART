@@ -30,17 +30,23 @@ public class Screens {
     public static void customerScreen(){
         Scanner inputCustomer = new Scanner(System.in);
         char choice;
-        String screens = "123";
+        String screens = "123456";
         System.out.println("Customer Screen - Type one of the options below:");
         System.out.println("1. Rent a game");
         System.out.println("2. Return a game");
-        System.out.println("3. Return to Main Menu");
+        System.out.println("3. Rent a song");
+        System.out.println("4. Return a song");
+        System.out.println("5. Request membership upgrade");
+        System.out.println("6. Return to Main Menu");
         choice = inputCustomer.nextLine().charAt(0);
         Tools.validateChar(choice, screens);
         switch(choice) {
             case '1' -> CustomerController.rentGame();
             case '2' -> totalProfit += CustomerController.returnGame();
-            case '3' -> {
+            case '3' -> CustomerController.rentSong();
+            case '4' -> totalProfit += CustomerController.returnSong();
+            case '5' -> CustomerController.requestUpgrade();
+            case '6' -> {
             }
         }
     }
@@ -70,7 +76,7 @@ public class Screens {
     public static void employeeScreen(){
         Scanner inputEmployee = new Scanner(System.in);
         char choice;
-        String screens = "123456789";
+        String screens = "1234567890a";
         System.out.println("Employee Screen - Type one of the options below:");
         System.out.println("1. Register a game");
         System.out.println("2. Remove a game");
@@ -80,7 +86,9 @@ public class Screens {
         System.out.println("6. View all games");
         System.out.println("7. View all customers");
         System.out.println("8. Fill games");
-        System.out.println("9. Return to Main Menu");
+        System.out.println("9. View upgrade requests");
+        System.out.println("a. Upgrade member");
+        System.out.println("0. Return to Main Menu");
         choice = inputEmployee.next().charAt(0);
         Tools.validateChar(choice, screens);
         switch (choice) {
@@ -92,7 +100,9 @@ public class Screens {
             case '6' -> GameController.empViewAllGames();
             case '7' -> EmployeeController.viewAllCustomer();
             case '8' -> EmployeeController.fillGames();
-            case '9' -> {
+            case '9' -> EmployeeController.viewAllUpgRequest();
+            case 'a' -> EmployeeController.upgradeCustomer();
+            case '0' -> {
             }
         }
     }

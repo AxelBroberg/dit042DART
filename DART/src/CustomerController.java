@@ -168,6 +168,12 @@ public class CustomerController {
         return 0;
     }
 
+    public static void requestUpgrade(){
+        String upgID = Tools.getString("Enter your id: "); //Declares a String variable, which is used to remove customers
+        EmployeeController.upgradeRequestsID.add(upgID);
+        Screens.customerScreen();
+    }
+
 
 /*
 public static void rentItem(String item){ // method to rent a game, by adding a game to a customers list
