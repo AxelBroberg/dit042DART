@@ -27,10 +27,10 @@ public class CustomerController {
 
 
                     try {
-                        System.out.print("What is the return date? (YYYY-MM-DD)");
+                        System.out.print("What is the rent date? (YYYY-MM-DD)");
                         GameController.gameList.get(i).setRentDate(input.nextLine());
                     } catch (Exception e) {
-                        System.out.println("Wrong format, assuming return date is today.");
+                        System.out.println("Wrong format, assuming rent date is today.");
                         GameController.gameList.get(i).setAutomaticRentDate();
                     }
 
@@ -84,7 +84,7 @@ public class CustomerController {
                     System.out.println("Successfully returned.");
                     rent = GameController.gameList.get(i).getDailyRent() * calcDays(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
                     System.out.println("The cost for renting the game for " + calcDays(i) + " days is: " + rent);
-                    Screens.employeeScreen();
+                    Screens.customerScreen();
                     return rent; // returns the rent cost
                 } else System.out.println("Game is not available");
             }

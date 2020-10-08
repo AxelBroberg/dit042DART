@@ -39,7 +39,7 @@ public class EmployeeController {
             }
         }
         if(!removed) System.out.println("Customer with id " + i + " not found.");
-
+        Screens.employeeScreen();
     }
     public static void registerGame(){
 
@@ -94,6 +94,7 @@ public class EmployeeController {
         if(!removed){
             System.out.println("Game with id " + i + " not found.");
         }
+        Screens.employeeScreen();
     }
 
 }

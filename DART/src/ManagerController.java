@@ -18,18 +18,20 @@ public class ManagerController {
         Screens.managerScreen();
     }
 
-    public static void viewAllEmployee(){
+    public static void viewAllEmployee(boolean returnToMenu){
         for (Employee manager : employeeArrayList) {
             System.out.println(manager.toString());
         }
-        Screens.managerScreen();
+        if (returnToMenu){
+            Screens.managerScreen();
+        }
     }
 
     public static void removeEmployee(){
         boolean removed = false;
         int i;
         System.out.println("Employees: ");
-        viewAllEmployee();
+        viewAllEmployee(false);
         String removeID = Tools.getString("Enter the ID of employee you want to remove: ");
         for(i = 0; i < employeeArrayList.size(); i++){
             if(employeeArrayList.get(i).getID().equals(removeID)){
@@ -39,7 +41,7 @@ public class ManagerController {
                 i = employeeArrayList.size();
             }
         }
-        if(!removed) System.out.println("Employee with id " + i + " not found.");
+        if(!removed) System.out.println("Employee with id " + removeID + " not found.");
         Screens.managerScreen();
     }
 

@@ -58,7 +58,7 @@ public class Screens {
         Tools.validateChar(choice, screens);
         switch (choice) {
             case '1' -> ManagerController.registerEmployee();
-            case '2' -> ManagerController.viewAllEmployee();
+            case '2' -> ManagerController.viewAllEmployee(true);
             case '3' -> ManagerController.removeEmployee();
             case '4' -> ManagerController.calcNetSalary();
             case '5' -> ManagerController.bonus();
@@ -88,7 +88,7 @@ public class Screens {
             case '2' -> EmployeeController.removeGame();
             case '3' -> EmployeeController.registerCustomer();
             case '4' -> EmployeeController.removeCustomer();
-            case '5' -> System.out.println("Total profit is: " + totalProfit);
+            case '5' -> {System.out.println("Total profit is: " + totalProfit); employeeScreen();}
             case '6' -> GameController.empViewAllGames();
             case '7' -> EmployeeController.viewAllCustomer();
             case '8' -> EmployeeController.fillGames();
