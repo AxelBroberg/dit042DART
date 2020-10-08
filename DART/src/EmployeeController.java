@@ -1,3 +1,4 @@
+import javax.tools.Tool;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -93,6 +94,41 @@ public class EmployeeController {
         }
         if(!removed){
             System.out.println("Game with id " + i + " not found.");
+        }
+        Screens.employeeScreen();
+    }
+
+    public static void registerSong(){
+
+        Song s = new Song(Tools.getString("Enter title: "), Tools.getString("Enter artist: "), Tools.getDouble("Enter daily rent: "), Tools.getInt("Enter release year: "), Tools.getDouble("Enter ratings: ")); // OBJECT CREATION
+
+        System.out.print("You have added game: ");
+        System.out.println(s.toString());
+        SongController.songList.add(s);
+        Screens.employeeScreen();
+    }
+
+    public static void removeSong(){
+        Scanner input = new Scanner(System.in);
+        boolean removed = false;
+        int i;
+        System.out.println("Songs: ");
+        for (Song song : SongController.songList) {
+            System.out.println(song.toString());
+        }
+
+
+        String removeID = Tools.getString("Enter the ID of the song you want to remove: ");
+        for(i = 0; i < SongController.songList.size(); i++){
+            if(SongController.songList.get(i).getID().equals(removeID)){
+                SongController.songList.remove(i);
+                System.out.println("Successfully removed!");
+                removed = true;
+                i = SongController.songList.size();
+            }
+        }
+        if(!removed){
+            System.out.println("Song with id " + removeID + " not found.");
         }
         Screens.employeeScreen();
     }
