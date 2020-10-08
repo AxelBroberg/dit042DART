@@ -1,24 +1,45 @@
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Scanner;
+
+import java.time.Year;
 
 import static jdk.internal.org.jline.reader.LineReader.END_OF_LINE;
 
 public class Employee {
 
-    private String ID; //creates String variable named 'ID'
-    private String name; //creates String variable named 'name'
+    private String ID;
+    private int birthyear;
+    private String address;
+    private double grossSalary;
+    private double netSalary;
+    private String name;
 
-    Employee(String name){ this.name = name; this.ID = Tools.randomizeID();} //Creates a constructor with takes a name
-
-    public void setID(){ ID = Tools.randomizeID(); } // a method that assigns a random id to the variable 'ID'
-    public String getID(){ return ID; } // returns the id created by the method above
-
-    public String toString(){
-
-
-        return getID() + " : " + this.name + END_OF_LINE;
+    Employee(String name, String address, int birthyear, double grossSalary){
+        this.name = name;
+        this.address = address;
+        this.birthyear = birthyear;
+        this.grossSalary = grossSalary;
+        this.ID = Tools.randomizeID();
     }
 
+    public void setBirthyear(int birthyear){ this.birthyear = birthyear; }
+    public int getBirthyear(){ return birthyear; }
 
+    public void setAddress(String address){ this.address = address; }
+    public String getAddress(){ return address; }
+
+    public void setGrossSalary(double grossSalary){ this.grossSalary = grossSalary; }
+    public double getGrossSalary(){ return grossSalary; }
+
+    public void setNetSalary(double netSalary){ this.netSalary = netSalary; }
+    public double getNetSalary(){ return netSalary; }
+
+    public void setID(){ ID = Tools.randomizeID(); }
+    public String getID(){ return ID; }
+
+    public String toString(){
+        String s = getID() + " " + this.name + " - " + getBirthyear() + " (" + (Year.now().getValue() - getBirthyear()) + " ): " + "Gross salary: " + getGrossSalary() + " SEK";
+        if(getNetSalary()!=0) s = s + " Net salary: " + getNetSalary() + " SEK";
+        s = s + System.lineSeparator();
+        return s;
+
+    }
 }

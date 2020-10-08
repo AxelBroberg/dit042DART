@@ -45,7 +45,11 @@ public class CustomerController {
         Screens.customerScreen();
     }
 
-    public static void viewAllRentedGames() { customerGames.forEach(Game::toString); } // method that prints all the customers games | for each Games in the customerGames list, it will print the game
+    public static void viewAllRentedGames() {
+        for (Game customerGame : customerGames) {
+            System.out.println(customerGame.toString());
+        }
+    } // method that prints all the customers games | for each Games in the customerGames list, it will print the game
 
     public static long calcDays(int i){ // a method that returns days between game was rented and returned
         return ChronoUnit.DAYS.between(GameController.gameList.get(i).getRentDate(), GameController.gameList.get(i).getReturnDate());

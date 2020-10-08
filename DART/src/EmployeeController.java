@@ -2,28 +2,31 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class EmployeeController {
-    static ArrayList<Employee> customerList = new ArrayList(); //creates ArrayList named 'customerList' containing Customers
+    static ArrayList<Customer> customerList = new ArrayList(); //creates ArrayList named 'customerList' containing Customers
 
     public static void registerCustomer(){ // method that registers a customer
-        Scanner input = new Scanner(System.in);
-        System.out.println("Creating customer. Please type customer's: \n Name: "); Employee c = new Employee(input.nextLine());
-        // prints two lines, and creates a Customer object 'c' with an input
-        c.setID(); System.out.println("Random ID <" + c.getID() + "> was assigned."); // sets a random id & then prints it
+        Customer c = new Customer(Tools.getString("Creating customer. Please type customer's: " + System.lineSeparator() + " Name: "));
         System.out.println("You have added customer: ");
-        c.toString(); // prints all information about the customer created
+        System.out.println(c.toString()); // prints all information about the customer created
         customerList.add(c); // adds the object 'c' to the ArrayList
         Screens.employeeScreen(); // returns the user to the employee screen
 }
 
     public static void viewAllCustomer(){
-        customerList.forEach(Employee::toString); Screens.employeeScreen(); } // for each Customer in the 'customerList', it will execute printCustomer
+        for (Customer employee : customerList) {
+            System.out.println(employee.toString());
+        }
+        Screens.employeeScreen(); } // for each Customer in the 'customerList', it will execute printCustomer
 
     public static void removeCustomer(){ // method that removes customers
         Scanner input = new Scanner(System.in);
         boolean removed = false; // declares a variable that will decide if the following for loop will continue looping
         int i; // initializes a variable 'i' so it can be used outside of the for loop
         System.out.println("Games: ");
-        customerList.forEach(Employee::toString); // prints all of the customers, so it will be easier for the user to see which customer to remove
+        // prints all of the customers, so it will be easier for the user to see which customer to remove
+        for (Customer employee : customerList) {
+            System.out.println(employee.toString());
+        }
         System.out.print("Enter the ID of the customer you want to remove: ");
 
         String removeID = input.nextLine(); // declares a String variable, which is used to remove customers
@@ -44,7 +47,7 @@ public class EmployeeController {
 
 
         System.out.print("You have added game: ");
-        g.toString();
+        System.out.println(g.toString());
         GameController.gameList.add(g);
         Screens.employeeScreen();
     }
@@ -53,7 +56,7 @@ public class EmployeeController {
 
 
         System.out.print("You have added game: ");
-        g.toString();
+        System.out.println(g.toString());
         GameController.gameList.add(g);
 
     }
@@ -74,7 +77,9 @@ public class EmployeeController {
         boolean removed = false;
         int i;
         System.out.println("Games: ");
-        GameController.gameList.forEach(Game::toString);
+        for (Game game : GameController.gameList) {
+            System.out.println(game.toString());
+        }
 
 
         String removeID = Tools.getString("Enter the ID of the game you want to remove: ");

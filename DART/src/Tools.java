@@ -12,7 +12,6 @@ Because of this we created a generator which creates a 6 character long id, whic
 https://stackoverflow.com/questions/9543715/generating-human-readable-usable-short-but-unique-ids
  */
 public class Tools {
-    private static Scanner input = new Scanner(System.in);
 
     public static String getString(String message){
         Scanner input = new Scanner(System.in);
@@ -22,12 +21,14 @@ public class Tools {
     }
 
     public static char getChar(String message){
+        Scanner input = new Scanner(System.in);
         System.out.println(message);
         char userInput = input.next().charAt(0);
         return userInput;
     }
 
     public static int getInt(String message){
+        Scanner input = new Scanner(System.in);
         System.out.println(message);
         int userInput = input.nextInt();
         input.nextLine();
@@ -35,6 +36,7 @@ public class Tools {
     }
 
     public static double getDouble(String message){
+        Scanner input = new Scanner(System.in);
         System.out.println(message);
         double userInput = input.nextDouble();
         input.nextLine();

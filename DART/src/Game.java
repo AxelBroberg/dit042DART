@@ -50,18 +50,6 @@ public class Game {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     public String toString(){
         String s = getID() + " : " + this.title + " [" + getGenre() + "]. " + getDailyRent() + ". " + "Status: ";
 

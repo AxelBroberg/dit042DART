@@ -6,11 +6,15 @@ public class GameController {
 
     public static void customerViewAllGames(){
 
-        gameList.forEach(Game::toString);
+        for (Game game : gameList) {
+            System.out.println(game.toString());
+        }
     }
 
     public static void empViewAllGames(){
-        GameController.gameList.forEach(Game::toString);
+        for (Game game : GameController.gameList) {
+            System.out.println(game.toString());
+        }
         Screens.employeeScreen();
     }
 

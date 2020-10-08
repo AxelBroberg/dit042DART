@@ -2,10 +2,10 @@ import java.time.Year;
 import java.util.ArrayList;
 
 public class ManagerController {
-    static ArrayList<Manager> employeeArrayList = new ArrayList();
+    static ArrayList<Employee> employeeArrayList = new ArrayList();
 
     public static void registerEmployee() {
-        Manager employee = new Manager(
+        Employee employee = new Employee(
             Tools.getString("Enter employee name: "),
             Tools.getString("Enter employee address: "),
             Tools.getInt("Enter employee birth year: "),
@@ -13,13 +13,15 @@ public class ManagerController {
         System.out.println("Random ID <" + employee.getID() + "> was assigned.");
 
         System.out.print("You have added employee: ");
-        employee.toString();
+        System.out.println(employee.toString());
         employeeArrayList.add(employee);
         Screens.managerScreen();
     }
 
     public static void viewAllEmployee(){
-        employeeArrayList.forEach(Manager::toString);
+        for (Employee manager : employeeArrayList) {
+            System.out.println(manager.toString());
+        }
         Screens.managerScreen();
     }
 
