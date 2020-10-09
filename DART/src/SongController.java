@@ -2,17 +2,17 @@ import java.util.ArrayList;
 
 public class SongController {
 
-    static ArrayList<Song> songList = new ArrayList();
+    static ArrayList<Rentable> songList = new ArrayList();
 
     public static void customerViewAllSongs(){
 
-        for (Song song : songList) {
+        for ( Rentable song : songList) {
             System.out.println(song.toString());
         }
     }
 
     public static void empViewAllSongs(){
-        for (Song song : songList) {
+        for ( Rentable song : songList) {
             System.out.println(song.toString());
         }
         Screens.employeeScreen();

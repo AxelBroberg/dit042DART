@@ -1,4 +1,3 @@
-import javax.tools.Tool;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,27 +29,28 @@ public class EmployeeController {
     }
 
 
-    public static void upgradeCustomer(){ // method that removes customers
+    public static void upgradeCustomer() { // method that removes customers
         boolean upgraded = false;
         int i;
         String upgID = Tools.getString("Enter the ID of the customer you want to upgrade: ");
-        for(i = 0; i < customerList.size(); i++){
-            if(customerList.get(i).getID().equals(upgID)){
+        for ( i = 0; i < customerList.size(); i++ ) {
+            if (customerList.get(i).getID().equals(upgID)) {
                 customerList.get(i).upgradeMembership();
                 System.out.println("Successfully upgraded!");
                 upgraded = true;
                 //Removed the id from the request list
-                for(int j = 0; j < upgradeRequestsID.size(); j++){
-                    if(upgradeRequestsID.get(j).equals(upgID)){
+                for ( int j = 0; j < upgradeRequestsID.size(); j++ ) {
+                    if (upgradeRequestsID.get(j).equals(upgID)) {
                         upgradeRequestsID.remove(j);
                         j = upgradeRequestsID.size();
                     }
 
-                i = customerList.size(); // sets variable 'i' to the same size as customerList, which will make the for loop not loop again
+                    i = customerList.size(); // sets variable 'i' to the same size as customerList, which will make the for loop not loop again
+                }
             }
+            if (!upgraded) System.out.println("Customer with id " + upgID + " not found.");
+            Screens.employeeScreen();
         }
-        if(!upgraded) System.out.println("Customer with id " + upgID + " not found.");
-        Screens.employeeScreen();
     }
 
 
@@ -113,7 +113,7 @@ public class EmployeeController {
         boolean removed = false;
         int i;
         System.out.println("Games: ");
-        for (Game game : GameController.gameList) {
+        for ( Rentable game : GameController.gameList) {
             System.out.println(game.toString());
         }
 
@@ -148,7 +148,7 @@ public class EmployeeController {
         boolean removed = false;
         int i;
         System.out.println("Songs: ");
-        for (Song song : SongController.songList) {
+        for ( Rentable song : SongController.songList) {
             System.out.println(song.toString());
         }
 

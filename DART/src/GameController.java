@@ -1,18 +1,17 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class GameController {
-    static ArrayList<Game> gameList = new ArrayList();
+    static ArrayList<Rentable> gameList = new ArrayList();
 
     public static void customerViewAllGames(){
 
-        for (Game game : gameList) {
+        for ( Rentable game : gameList) {
             System.out.println(game.toString());
         }
     }
 
     public static void empViewAllGames(){
-        for (Game game : GameController.gameList) {
+        for ( Rentable game : GameController.gameList) {
             System.out.println(game.toString());
         }
         Screens.employeeScreen();

@@ -9,8 +9,8 @@ public class Rentable {
     protected String ID;
     protected double dailyRent;
     protected boolean status;
-    protected static LocalDate rentDate;
-    protected static LocalDate returnDate;
+    protected LocalDate rentDate;
+    protected LocalDate returnDate;
 
     Rentable(String title, double dailyRent){
         this.title = title;
@@ -19,8 +19,8 @@ public class Rentable {
 
         this.ID = Tools.randomizeID();
 
-        setAutomaticRentDate(); // Sets the rent date to now so that it is available in the object, to be changed later
-        setAutomaticReturnDate(); // Sets the return date to now so that it is available in the object, to be changed later
+        this.rentDate = LocalDate.parse("2020-01-01");
+        this.returnDate = LocalDate.parse("2020-01-01");
     }
 
     public void setID(){ ID = Tools.randomizeID(); }
@@ -32,13 +32,13 @@ public class Rentable {
     public void setStatus (boolean status){ this.status = status; }
     public boolean getStatus(){ return status; }
 
-    public static void setRentDate(String rentADate){ rentDate = LocalDate.parse(rentADate); } // Method for assigning a date input to the rentDate variable
-    public static void setAutomaticRentDate(){ rentDate = LocalDate.now(); } //Method for automatically assigning a date to the rentDate variable
-    public static LocalDate getRentDate(){ return rentDate; }
+    public void setRentDate(String rentADate){ rentDate = LocalDate.parse(rentADate); } // Method for assigning a date input to the rentDate variable
+    public void setAutomaticRentDate(){ rentDate = LocalDate.now(); } //Method for automatically assigning a date to the rentDate variable
+    public LocalDate getRentDate(){ return rentDate; }
 
-    public static void setReturnDate(String returnADate){ returnDate = LocalDate.parse(returnADate); } // Method for assigning a date input to the returnDate variable
-    public static void setAutomaticReturnDate(){ returnDate = LocalDate.now(); } //Method for automatically assigning a date to the returnDate variable
-    public static LocalDate getReturnDate(){ return returnDate; }
+    public void setReturnDate(String returnADate){ returnDate = LocalDate.parse(returnADate); } // Method for assigning a date input to the returnDate variable
+    public void setAutomaticReturnDate(){ returnDate = LocalDate.now(); } //Method for automatically assigning a date to the returnDate variable
+    public LocalDate getReturnDate(){ return returnDate; }
 
 
 

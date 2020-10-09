@@ -8,41 +8,13 @@ public class CustomerController {
     public static ArrayList<Rentable> customerGames = new ArrayList(); //creates ArrayList named 'customerGames' containing Games
     public static ArrayList<Rentable> customerSongs = new ArrayList();
 
-    public static void addGame(Game game){ customerGames.add(game); } // a method that adds an object game to the ArrayList 'customerGames'
-    public static void removeGame(Game game){ customerGames.remove(game); } // a method that removes an object game to the ArrayList 'customerGames'
+    public static void addGame(Rentable game){ customerGames.add(game); } // a method that adds an object game to the ArrayList 'customerGames'
+    public static void removeGame(Rentable game){ customerGames.remove(game); } // a method that removes an object game to the ArrayList 'customerGames'
 
-    public static void addSong(Song song){ customerSongs.add(song); }
-    public static void removeSong(Song song){ customerSongs.remove(song); }
+    public static void addSong(Rentable song){ customerSongs.add(song); }
+    public static void removeSong(Rentable song){ customerSongs.remove(song); }
 
-    public static void rentGame(){ // method to rent a game, by adding a game to a customers list
-        Scanner input = new Scanner(System.in);
-        System.out.println("Current song library: ");
-        SongController.customerViewAllSongs(); // executes viewAllGames from class Games
-        System.out.println("What song do you want to rent? ");
 
-        String rentID = input.nextLine(); //Declares a String variable, which is used to remove customers
-        for( int i = 0; i < GameController.gameList.size(); i++){
-            if(GameController.gameList.get(i).getID().equals(rentID)){
-                if(GameController.gameList.get(i).getStatus()) { // if the game is available
-                    addGame(GameController.gameList.get(i));
-                    GameController.gameList.get(i).setStatus(false); // makes the game no longer available from the stores game library
-                    try {
-                        System.out.print("What is the rent date? (YYYY-MM-DD)");
-                        GameController.gameList.get(i).setRentDate(input.nextLine());
-                    } catch (Exception e) {
-                        System.out.println("Wrong format, assuming rent date is today.");
-                        GameController.gameList.get(i).setAutomaticRentDate();
-                    }
-
-                    System.out.println("Successfully rented");
-                    i = GameController.gameList.size();
-                } else {
-                    System.out.println("Game is not available");
-                }
-            }
-        }
-        Screens.customerScreen();
-    }
 
     /*public static void viewAllRentedGames() {
         for (Game customerGame : customerGames) {
@@ -60,51 +32,91 @@ public class CustomerController {
         return ChronoUnit.DAYS.between(GameController.gameList.get(i).getRentDate(), GameController.gameList.get(i).getReturnDate());
     }
 
+    public static double calcRent(int i){
+        final double[] memDiscount = new double[]{1, 0.90, 0.85, 0.75};
+        double discount;
+        switch(EmployeeController.customerList.get(i).getMembership()) {
+            case "silver" -> discount = memDiscount[1];
+            case "gold" -> discount = memDiscount[2];
+            case "platinum" -> discount = memDiscount[3];
+            default -> discount = memDiscount[0];
+        }
+        return GameController.gameList.get(i).getDailyRent() * calcDays(i) * discount;
+    }
+
     // Chronounit: https://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
 
-    public static double returnGame(){ // a method to return games to the store
+    /*public static void rentGame(String ID){ // method to rent a game, by adding a game to a customers list
+        System.out.println("Current game library: ");
+        GameController.customerViewAllGames(); // executes viewAllGames from class Games
+
+        String rentID = Tools.getString("What game do you want to rent? "); //Declares a String variable, which is used to remove customers
+        for( int i = 0; i < GameController.gameList.size(); i++){
+            if(GameController.gameList.get(i).getID().equals(rentID)){
+                if(GameController.gameList.get(i).getStatus()) { // if the game is available
+                    addGame(GameController.gameList.get(i));
+                    GameController.gameList.get(i).setStatus(false); // makes the game no longer available from the stores game library
+                    try {
+                        GameController.gameList.get(i).setRentDate(Tools.getString("What is the rent date? (YYYY-MM-DD)"));
+                    } catch (Exception e) {
+                        System.out.println("Wrong format, assuming rent date is today.");
+                        GameController.gameList.get(i).setAutomaticRentDate();
+                    }
+                    for(int j = 0; j < EmployeeController.customerList.size(); j++){
+                        if(EmployeeController.customerList.get(j).getID().equals(ID)) {
+                            EmployeeController.customerList.get(j).addToLibrary(GameController.gameList.get(i));
+                            System.out.println("Successfully rented");
+                            j = EmployeeController.customerList.size();
+                        }
+                    }
+                    i = GameController.gameList.size();
+                } else {
+                    System.out.println("Game is not available");
+                }
+            }
+        }
+        Screens.customerScreen(ID);
+    }
+
+    public static double returnGame(String ID){ // a method to return games to the store
         double rent; //initializes a variable local to the method
-        Scanner input = new Scanner(System.in);
         System.out.println("Current game library: ");
         viewAllRented(customerGames); // prints all the games rented by the customer
-        System.out.println("What game do you want to return? ");
-
-        String rentID = input.nextLine();
+        String rentID = Tools.getString("What game do you want to return? ");
         for( int i = 0; i < GameController.gameList.size(); i++){
             if(GameController.gameList.get(i).getID().equals(rentID)){
                 if(!GameController.gameList.get(i).getStatus()) {
                     removeGame(GameController.gameList.get(i));
                     GameController.gameList.get(i).setStatus(true);
-
-
                     try {
-                        System.out.print("What is the return date? (YYYY-MM-DD)");
-                        GameController.gameList.get(i).setReturnDate(input.nextLine());
+                        GameController.gameList.get(i).setReturnDate(Tools.getString("What is the return date? (YYYY-MM-DD)"));
                     } catch (Exception e) {
                         System.out.println("Wrong format, assuming return date is today.");
                         GameController.gameList.get(i).setAutomaticReturnDate();
                     }
-
-
-                    System.out.println("Successfully returned.");
-                    rent = GameController.gameList.get(i).getDailyRent() * calcDays(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
+                    for(int j = 0; j < EmployeeController.customerList.size(); j++){
+                        if(EmployeeController.customerList.get(j).getID().equals(ID)) {
+                            EmployeeController.customerList.get(j).removeFromLibrary(GameController.gameList.get(i));
+                            System.out.println("Successfully returned");
+                            j = EmployeeController.customerList.size();
+                        }
+                    }
+                    rent = calcRent(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
                     System.out.println("The cost for renting the game for " + calcDays(i) + " days is: " + rent);
-                    Screens.customerScreen();
+                    Screens.customerScreen(ID);
                     return rent; // returns the rent cost
                 } else System.out.println("Game is not available");
             }
         }
-        Screens.customerScreen();
+        Screens.customerScreen(ID);
         return 0;
     }
 
-    public static void rentSong(){ // method to rent a game, by adding a game to a customers list
-        Scanner input = new Scanner(System.in);
+    public static void rentSong(String ID){ // method to rent a game, by adding a game to a customers list
         System.out.println("Current song library: ");
         SongController.customerViewAllSongs(); // executes viewAllGames from class Games
-        System.out.println("What song do you want to rent? ");
 
-        String rentID = input.nextLine(); //Declares a String variable, which is used to remove customers
+        String rentID = Tools.getString("What song do you want to rent? "); //Declares a String variable, which is used to remove customers
         for( int i = 0; i < SongController.songList.size(); i++){
             if(SongController.songList.get(i).getID().equals(rentID)){
                 if(SongController.songList.get(i).getStatus()) { // if the game is available
@@ -114,106 +126,145 @@ public class CustomerController {
 
 
                     try {
-                        System.out.print("What is the rent date? (YYYY-MM-DD)");
-                        SongController.songList.get(i).setRentDate(input.nextLine());
+                        SongController.songList.get(i).setRentDate(Tools.getString("What is the rent date? (YYYY-MM-DD)"));
                     } catch (Exception e) {
                         System.out.println("Wrong format, assuming rent date is today.");
                         SongController.songList.get(i).setAutomaticRentDate();
                     }
 
-
-                    System.out.println("Successfully rented");
+                    for(int j = 0; j < EmployeeController.customerList.size(); j++){
+                        if(EmployeeController.customerList.get(j).getID().equals(ID)) {
+                            EmployeeController.customerList.get(j).addToLibrary(SongController.songList.get(i));
+                            System.out.println("Successfully rented");
+                            j = EmployeeController.customerList.size();
+                        }
+                    }
                     i = SongController.songList.size();
                 } else {
                     System.out.println("Song is not available");
                 }
             }
         }
-        Screens.customerScreen();
+        Screens.customerScreen(ID);
     }
 
-    public static double returnSong(){ // a method to return games to the store
+    public static double returnSong(String ID){ // a method to return games to the store
         double rent; //initializes a variable local to the method
-        Scanner input = new Scanner(System.in);
         System.out.println("Current song library: ");
         viewAllRented(customerSongs); // prints all the games rented by the customer
-        System.out.println("What song do you want to return? ");
-
-        String rentID = input.nextLine();
+        String rentID = Tools.getString("What song do you want to return? ");
         for( int i = 0; i < SongController.songList.size(); i++){
             if(SongController.songList.get(i).getID().equals(rentID)){
                 if(!SongController.songList.get(i).getStatus()) {
                     removeSong(SongController.songList.get(i));
                     SongController.songList.get(i).setStatus(true);
-
-
                     try {
-                        System.out.print("What is the return date? (YYYY-MM-DD)");
-                        SongController.songList.get(i).setReturnDate(input.nextLine());
+                        SongController.songList.get(i).setReturnDate(Tools.getString("What is the return date? (YYYY-MM-DD)"));
                     } catch (Exception e) {
                         System.out.println("Wrong format, assuming return date is today.");
                         SongController.songList.get(i).setAutomaticReturnDate();
                     }
-
-
-                    System.out.println("Successfully returned.");
+                    for(int j = 0; j < EmployeeController.customerList.size(); j++){
+                        if(EmployeeController.customerList.get(j).getID().equals(ID)) {
+                            EmployeeController.customerList.get(j).removeFromLibrary(SongController.songList.get(i));
+                            System.out.println("Successfully rented");
+                            j = EmployeeController.customerList.size();
+                        }
+                    }
                     rent = SongController.songList.get(i).getDailyRent() * calcDays(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
                     System.out.println("The cost for renting the song for " + calcDays(i) + " days is: " + rent);
-                    Screens.customerScreen();
+                    Screens.customerScreen(ID);
                     return rent; // returns the rent cost
                 } else System.out.println("Song is not available");
             }
         }
-        Screens.customerScreen();
+        Screens.customerScreen(ID);
         return 0;
-    }
+    }*/
 
-    public static void requestUpgrade(){
+    public static void requestUpgrade(String ID){
         String upgID = Tools.getString("Enter your id: "); //Declares a String variable, which is used to remove customers
         EmployeeController.upgradeRequestsID.add(upgID);
-        Screens.customerScreen();
+        Screens.customerScreen(ID);
     }
 
 
-/*
-public static void rentItem(String item){ // method to rent a game, by adding a game to a customers list
-        Scanner input = new Scanner(System.in);
 
-        ArrayList<Rentable> array = new ArrayList(); <---------- PROBLEM
-
+public static void rentItem(String item, String ID){ // method to rent a game, by adding a game to a customers list
+        ArrayList<Rentable> array;
         System.out.println("Current library: ");
         if (item.equals("Game")) {
             GameController.customerViewAllGames();
             array = GameController.gameList;
         } else {
             SongController.customerViewAllSongs();
+            array = SongController.songList;
         }
 
-        System.out.println("What do you want to rent? ");
-
-        String rentID = input.nextLine(); //Declares a String variable, which is used to remove customers
-        for( int i = 0; i < GameController.gameList.size(); i++){
+        String rentID = Tools.getString("What do you want to rent?"); //Declares a String variable, which is used to remove customers
+        for( int i = 0; i < array.size(); i++){
             if(array.get(i).getID().equals(rentID)){
-                if(GameController.gameList.get(i).getStatus()) { // if the game is available
-                    addGame(GameController.gameList.get(i));
-                    GameController.gameList.get(i).setStatus(false); // makes the game no longer available from the stores game library
+                if(array.get(i).getStatus()) { // if the game is available
+                    if(item.equals("Game")) {addGame(array.get(i));}
+                    if(item.equals("Song")) {addSong(array.get(i));}
+                    array.get(i).setStatus(false); // makes the game no longer available from the stores game library
                     try {
-                        System.out.print("What is the rent date? (YYYY-MM-DD)");
-                        GameController.gameList.get(i).setRentDate(input.nextLine());
+                        array.get(i).setRentDate(Tools.getString("What is the rent date? (YYYY-MM-DD)"));
                     } catch (Exception e) {
                         System.out.println("Wrong format, assuming rent date is today.");
-                        GameController.gameList.get(i).setAutomaticRentDate();
+                        array.get(i).setAutomaticRentDate();
                     }
 
                     System.out.println("Successfully rented");
-                    i = GameController.gameList.size();
+                    i = array.size();
                 } else {
                     System.out.println("Game is not available");
                 }
             }
         }
-        Screens.customerScreen();
+        Screens.customerScreen(ID);
     }
- */
+
+    public static double returnItem(String item, String ID){ // a method to return games to the store
+        ArrayList<Rentable> array;
+        System.out.println("Current library: ");
+        if (item.equals("Game")) {
+            viewAllRented(customerGames);
+            array = GameController.gameList;
+        } else {
+            viewAllRented(customerSongs);
+            array = SongController.songList;
+        }
+
+        double rent; //initializes a variable local to the method
+        String rentID = Tools.getString("What song do you want to return? ");
+        for( int i = 0; i < array.size(); i++){
+            if(array.get(i).getID().equals(rentID)){
+                if(!array.get(i).getStatus()) {
+                    removeSong(array.get(i));
+                    array.get(i).setStatus(true);
+                    try {
+                        array.get(i).setReturnDate(Tools.getString("What is the return date? (YYYY-MM-DD)"));
+                    } catch (Exception e) {
+                        System.out.println("Wrong format, assuming return date is today.");
+                        array.get(i).setAutomaticReturnDate();
+                    }
+                    for(int j = 0; j < EmployeeController.customerList.size(); j++){
+                        if(EmployeeController.customerList.get(j).getID().equals(ID)) {
+                            EmployeeController.customerList.get(j).removeFromLibrary(array.get(i));
+                            System.out.println("Successfully rented");
+                            j = EmployeeController.customerList.size();
+                        }
+                    }
+                    rent = array.get(i).getDailyRent() * calcDays(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
+                    System.out.println("The cost for renting the song for " + calcDays(i) + " days is: " + rent);
+                    Screens.customerScreen(ID);
+                    return rent; // returns the rent cost
+                } else System.out.println("Song is not available");
+            }
+        }
+        Screens.customerScreen(ID);
+        return 0;
+    }
 
 }

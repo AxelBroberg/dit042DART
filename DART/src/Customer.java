@@ -10,6 +10,7 @@ public class Customer {
     private String ID; //creates String variable named 'ID'
     private String name; //creates String variable named 'name'
     private String membership;
+    private ArrayList<Rentable> library= new ArrayList();
 
     Customer(String name){
         this.name = name;
@@ -21,7 +22,8 @@ public class Customer {
     public String getID(){ return ID; } // returns the id created by the method above
     public String getMembership() { return membership; }
 
-
+    public void addToLibrary(Rentable item){ library.add(item); }
+    public void removeFromLibrary(Rentable item){ library.remove(item); }
 
     public void upgradeMembership(){
         switch (membership){

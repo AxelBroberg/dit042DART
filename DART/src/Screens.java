@@ -12,7 +12,7 @@ public class Screens {
             case 'e','E' -> {
                 if (Tools.password("password123")) employeeScreen();
             }
-            case 'c','C' -> customerScreen();
+            case 'c','C' -> preCustomerScreen();
             case 'x','X' -> DartMain.exitProgram();
         }
     }
@@ -27,7 +27,20 @@ public class Screens {
         System.out.println("4. Enter “X” to exit system ");
     }
 
-    public static void customerScreen(){
+    public static void preCustomerScreen(){
+        String ID = Tools.getString("Please enter your ID");
+        for(int i = 0; i < EmployeeController.customerList.size(); i++){
+            if(EmployeeController.customerList.get(i).getID().equals(ID)){
+                customerScreen(ID);
+            }
+            if(i == EmployeeController.customerList.size()){
+                System.out.println("Invalid ID. Sending you back to the main menu");
+                mainMenu();
+            }
+        }
+    }
+
+    public static void customerScreen(String ID){
         Scanner inputCustomer = new Scanner(System.in);
         char choice;
         String screens = "123456";
@@ -41,11 +54,11 @@ public class Screens {
         choice = inputCustomer.nextLine().charAt(0);
         Tools.validateChar(choice, screens);
         switch(choice) {
-            case '1' -> CustomerController.rentGame();
-            case '2' -> totalProfit += CustomerController.returnGame();
-            case '3' -> CustomerController.rentSong();
-            case '4' -> totalProfit += CustomerController.returnSong();
-            case '5' -> CustomerController.requestUpgrade();
+            case '1' -> CustomerController.rentItem("Game", ID);
+            case '2' -> totalProfit += CustomerController.returnItem("Game", ID);
+            case '3' -> CustomerController.rentItem("Song", ID);
+            case '4' -> totalProfit += CustomerController.returnItem("Song", ID);
+            case '5' -> CustomerController.requestUpgrade(ID);
             case '6' -> {
             }
         }
