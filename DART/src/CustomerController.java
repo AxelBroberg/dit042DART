@@ -14,8 +14,6 @@ public class CustomerController {
     public static void addSong(Rentable song){ customerSongs.add(song); }
     public static void removeSong(Rentable song){ customerSongs.remove(song); }
 
-
-
     /*public static void viewAllRentedGames() {
         for (Game customerGame : customerGames) {
             System.out.println(customerGame.toString());
@@ -36,9 +34,9 @@ public class CustomerController {
         final double[] memDiscount = new double[]{1, 0.90, 0.85, 0.75};
         double discount;
         switch(EmployeeController.customerList.get(i).getMembership()) {
-            case "silver" -> discount = memDiscount[1];
-            case "gold" -> discount = memDiscount[2];
             case "platinum" -> discount = memDiscount[3];
+            case "gold" -> discount = memDiscount[2];
+            case "silver" -> discount = memDiscount[1];
             default -> discount = memDiscount[0];
         }
         return GameController.gameList.get(i).getDailyRent() * calcDays(i) * discount;
@@ -188,9 +186,7 @@ public class CustomerController {
         Screens.customerScreen(ID);
     }
 
-
-
-public static void rentItem(String item, String ID){ // method to rent a game, by adding a game to a customers list
+    public static void rentItem(String item, String ID){ // method to rent a game, by adding a game to a customers list
         ArrayList<Rentable> array;
         System.out.println("Current library: ");
         if (item.equals("Game")) {
@@ -241,7 +237,8 @@ public static void rentItem(String item, String ID){ // method to rent a game, b
         for( int i = 0; i < array.size(); i++){
             if(array.get(i).getID().equals(rentID)){
                 if(!array.get(i).getStatus()) {
-                    removeSong(array.get(i));
+                    if(item.equals("Game")) {removeGame(array.get(i));}
+                    if(item.equals("Song")) {removeSong(array.get(i));}
                     array.get(i).setStatus(true);
                     try {
                         array.get(i).setReturnDate(Tools.getString("What is the return date? (YYYY-MM-DD)"));
@@ -256,7 +253,7 @@ public static void rentItem(String item, String ID){ // method to rent a game, b
                             j = EmployeeController.customerList.size();
                         }
                     }
-                    rent = array.get(i).getDailyRent() * calcDays(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
+                    rent = calcRent(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
                     System.out.println("The cost for renting the song for " + calcDays(i) + " days is: " + rent);
                     Screens.customerScreen(ID);
                     return rent; // returns the rent cost
