@@ -1,3 +1,5 @@
+import jdk.swing.interop.SwingInterOpUtils;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -77,7 +79,7 @@ public class EmployeeController {
         if(!removed) System.out.println("Customer with id " + i + " not found.");
         Screens.employeeScreen();
     }
-    public static void registerGame(){
+    /*public static void registerGame(){
 
         Game g = new Game(Tools.getString("Enter game title: "), Tools.getString("Enter game genre: "), Tools.getDouble("Enter daily rent: ")); // OBJECT CREATION
 
@@ -85,6 +87,28 @@ public class EmployeeController {
         System.out.print("You have added game: ");
         System.out.println(g.toString());
         GameController.gameList.add(g);
+        Screens.employeeScreen();
+    }*/
+
+    public static void registerItem(String item){
+        Rentable x;
+        if(item.equals("game")){
+            x = new Game(
+                    Tools.getString("Enter game title: "),
+                    Tools.getString("Enter game genre: "),
+                    Tools.getDouble("Enter daily rent: ")); // OBJECT CREATION
+            GameController.gameList.add(x);
+        } else {
+            x = new Song(
+                    Tools.getString("Enter title: "),
+                    Tools.getString("Enter artist: "),
+                    Tools.getDouble("Enter daily rent: "),
+                    Tools.getInt("Enter release year: "),
+                    Tools.getDouble("Enter ratings: ")); // OBJECT CREATION
+            SongController.songList.add(x);
+        }
+        System.out.print("You have added game: ");
+        System.out.println(x.toString());
         Screens.employeeScreen();
     }
     public static void autoRegisterGame(String title, String genre, double price){ // Method for adding games, used for testing purposes
@@ -96,7 +120,6 @@ public class EmployeeController {
         GameController.gameList.add(g);
 
     }
-
     public static void fillGames(){ // Method for adding games, used for testing purposes
         String[] gameName = {"The Last of us Part 2", "The Witcher 3 Wild Hunt", "Red Dead Redemption 2"};
         String[] genre = {"action", "comedy", "family"};
@@ -108,6 +131,39 @@ public class EmployeeController {
         Screens.employeeScreen();
     }
 
+    public static void removeItem(String item){
+        boolean removed = false;
+        int i;
+        Object itemO;
+        ArrayList<Rentable> array = new ArrayList<>();
+        if(item.equals("game")){
+            array = GameController.gameList;
+            System.out.println("Games: ");
+            for( Rentable game : array ) {
+                System.out.println(game.toString());
+            }
+        } else {
+            array = SongController.songList;
+            System.out.println("Songs: ");
+            for( Rentable song : array ) {
+                System.out.println(song.toString());
+            }
+        }
+        String removeID = Tools.getString("Enter the ID of the item you want to remove: ");
+        for(i = 0; i < array.size(); i++){
+            if(array.get(i).getID().equals(removeID)){
+                array.remove(i);
+                System.out.println("Successfully removed!");
+                removed = true;
+                i = array.size();
+            }
+        }
+        if(!removed){
+            System.out.println("Item with id " + i + " not found.");
+        }
+        Screens.employeeScreen();
+    }
+
     public static void removeGame(){
         boolean removed = false;
         int i;
@@ -115,8 +171,6 @@ public class EmployeeController {
         for ( Rentable game : GameController.gameList) {
             System.out.println(game.toString());
         }
-
-
         String removeID = Tools.getString("Enter the ID of the game you want to remove: ");
         for(i = 0; i < GameController.gameList.size(); i++){
             if(GameController.gameList.get(i).getID().equals(removeID)){
@@ -131,8 +185,7 @@ public class EmployeeController {
         }
         Screens.employeeScreen();
     }
-
-    public static void registerSong(){
+    /*public static void registerSong(){
 
         Song s = new Song(Tools.getString("Enter title: "), Tools.getString("Enter artist: "), Tools.getDouble("Enter daily rent: "), Tools.getInt("Enter release year: "), Tools.getDouble("Enter ratings: ")); // OBJECT CREATION
 
@@ -140,7 +193,7 @@ public class EmployeeController {
         System.out.println(s.toString());
         SongController.songList.add(s);
         Screens.employeeScreen();
-    }
+    }*/
 
     public static void removeSong(){
         boolean removed = false;

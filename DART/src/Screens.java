@@ -100,8 +100,8 @@ public class Screens {
         choice = Tools.getChar("");
         Tools.validateChar(choice, screens);
         switch (choice) {
-            case '1' -> EmployeeController.registerGame();
-            case '2' -> EmployeeController.removeGame();
+            case '1' -> EmployeeController.registerItem("game");
+            case '2' -> EmployeeController.removeItem("game");
             case '3' -> EmployeeController.registerCustomer();
             case '4' -> EmployeeController.removeCustomer();
             case '5' -> {System.out.println("Total profit is: " + totalProfit); employeeScreen();}
