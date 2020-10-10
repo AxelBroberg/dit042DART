@@ -2,7 +2,7 @@ import java.time.Year;
 import java.util.ArrayList;
 
 public class ManagerController {
-    static ArrayList<Employee> employeeArrayList = new ArrayList();
+    static ArrayList<Employee> employeeArrayList = new ArrayList<>();
 
     public static void registerEmployee() {
         Employee employee = new Employee(

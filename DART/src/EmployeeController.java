@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class EmployeeController {
-    static ArrayList<Customer> customerList = new ArrayList(); //creates ArrayList named 'customerList' containing Customers
-    static ArrayList<String> upgradeRequestsID = new ArrayList();
+    static ArrayList<Customer> customerList = new ArrayList<>(); //creates ArrayList named 'customerList' containing Customers
+    static ArrayList<String> upgradeRequestsID = new ArrayList<>();
 
     public static void registerCustomer(){ // method that registers a customer
         Customer c = new Customer(Tools.getString("Creating customer. Please type customer's: " + System.lineSeparator() + " Name: "));
@@ -109,7 +109,6 @@ public class EmployeeController {
     }
 
     public static void removeGame(){
-        Scanner input = new Scanner(System.in);
         boolean removed = false;
         int i;
         System.out.println("Games: ");
@@ -144,7 +143,6 @@ public class EmployeeController {
     }
 
     public static void removeSong(){
-        Scanner input = new Scanner(System.in);
         boolean removed = false;
         int i;
         System.out.println("Songs: ");

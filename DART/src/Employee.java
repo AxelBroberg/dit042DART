@@ -1,8 +1,6 @@
 
 import java.time.Year;
 
-import static jdk.internal.org.jline.reader.LineReader.END_OF_LINE;
-
 public class Employee {
 
     private String ID;

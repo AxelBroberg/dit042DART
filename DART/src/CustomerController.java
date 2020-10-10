@@ -1,12 +1,11 @@
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class CustomerController {
 
 
-    public static ArrayList<Rentable> customerGames = new ArrayList(); //creates ArrayList named 'customerGames' containing Games
-    public static ArrayList<Rentable> customerSongs = new ArrayList();
+    public static ArrayList<Rentable> customerGames = new ArrayList<>(); //creates ArrayList named 'customerGames' containing Games
+    public static ArrayList<Rentable> customerSongs = new ArrayList<>();
 
     public static void addGame(Rentable game){ customerGames.add(game); } // a method that adds an object game to the ArrayList 'customerGames'
     public static void removeGame(Rentable game){ customerGames.remove(game); } // a method that removes an object game to the ArrayList 'customerGames'
@@ -210,8 +209,13 @@ public class CustomerController {
                         System.out.println("Wrong format, assuming rent date is today.");
                         array.get(i).setAutomaticRentDate();
                     }
-
-                    System.out.println("Successfully rented");
+                    for(int j = 0; j < EmployeeController.customerList.size(); j++){
+                        if(EmployeeController.customerList.get(j).getID().equals(ID)) {
+                            EmployeeController.customerList.get(j).addToLibrary(array.get(i));
+                            System.out.println("Successfully rented");
+                            j = EmployeeController.customerList.size();
+                        }
+                    }
                     i = array.size();
                 } else {
                     System.out.println("Game is not available");
@@ -249,7 +253,7 @@ public class CustomerController {
                     for(int j = 0; j < EmployeeController.customerList.size(); j++){
                         if(EmployeeController.customerList.get(j).getID().equals(ID)) {
                             EmployeeController.customerList.get(j).removeFromLibrary(array.get(i));
-                            System.out.println("Successfully rented");
+                            System.out.println("Successfully returned");
                             j = EmployeeController.customerList.size();
                         }
                     }

@@ -1,7 +1,3 @@
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class Game extends Rentable{
 
     private String genre;

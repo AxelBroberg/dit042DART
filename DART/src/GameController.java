@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class GameController {
-    static ArrayList<Rentable> gameList = new ArrayList();
+    static ArrayList<Rentable> gameList = new ArrayList<>();
 
     public static void customerViewAllGames(){
 

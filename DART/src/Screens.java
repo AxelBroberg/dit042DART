@@ -1,8 +1,5 @@
-import java.util.Scanner;
-
 public class Screens {
     private static double totalProfit;
-    Scanner input = new Scanner(System.in);
 
     public static void screenChoice(char x){
         switch (x) {
@@ -41,7 +38,6 @@ public class Screens {
     }
 
     public static void customerScreen(String ID){
-        Scanner inputCustomer = new Scanner(System.in);
         char choice;
         String screens = "123456";
         System.out.println("Customer Screen - Type one of the options below:");
@@ -51,7 +47,7 @@ public class Screens {
         System.out.println("4. Return a song");
         System.out.println("5. Request membership upgrade");
         System.out.println("6. Return to Main Menu");
-        choice = inputCustomer.nextLine().charAt(0);
+        choice = Tools.getChar("");
         Tools.validateChar(choice, screens);
         switch(choice) {
             case '1' -> CustomerController.rentItem("Game", ID);
@@ -87,7 +83,6 @@ public class Screens {
     }
 
     public static void employeeScreen(){
-        Scanner inputEmployee = new Scanner(System.in);
         char choice;
         String screens = "1234567890a";
         System.out.println("Employee Screen - Type one of the options below:");
@@ -102,7 +97,7 @@ public class Screens {
         System.out.println("9. View upgrade requests");
         System.out.println("a. Upgrade member");
         System.out.println("0. Return to Main Menu");
-        choice = inputEmployee.next().charAt(0);
+        choice = Tools.getChar("");
         Tools.validateChar(choice, screens);
         switch (choice) {
             case '1' -> EmployeeController.registerGame();

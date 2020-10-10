@@ -1,8 +1,5 @@
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import static jdk.internal.org.jline.reader.LineReader.END_OF_LINE;
 
 public class Customer {
 
@@ -10,7 +7,7 @@ public class Customer {
     private String ID; //creates String variable named 'ID'
     private String name; //creates String variable named 'name'
     private String membership;
-    private ArrayList<Rentable> library= new ArrayList();
+    private ArrayList<Rentable> library= new ArrayList<>();
 
     Customer(String name){
         this.name = name;
