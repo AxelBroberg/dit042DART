@@ -1,6 +1,15 @@
 
 import java.time.Year;
 
+// Changes because of the feedback we got on the last milestone:
+// Moved the ArrayList employeeArrayList to the EmployeeController
+// Moved the methods autoRegisterGame, fillGames, registerCustomer, removeCustomer, viewAllCustomer to the EmployeeController
+//
+// We also added a toString, which we didnt have in the last milestone
+//
+// We did some modifications to the Constructor so that it doesn't only take a name as a parameter
+
+
 public class Employee {
 
     private String ID;

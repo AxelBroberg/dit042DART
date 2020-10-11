@@ -1,6 +1,9 @@
 public class Screens {
     private static double totalProfit;
 
+    // Based on the feedback from the last milestone we moved the screenChoice method to here
+    // The only changes in this class is the addition of new methods that are used in the different epic features
+
     public static void screenChoice(char x){
         switch (x) {
             case 'm','M' -> {

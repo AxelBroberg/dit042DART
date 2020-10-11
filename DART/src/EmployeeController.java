@@ -1,7 +1,23 @@
-import jdk.swing.interop.SwingInterOpUtils;
-
 import java.util.ArrayList;
 import java.util.Scanner;
+
+// We created this class because we got feedback on the last milestone that we are supposed to have a controller.
+// We decided that we would have one controller per object class
+// (customer, employee, game) instead of having one controller for the entire program
+//
+// In here we have the autoRegisterGame, fillGames, registerCustomer, removeCustomer and viewAllCustomer originating from the Games class
+//
+// We also created a findCustomer method, which is used to generalize the methods used in the last milestone
+//
+// In order to implement epic feature 7 we modified the class CustomerController by adding the methods:
+// - autoRegisterSong, which is just like the autoRegisterGame but it registers songs
+// - registerItem, which is a modification of registerGame, but it can also register songs
+// - removeItem, which is a modification of removeGame, but it can also remove songs
+//
+// In order to implement epic feature 8 we modified the class CustomerController by adding the methods:
+// - upgradeCustomer, which is used to upgrade the customers that have requested an upgrade
+// - viewAllUpgRequest, which is used to print all upgrade requests
+// We also added an ArrayList to hold all of the upgrade requests, which is named upgradeRequestsID
 
 public class EmployeeController {
     static ArrayList<Customer> customerList = new ArrayList<>(); //creates ArrayList named 'customerList' containing Customers
@@ -180,7 +196,7 @@ public class EmployeeController {
         Screens.employeeScreen();
     }
 
-    public static void removeGame(){
+    /*public static void removeGame(){
         boolean removed = false;
         int i;
         System.out.println("Games: ");
@@ -201,7 +217,7 @@ public class EmployeeController {
         }
         Screens.employeeScreen();
     }
-    /*public static void registerSong(){
+    public static void registerSong(){
 
         Song s = new Song(Tools.getString("Enter title: "), Tools.getString("Enter artist: "), Tools.getDouble("Enter daily rent: "), Tools.getInt("Enter release year: "), Tools.getDouble("Enter ratings: ")); // OBJECT CREATION
 
@@ -209,7 +225,7 @@ public class EmployeeController {
         System.out.println(s.toString());
         SongController.songList.add(s);
         Screens.employeeScreen();
-    }*/
+    }
 
     public static void removeSong(){
         boolean removed = false;
@@ -233,7 +249,7 @@ public class EmployeeController {
             System.out.println("Song with id " + removeID + " not found.");
         }
         Screens.employeeScreen();
-    }
+    }*/
 
     public static int findCustomer(String ID){
         int j = 0;

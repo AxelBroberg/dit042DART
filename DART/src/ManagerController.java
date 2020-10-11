@@ -1,6 +1,12 @@
 import java.time.Year;
 import java.util.ArrayList;
 
+// We created this class because we got feedback on the last milestone that we are supposed to have a controller.
+// We decided that we would have one controller per object class
+// (customer, employee, game) instead of having one controller for the entire program
+//
+// In here we have the bonus, calcNetSalary, registerEmployee, removeEmployee & viewAllEmployee originating from the Employee class
+
 public class ManagerController {
     static ArrayList<Employee> employeeArrayList = new ArrayList<>();
 

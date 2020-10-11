@@ -1,6 +1,30 @@
-import javax.tools.Tool;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+
+// We created this class because we got feedback on the last milestone that we are supposed to have a controller.
+// We decided that we would have one controller per object class
+// (customer, employee, game) instead of having one controller for the entire program
+//
+// In here we have the addGame & removeGame originating from the Customer class
+// We also have the viewAllRented method, which is a method like the printGame existing in milestone 1,
+// but it works for all rentables (games & songs)
+//
+// In order to implement epic feature 7 we modified the class CustomerController by adding the methods:
+// - rentItem, which is a modification of the rentGame, created in the last milestone
+// - returnItem, which is a modification of the returnGame, created in the last milestone
+// - addSong & removeSong, they are just like the addGame & removeGame methods
+//
+// In order to implement epic feature 8 we modified the class CustomerController by adding the methods:
+// - calcRent, which uses the calcDays methods used in the last milestone to give the customer a discount based on their membership
+// - requestUpgrade, which lets the customer request an upgrade to a better membership
+//
+// In order to implement epic feature 9 we modified the class CustomerController by adding the methods:
+// - sendMessage, which will send a message to another customer
+// - removeMessage, which will give the user the ability to remove messages
+//
+// In order to implement epic feature 10 we modified the class CustomerController by adding the methods:
+// - searchGames, currently not working, but its intended use is so that the user can search for items based on an input i.e. the action genre
+// - we modified the method returnItem so that the customer is prompted with an option to give a rating & a review
 
 public class CustomerController {
 
@@ -207,9 +231,9 @@ public class CustomerController {
                     GameController.customerViewAllGames();
                 } else if (selectionSorting == 2) {
                     GameController.viewGamesByGenre(Tools.getString("Enter genre: "));
-                } else {
+                } /*else {
                     GameController.gamesSortedByRating();
-                }
+                }*/
                 array = GameController.gameList;
             } else {
                 selectionSorting = Tools.getInt("1. Show all songs" + System.lineSeparator() + "2. Sort by year");

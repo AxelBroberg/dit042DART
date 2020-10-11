@@ -19,12 +19,12 @@ public class GameController {
         }
     }
 
-    public static void gamesSortedByRating(){
+    /*public static void gamesSortedByRating(){
         Collections.sort(gameList);
         for ( Rentable game : gameList) {
             System.out.println(game.toString());
         }
-    }
+    }*/
 
     public static void empViewAllGames(){
         for ( Rentable game : GameController.gameList) {

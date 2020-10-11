@@ -1,5 +1,21 @@
 import java.util.ArrayList;
 
+// Changes because of the feedback we got on the last milestone:
+// Moved the ArrayLists customerGames & customerList to the CustomerController
+// Moved the methods addGame & removeGame to the CustomerController
+//
+// We also added a toString, which we didnt have in the last milestone
+//
+// We did some modifications to the Constructor so that it doesn't only take a name as a parameter
+//
+// In order to implement Epic Feature 7 we modified the Customer class to have
+// its own library ArrayList, which will store items, in this case games and songs
+//
+// In order to implement Epic Feature 8 we modified the Customer class by adding
+// a membership String variable, which will hold what membership the Customer has, the default being "regular"
+// In order for the membership to get upgraded we added an upgradeMembership method
+// which will upgrade the membership to the next tier
+
 
 public class Customer {
 

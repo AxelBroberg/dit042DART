@@ -1,16 +1,14 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-/*
-The UUID suggested for creating unique ID's creates a long string of numbers, letters and dashes.
-Such as: "123e4567-e89b-12d3-a456-556642440000"
-We found this difficult to read, and hard for the user to input by themselves.
-Because of this we created a generator which creates a 6 character long id, which is unique.
-*/
 
-/*
-https://stackoverflow.com/questions/9543715/generating-human-readable-usable-short-but-unique-ids
- */
+// We moved the essential methods that we had floating in our main to a separate Tools class
+// validateChar & password were moved here from the main class
+// The randomID class was all put inside of this class as well
+//
+// We created four getters for inputs here, getString, getChar, getInt & getDouble.
+// These are used inside of the code instead of every input, so that it will be clearer where we have scanners
+
 public class Tools {
 
     public static String getString(String message){
@@ -42,6 +40,13 @@ public class Tools {
         input.nextLine();
         return userInput;
     }
+
+    // The UUID suggested for creating unique ID's creates a long string of numbers, letters and dashes.
+    // Such as: "123e4567-e89b-12d3-a456-556642440000"
+    // We found this difficult to read, and hard for the user to input by themselves.
+    // Because of this we created a generator which creates a 6 character long id, which is unique.
+    //
+    // https://stackoverflow.com/questions/9543715/generating-human-readable-usable-short-but-unique-ids
 
     private static final ArrayList<String> IDCheck = new ArrayList<>(); // Declares an ArrayList holding strings, which will be used to check for duplicates
 

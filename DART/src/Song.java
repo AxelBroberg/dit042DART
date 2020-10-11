@@ -1,5 +1,7 @@
 public class Song extends Rentable{
 
+    // In order to implement epic feature 7 we created a new class Song, which extends Rentable
+
     protected String artist;
     protected int year;
 

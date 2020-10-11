@@ -1,3 +1,13 @@
+// Changes because of the feedback we got on the last milestone:
+// Moved the ArrayList gameList to the GameController
+// Moved most of the methods to the Rentable class
+//
+// We also added a toString, which we didnt have in the last milestone
+//
+// We did some modifications to the Constructor so that it doesn't only take a title as a parameter
+//
+// In order to implement Epic Feature 7 we modified the Game class to be a child class of Rentable
+
 public class Game extends Rentable {
 
     private String genre;

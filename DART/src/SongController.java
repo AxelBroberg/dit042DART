@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+// In order to implement epic feature 7 we created a SongController for the Song class
+
 public class SongController {
 
     static ArrayList<Rentable> songList = new ArrayList();
