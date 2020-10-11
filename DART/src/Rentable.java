@@ -1,14 +1,18 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
+
 
 //To implement Epic Feature 7, we modified the class Game by
 //creating a new class called Rentable and having both games and songs inherit from it.
 
-public class Rentable {
+public class Rentable{
 
     protected String title;
     protected String ID;
     protected double dailyRent;
     protected boolean status;
+    protected ArrayList<Integer> ratings;
+    protected ArrayList<String> reviews;
     protected LocalDate rentDate;
     protected LocalDate returnDate;
 
@@ -16,6 +20,8 @@ public class Rentable {
         this.title = title;
         this.dailyRent = dailyRent;
         this.status = true;
+        this.ratings = new ArrayList<>();
+        this.reviews = new ArrayList<>();
 
         this.ID = Tools.randomizeID();
 
@@ -25,6 +31,27 @@ public class Rentable {
 
     public void setID(){ ID = Tools.randomizeID(); }
     public String getID (){ return ID; }
+
+    public ArrayList<String> getReviews() {
+        return reviews;
+    }
+
+    public void addReview(String review){
+        this.reviews.add(review);
+    }
+
+    public double getAverageRating() {
+        int sum = 0;
+        int size = ratings.size() > 0 ? ratings.size() : 1; //Ensures we are not dividing by zero
+        for(Integer value : ratings){
+            sum += value;
+        }
+        return ((double)sum / size);
+    }
+
+    public void addRating(int rating) {
+        this.ratings.add(rating);
+    }
 
     public void setDailyRent(double dailyRent){ this.dailyRent = dailyRent; }
     public double getDailyRent(){ return dailyRent; }
@@ -40,6 +67,15 @@ public class Rentable {
     public void setAutomaticReturnDate(){ returnDate = LocalDate.now(); } //Method for automatically assigning a date to the returnDate variable
     public LocalDate getReturnDate(){ return returnDate; }
 
+    public String getGenre(){
+        System.out.println("USING WRONG GETGENRE"); // For testing
+        return "";
+    }
+
+    public int getYear(){
+        System.out.println("USING WRONG GETGENRE"); // For testing
+        return 0;
+    }
 
 
 }

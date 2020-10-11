@@ -196,14 +196,29 @@ public class CustomerController {
             Screens.customerScreen(ID);
         }
         int customerIndex = EmployeeController.findCustomer(ID);
+        int selectionSorting;
         if(!EmployeeController.customerList.get(customerIndex).libraryFull()) {
             ArrayList<Rentable> array;
             System.out.println("Current library: ");
             if (item.equals("Game")) {
-                GameController.customerViewAllGames();
+                selectionSorting = Tools.getInt("1. Show all games" + System.lineSeparator() + "2. Sort by genre");
+                if(selectionSorting == 1)
+                {
+                    GameController.customerViewAllGames();
+                } else if (selectionSorting == 2) {
+                    GameController.viewGamesByGenre(Tools.getString("Enter genre: "));
+                } else {
+                    GameController.gamesSortedByRating();
+                }
                 array = GameController.gameList;
             } else {
-                SongController.customerViewAllSongs();
+                selectionSorting = Tools.getInt("1. Show all songs" + System.lineSeparator() + "2. Sort by year");
+                if(selectionSorting == 1)
+                {
+                    SongController.customerViewAllSongs();
+                } else if (selectionSorting == 2){
+                    SongController.viewSongByYear(Tools.getInt("Enter year: (YYYY)"));
+                }
                 array = SongController.songList;
             }
 
@@ -257,17 +272,17 @@ public class CustomerController {
         if (item.equals("Game")) {
             viewAllRented(customerGames);
             array = GameController.gameList;
+
         } else {
             viewAllRented(customerSongs);
             array = SongController.songList;
         }
 
-        String rentID = Tools.getString("What song do you want to return? ");
+        String rentID = Tools.getString("What " + item.toLowerCase() + " do you want to return? ");
         for( int i = 0; i < array.size(); i++){
             if(array.get(i).getID().equals(rentID)){
                 if(!array.get(i).getStatus()) {
-                    if(item.equals("Game")) {removeGame(array.get(i));}
-                    if(item.equals("Song")) {removeSong(array.get(i));}
+
                     array.get(i).setStatus(true);
                     try {
                         array.get(i).setReturnDate(Tools.getString("What is the return date? (YYYY-MM-DD)"));
@@ -275,9 +290,15 @@ public class CustomerController {
                         System.out.println("Wrong format, assuming return date is today.");
                         array.get(i).setAutomaticReturnDate();
                     }
-                    EmployeeController.customerList.get(customerIndex).removeFromLibrary(array.get(i));
-                    System.out.println("Successfully returned");
+
                     EmployeeController.customerList.get(customerIndex).addCredit();
+                    if(Tools.getString("Successfully returned, would you like to leave a review?(y/n)").equals("y")){
+                        array.get(i).addRating(Tools.getInt("Enter rating 1-5"));
+                        array.get(i).addReview(Tools.getString("Write a short review"));
+                    }
+                    EmployeeController.customerList.get(customerIndex).removeFromLibrary(array.get(i));
+                    if(item.equals("Game")) {removeGame(array.get(i));}
+                    if(item.equals("Song")) {removeSong(array.get(i));}
                     }
 
                     // sets the variable 'rent' to the daily rent multiplied by the amount of days
@@ -291,7 +312,10 @@ public class CustomerController {
 
                     Screens.customerScreen(ID);
                     return rent; // returns the rent cost
-                } else System.out.println("Song is not available");
+                }
+            if(i == array.size()){
+                System.out.println("Does not exist in your library");
+            }
             }
         Screens.customerScreen(ID);
         return 0;
@@ -327,6 +351,10 @@ public class CustomerController {
         } catch(Exception e){
             System.out.println("Message does not exist");
         }
+    }
+
+    public static void searchGames(String ID){
+        String genre = Tools.getString("What genre? ");
 
     }
 

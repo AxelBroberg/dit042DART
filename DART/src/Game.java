@@ -1,4 +1,4 @@
-public class Game extends Rentable{
+public class Game extends Rentable {
 
     private String genre;
 
@@ -8,10 +8,14 @@ public class Game extends Rentable{
     }
 
     public void setGenre (String genre){ this.genre = genre; }
+
+    @Override
     public String getGenre (){ return genre; }
 
     public String toString(){
-        String s = getID() + " : " + this.title + " [" + getGenre() + "]. " + getDailyRent() + ". " + "Status: ";
+        String s = getID() + " : " + this.title + " [" + getGenre() + "]. " + getDailyRent() + ". "
+                + "Rating: " + getAverageRating() + "/5"
+                + " Status: ";
 
         if (getStatus()){
             s = s + "Available";
@@ -21,6 +25,7 @@ public class Game extends Rentable{
         }
         return s;
     }
+
 
 
 }

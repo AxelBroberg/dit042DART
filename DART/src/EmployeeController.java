@@ -106,8 +106,7 @@ public class EmployeeController {
                     Tools.getString("Enter title: "),
                     Tools.getString("Enter artist: "),
                     Tools.getDouble("Enter daily rent: "),
-                    Tools.getInt("Enter release year: "),
-                    Tools.getDouble("Enter ratings: ")); // OBJECT CREATION
+                    Tools.getInt("Enter release year: ")); // OBJECT CREATION
             SongController.songList.add(x);
         }
         System.out.print("You have added game: ");
@@ -116,20 +115,34 @@ public class EmployeeController {
     }
     public static void autoRegisterGame(String title, String genre, double price){ // Method for adding games, used for testing purposes
         Game g = new Game(title, genre, price);
-
-
         System.out.print("You have added game: ");
         System.out.println(g.toString());
         GameController.gameList.add(g);
 
     }
+
+    public static void autoRegisterSong(String title, String artist, double price, int year){ // Method for adding games, used for testing purposes
+        Song s = new Song(title, artist, price, year);
+        System.out.print("You have added game: ");
+        System.out.println(s.toString());
+        SongController.songList.add(s);
+
+    }
+
     public static void fillGames(){ // Method for adding games, used for testing purposes
         String[] gameName = {"The Last of us Part 2", "The Witcher 3 Wild Hunt", "Red Dead Redemption 2"};
         String[] genre = {"action", "comedy", "family"};
         double[] price = {12, 13, 14};
 
+        String[] songName = {"Song A", "Song B", "Song C"};
+        String[] artist = {"Artist A", "Artist B", "Artist C"};
+        double[] priceS = {12, 13, 14};
+        int[] year = {1970, 2030, 2000};
+
+
         for(int i = 0; i < gameName.length; i++){
             autoRegisterGame(gameName[i], genre[i], price[i]);
+            autoRegisterSong(songName[i], artist[i], priceS[i], year[i]);
         }
         Screens.employeeScreen();
     }

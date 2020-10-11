@@ -72,6 +72,11 @@ public class Customer {
     public void addToLibrary(Rentable item){ library.add(item); }
     public void removeFromLibrary(Rentable item){ library.remove(item); }
 
+    public Rentable getFromLibrary(int index){
+
+        return library.get(index);
+    }
+
     public void upgradeMembership(){
         switch (membership){
             case "regular" -> membership = "silver";

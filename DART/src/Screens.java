@@ -102,7 +102,7 @@ public class Screens {
         System.out.println("5. Show total rent profit");
         System.out.println("6. View all games");
         System.out.println("7. View all customers");
-        System.out.println("8. Fill games");
+        System.out.println("8. Fill games + songs");
         System.out.println("9. View upgrade requests");
         System.out.println("a. Upgrade member");
         System.out.println("0. Return to Main Menu");
