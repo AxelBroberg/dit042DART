@@ -15,11 +15,14 @@ public class EmployeeController {
         Screens.employeeScreen(); // returns the user to the employee screen
 }
 
-    public static void viewAllCustomer(){
+    public static void viewAllCustomer(boolean showScreen){
         for (Customer customer : customerList) {
             System.out.println(customer.toString());
         }
-        Screens.employeeScreen(); } // for each Customer in the 'customerList', it will execute printCustomer
+        if(showScreen) {
+            Screens.employeeScreen();
+        }
+    } // for each Customer in the 'customerList', it will execute printCustomer
 
     public static void viewAllUpgRequest(){
         for (Customer customer : customerList) {
@@ -218,5 +221,33 @@ public class EmployeeController {
         }
         Screens.employeeScreen();
     }
+
+    public static int findCustomer(String ID){
+        int j = 0;
+        for(j = 0; j < EmployeeController.customerList.size(); j++){
+            if(EmployeeController.customerList.get(j).getID().equals(ID)) {
+                break;
+            }
+        }
+        return j;
+    }
+
+    public static boolean customerExists(String ID){
+        for(int j = 0; j < EmployeeController.customerList.size(); j++) {
+            if (EmployeeController.customerList.get(j).getID().equals(ID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
+
+
+
+
+
 
 }

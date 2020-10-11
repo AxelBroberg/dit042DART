@@ -39,14 +39,17 @@ public class Screens {
 
     public static void customerScreen(String ID){
         char choice;
-        String screens = "123456";
+        String screens = "123456789";
         System.out.println("Customer Screen - Type one of the options below:");
         System.out.println("1. Rent a game");
         System.out.println("2. Return a game");
         System.out.println("3. Rent a song");
         System.out.println("4. Return a song");
-        System.out.println("5. Request membership upgrade");
-        System.out.println("6. Return to Main Menu");
+        System.out.println("5. Send message");
+        System.out.println("6. View unread messages");
+        System.out.println("7. Remove a message");
+        System.out.println("8. Request membership upgrade");
+        System.out.println("9. Return to Main Menu");
         choice = Tools.getChar("");
         Tools.validateChar(choice, screens);
         switch(choice) {
@@ -54,8 +57,14 @@ public class Screens {
             case '2' -> totalProfit += CustomerController.returnItem("Game", ID);
             case '3' -> CustomerController.rentItem("Song", ID);
             case '4' -> totalProfit += CustomerController.returnItem("Song", ID);
-            case '5' -> CustomerController.requestUpgrade(ID);
+            case '5' -> CustomerController.sendMessage(ID);
             case '6' -> {
+                EmployeeController.customerList.get(EmployeeController.findCustomer(ID)).viewUnread();
+                customerScreen(ID);
+            }
+            case '7' -> CustomerController.removeMessage(ID);
+            case '8' -> CustomerController.requestUpgrade(ID);
+            case '9' -> {
             }
         }
     }
@@ -106,7 +115,7 @@ public class Screens {
             case '4' -> EmployeeController.removeCustomer();
             case '5' -> {System.out.println("Total profit is: " + totalProfit); employeeScreen();}
             case '6' -> GameController.empViewAllGames();
-            case '7' -> EmployeeController.viewAllCustomer();
+            case '7' -> EmployeeController.viewAllCustomer(true);
             case '8' -> EmployeeController.fillGames();
             case '9' -> EmployeeController.viewAllUpgRequest();
             case 'a' -> EmployeeController.upgradeCustomer();
@@ -115,3 +124,5 @@ public class Screens {
         }
     }
 }
+
+
