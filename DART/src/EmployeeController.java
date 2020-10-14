@@ -115,7 +115,8 @@ public class EmployeeController {
             x = new Game(
                     Tools.getString("Enter game title: "),
                     Tools.getString("Enter game genre: "),
-                    Tools.getDouble("Enter daily rent: ")); // OBJECT CREATION
+                    Tools.getDouble("Enter daily rent: "),
+                    Tools.getInt("Enter release year: ")); // OBJECT CREATION
             GameController.gameList.add(x);
         } else {
             x = new Song(
@@ -129,8 +130,8 @@ public class EmployeeController {
         System.out.println(x.toString());
         Screens.employeeScreen();
     }
-    public static void autoRegisterGame(String title, String genre, double price){ // Method for adding games, used for testing purposes
-        Game g = new Game(title, genre, price);
+    public static void autoRegisterGame(String title, String genre, double price, int year){ // Method for adding games, used for testing purposes
+        Game g = new Game(title, genre, price, year);
         System.out.print("You have added game: ");
         System.out.println(g.toString());
         GameController.gameList.add(g);
@@ -157,7 +158,7 @@ public class EmployeeController {
 
 
         for(int i = 0; i < gameName.length; i++){
-            autoRegisterGame(gameName[i], genre[i], price[i]);
+            autoRegisterGame(gameName[i], genre[i], price[i], year[i]);
             autoRegisterSong(songName[i], artist[i], priceS[i], year[i]);
         }
         Screens.employeeScreen();

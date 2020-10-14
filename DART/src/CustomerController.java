@@ -1,5 +1,7 @@
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 // We created this class because we got feedback on the last milestone that we are supposed to have a controller.
 // We decided that we would have one controller per object class
@@ -225,25 +227,49 @@ public class CustomerController {
             ArrayList<Rentable> array;
             System.out.println("Current library: ");
             if (item.equals("Game")) {
-                selectionSorting = Tools.getInt("1. Show all games" + System.lineSeparator() + "2. Sort by genre");
+                array = GameController.gameList;
+                selectionSorting = Tools.getInt("1. Show all games" + System.lineSeparator() + "2. Sort by genre" + System.lineSeparator() + "3. Sort by ratings" + System.lineSeparator() + "4. Sort by year");
                 if(selectionSorting == 1)
                 {
                     GameController.customerViewAllGames();
                 } else if (selectionSorting == 2) {
                     GameController.viewGamesByGenre(Tools.getString("Enter genre: "));
-                } /*else {
-                    GameController.gamesSortedByRating();
-                }*/
-                array = GameController.gameList;
+                } else if (selectionSorting == 3){
+                    Collections.sort(array, new RatingsComparator());
+                    Collections.reverse(array);
+                    for ( Rentable game: array) {
+                        System.out.println(game.toString());
+                    }
+                } else if (selectionSorting == 4){
+                    Collections.sort(array, new YearComparator());
+                    Collections.reverse(array);
+                    for ( Rentable game: array) {
+                        System.out.println(game.toString());
+                    }
+                }
+
             } else {
-                selectionSorting = Tools.getInt("1. Show all songs" + System.lineSeparator() + "2. Sort by year");
+                array = SongController.songList;
+                selectionSorting = Tools.getInt("1. Show all songs" + System.lineSeparator() + "2. Search by year" + System.lineSeparator() + "3. Sort by ratings" + System.lineSeparator() + "4. Sort by year");
                 if(selectionSorting == 1)
                 {
                     SongController.customerViewAllSongs();
                 } else if (selectionSorting == 2){
                     SongController.viewSongByYear(Tools.getInt("Enter year: (YYYY)"));
+                } else if (selectionSorting == 3){
+                    Collections.sort(array, new RatingsComparator());
+                    Collections.reverse(array);
+                    for ( Rentable song: array) {
+                        System.out.println(song.toString());
+                    }
+                } else if (selectionSorting == 4){
+                    Collections.sort(array, new YearComparator());
+                    Collections.reverse(array);
+                    for ( Rentable song: array) {
+                        System.out.println(song.toString());
+                    }
                 }
-                array = SongController.songList;
+
             }
 
             String rentID = Tools.getString("What do you want to rent?"); //Declares a String variable, which is used to remove customers

@@ -8,12 +8,14 @@
 //
 // In order to implement Epic Feature 7 we modified the Game class to be a child class of Rentable
 
+import java.util.Comparator;
+
 public class Game extends Rentable {
 
     private String genre;
 
-    Game(String title, String genre, double dailyRent){
-        super(title, dailyRent);
+    Game(String title, String genre, double dailyRent, int year){
+        super(title, dailyRent, year);
         this.genre = genre;
     }
 
@@ -24,7 +26,8 @@ public class Game extends Rentable {
 
     public String toString(){
         String s = getID() + " : " + this.title + " [" + getGenre() + "]. " + getDailyRent() + ". "
-                + "Rating: " + getAverageRating() + "/5"
+                + "Year: " + getYear()
+                + " Rating: " + getAverageRating() + "/5"
                 + " Status: ";
 
         if (getStatus()){

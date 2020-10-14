@@ -1,11 +1,12 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 //To implement Epic Feature 7, we modified the class Game by
 //creating a new class called Rentable and having both games and songs inherit from it.
 
-public class Rentable{
+public class Rentable implements Comparable<Rentable>{
 
     protected String title;
     protected String ID;
@@ -13,15 +14,17 @@ public class Rentable{
     protected boolean status;
     protected ArrayList<Integer> ratings;
     protected ArrayList<String> reviews;
+    protected int year;
     protected LocalDate rentDate;
     protected LocalDate returnDate;
 
-    Rentable(String title, double dailyRent){
+    Rentable(String title, double dailyRent, int year){
         this.title = title;
         this.dailyRent = dailyRent;
         this.status = true;
         this.ratings = new ArrayList<>();
         this.reviews = new ArrayList<>();
+        this.year = year;
 
         this.ID = Tools.randomizeID();
 
@@ -67,14 +70,24 @@ public class Rentable{
     public void setAutomaticReturnDate(){ returnDate = LocalDate.now(); } //Method for automatically assigning a date to the returnDate variable
     public LocalDate getReturnDate(){ return returnDate; }
 
-    public String getGenre(){
-        System.out.println("USING WRONG GETGENRE"); // For testing
-        return "";
+    public int getYear() {
+        return year;
     }
 
-    public int getYear(){
-        System.out.println("USING WRONG GETGENRE"); // For testing
-        return 0;
+    public String getGenre(){
+        System.out.println("WRONG GENRE");
+        return "WRONG GENRE";
+    }
+
+    @Override
+    public int compareTo(Rentable o) {
+        if(this.getAverageRating() < o.getAverageRating()){
+            return -1;
+        } else if(this.getAverageRating() < o.getAverageRating()){
+            return 0;
+        } else {
+            return 1;
+        }
     }
 
 
