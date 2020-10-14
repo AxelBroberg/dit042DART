@@ -215,7 +215,7 @@ public class CustomerController {
 
     // Milestone 2: Changed gameList and songList to an ArrayList of rentable
     // and with a few changes to this method allowed us to reuse this method for both  games and song albums
-
+    // Fixed to that sorting is possible
     public static void rentItem(String item, String ID){ // method to rent a game, by adding a game to a customers list
         if(!EmployeeController.customerExists(ID)) {
             System.out.println("Customer does not exist!");
@@ -292,6 +292,7 @@ public class CustomerController {
                         for (int j = 0; j < EmployeeController.customerList.size(); j++) {
                             if (EmployeeController.customerList.get(j).getID().equals(ID)) {
                                 EmployeeController.customerList.get(j).addToLibrary(array.get(i));
+                                array.get(i).addRentFrequency();
                                 System.out.println("Successfully rented");
                                 j = EmployeeController.customerList.size();
                             }
@@ -308,12 +309,16 @@ public class CustomerController {
         Screens.customerScreen(ID);
     }
 
+    //Changed so when returning creates a new RentHistoryItem object and adds to the arraylist in manager controller
     public static double returnItem(String item, String ID){ // a method to return games to the store
         if(!EmployeeController.customerExists(ID)) {
             System.out.println("Customer does not exist!");
             Screens.customerScreen(ID);
             return 0;
         }
+        boolean leftReview = false;
+        int rating = 0;
+        String review = "";
         int customerIndex = EmployeeController.findCustomer(ID);
         final int CREDIT_COST = 5;
         ArrayList<Rentable> array;
@@ -343,9 +348,13 @@ public class CustomerController {
 
                     EmployeeController.customerList.get(customerIndex).addCredit();
                     if(Tools.getString("Successfully returned, would you like to leave a review?(y/n)").equals("y")){
-                        array.get(i).addRating(Tools.getInt("Enter rating 1-5"));
-                        array.get(i).addReview(Tools.getString("Write a short review"));
+                        rating = Tools.getInt("Enter rating 1-5");
+                        array.get(i).addRating(rating);
+                        review = Tools.getString("Write a short review");
+                        array.get(i).addReview(review);
+                        leftReview = true;
                     }
+
                     EmployeeController.customerList.get(customerIndex).removeFromLibrary(array.get(i));
                     if(item.equals("Game")) {removeGame(array.get(i));}
                     if(item.equals("Song")) {removeSong(array.get(i));}
@@ -359,7 +368,13 @@ public class CustomerController {
                         rent = calcRent(customerIndex);
                         System.out.println("The cost for renting the song for " + calcDays(i) + " days is: " + rent);
                     }
-
+                    if(leftReview) {
+                        ManagerController.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i), rentID, rating, review));
+                    } else {
+                        ManagerController.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i), rentID));
+                    }
+                    EmployeeController.customerList.get(customerIndex).addSpent(rent);
+                    array.get(i).addProfit(rent);
                     Screens.customerScreen(ID);
                     return rent; // returns the rent cost
                 }

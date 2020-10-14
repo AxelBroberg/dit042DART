@@ -72,15 +72,19 @@ public class Screens {
         }
     }
 
+    //
     public static void managerScreen(){
-        String screens = "123456";
+        String screens = "123456789";
         System.out.println("Manager Screen - Type one of the options below:");
         System.out.println("1. Add an employee");
         System.out.println("2. View all employees");
         System.out.println("3. Remove an employee");
         System.out.println("4. Calculate net salary of employee");
         System.out.println("5. Calculate and give bonus to employee");
-        System.out.println("6. Return to Main Menu");
+        System.out.println("6. View rent frequency");
+        System.out.println("7. Most profitable item");
+        System.out.println("8. Most valued customer");
+        System.out.println("9. Return to Main Menu");
         char choice = Tools.getChar("");
         Tools.validateChar(choice, screens);
         switch (choice) {
@@ -89,7 +93,10 @@ public class Screens {
             case '3' -> ManagerController.removeEmployee();
             case '4' -> ManagerController.calcNetSalary();
             case '5' -> ManagerController.bonus();
-            case '6' -> {
+            case '6' -> ManagerController.viewRentFrequency();
+            case '7' -> ManagerController.mostProfitable();
+            case '8' -> ManagerController.mostProfitableCustomer();
+            case '9' -> {
             }
         }
     }

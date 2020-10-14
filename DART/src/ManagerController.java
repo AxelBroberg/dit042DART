@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class ManagerController {
     static ArrayList<Employee> employeeArrayList = new ArrayList<>();
+    static ArrayList<RentHistoryItem> rentHistory = new ArrayList<>();
 
     public static void registerEmployee() {
         Employee employee = new Employee(
@@ -106,4 +107,83 @@ public class ManagerController {
         System.out.println("Employee bonus is: " + bonus);
         Screens.managerScreen();
     }
+
+
+    public static void mostProfitable(){
+        if(GameController.gameList.size() > 0 && SongController.songList.size() > 0) {
+            Rentable mostProfit = GameController.gameList.get(0);
+
+            for (Rentable game : GameController.gameList) {
+                if (game.getProfit() > mostProfit.getProfit()) {
+                    mostProfit = game;
+                }
+            }
+
+            for (Rentable song : SongController.songList) {
+                if (song.getProfit() > mostProfit.getProfit()) {
+                    mostProfit = song;
+                }
+            }
+
+            System.out.println("Most profitable item: " + mostProfit.toString());
+
+        }
+        //If no songs
+        else if(GameController.gameList.size() > 0){
+            Rentable mostProfit = GameController.gameList.get(0);
+
+            for (Rentable game : GameController.gameList) {
+                if (game.getProfit() > mostProfit.getProfit()) {
+                    mostProfit = game;
+                }
+            }
+            System.out.println("Most profitable item: " + mostProfit.toString());
+        }
+        //If no games
+        else if(SongController.songList.size() > 0){
+            Rentable mostProfit = SongController.songList.get(0);
+            for (Rentable song : SongController.songList) {
+                if (song.getProfit() > mostProfit.getProfit()) {
+                    mostProfit = song;
+                }
+            }
+            System.out.println("Most profitable item: " + mostProfit.toString());
+        }
+
+        else {
+            System.out.println("There are no games or songs");
+        }
+        Screens.managerScreen();
+    }
+
+
+    public static void viewRentFrequency(){
+        for (Rentable game : GameController.gameList) {
+            if(game.getRentFrequency() > 0 ){
+                System.out.println(game.getTitle() + " : " + game.getRentFrequency());
+            }
+        }
+        for (Rentable song : SongController.songList) {
+            if(song.getRentFrequency() > 0 ){
+                System.out.println(song.getTitle() + " : " + song.getRentFrequency());
+            }
+        }
+        Screens.managerScreen();
+    }
+
+    public static void mostProfitableCustomer() {
+        if (EmployeeController.customerList.size() > 0) {
+            Customer mostProfit = EmployeeController.customerList.get(0);
+
+            for (Customer customer : EmployeeController.customerList) {
+                if (customer.getAmountSpent() > customer.getAmountSpent()) {
+                    mostProfit = customer;
+                }
+            }
+            System.out.println("Most profitable customer: " + mostProfit.toString());
+        }
+        Screens.managerScreen();
+    }
+
+
 }

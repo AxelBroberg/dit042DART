@@ -8,6 +8,7 @@ import java.util.Comparator;
 
 public class Rentable implements Comparable<Rentable>{
 
+    //Added profit and rentFrequency to implement Epic Feature 11 - Rent history
     protected String title;
     protected String ID;
     protected double dailyRent;
@@ -17,6 +18,8 @@ public class Rentable implements Comparable<Rentable>{
     protected int year;
     protected LocalDate rentDate;
     protected LocalDate returnDate;
+    protected double profit;
+    protected int rentFrequency;
 
     Rentable(String title, double dailyRent, int year){
         this.title = title;
@@ -30,6 +33,8 @@ public class Rentable implements Comparable<Rentable>{
 
         this.rentDate = LocalDate.parse("2020-01-01");
         this.returnDate = LocalDate.parse("2020-01-01");
+        this.profit = 0;
+        this.rentFrequency = 0;
     }
 
     public void setID(){ ID = Tools.randomizeID(); }
@@ -69,6 +74,26 @@ public class Rentable implements Comparable<Rentable>{
     public void setReturnDate(String returnADate){ returnDate = LocalDate.parse(returnADate); } // Method for assigning a date input to the returnDate variable
     public void setAutomaticReturnDate(){ returnDate = LocalDate.now(); } //Method for automatically assigning a date to the returnDate variable
     public LocalDate getReturnDate(){ return returnDate; }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public void addProfit(double profit){
+        this.profit = this.profit + profit;
+    }
+
+    public int getRentFrequency() {
+        return rentFrequency;
+    }
+
+    public void addRentFrequency(){
+        this.rentFrequency += 1;
+    }
 
     public int getYear() {
         return year;

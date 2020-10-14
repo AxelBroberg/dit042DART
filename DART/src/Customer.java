@@ -19,23 +19,33 @@ import java.util.ArrayList;
 
 public class Customer {
 
-
+    //Added amountpent to implement Epic Feature 11 - Rent history
     private String ID; //creates String variable named 'ID'
     private String name; //creates String variable named 'name'
     private String membership;
     private int credit;
     private ArrayList<Rentable> library= new ArrayList<>();
     private ArrayList<Message> inbox = new ArrayList<>();
+    private double amountSpent;
 
     Customer(String name){
         this.name = name;
         this.membership = "regular";
         this.ID = Tools.randomizeID();
+        this.amountSpent = 0;
     } //Creates a constructor with takes a name
 
     public void setID(){ ID = Tools.randomizeID(); } // a method that assigns a random id to the variable 'ID'
     public String getID(){ return ID; } // returns the id created by the method above
     public String getMembership() { return membership; }
+
+    public double getAmountSpent() {
+        return amountSpent;
+    }
+
+    public void addSpent(double spent){
+        this.amountSpent = this.amountSpent + spent;
+    }
 
     public int getCredit() { return credit; }
 
@@ -68,6 +78,8 @@ public class Customer {
             System.out.println((inbox.indexOf(message) + 1) + ". " + message + System.lineSeparator());
         }
     }
+
+
 
     public void removeMessage(int index){
         inbox.remove(index);
