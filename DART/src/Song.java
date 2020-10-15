@@ -10,11 +10,6 @@ public class Song extends Rentable{
     }
 
     public String getArtist() { return artist; }
-    public void setArtist(String artist) { this.artist = artist; }
-
-    public void setYear(int year) { this.year = year; }
-
-
 
     public String toString(){
         String s = getID() + " : " + this.title + " - by " + getArtist() + ". Released in " + getYear() + ". Price: " + getDailyRent() + "SEK. "

@@ -35,7 +35,6 @@ public class Customer {
         this.amountSpent = 0;
     } //Creates a constructor with takes a name
 
-    public void setID(){ ID = Tools.randomizeID(); } // a method that assigns a random id to the variable 'ID'
     public String getID(){ return ID; } // returns the id created by the method above
     public String getMembership() { return membership; }
 
@@ -79,8 +78,6 @@ public class Customer {
         }
     }
 
-
-
     public void removeMessage(int index){
         inbox.remove(index);
     }
@@ -99,11 +96,6 @@ public class Customer {
 
     public void addToLibrary(Rentable item){ library.add(item); }
     public void removeFromLibrary(Rentable item){ library.remove(item); }
-
-    public Rentable getFromLibrary(int index){
-
-        return library.get(index);
-    }
 
     public void upgradeMembership(){
         switch (membership){

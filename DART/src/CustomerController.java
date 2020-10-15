@@ -432,12 +432,4 @@ public class CustomerController {
         }
     }
 
-    public static void searchGames(String ID){
-        String genre = Tools.getString("What genre? ");
-
-    }
-
-
-
-
 }

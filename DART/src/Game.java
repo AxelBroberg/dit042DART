@@ -19,8 +19,6 @@ public class Game extends Rentable {
         this.genre = genre;
     }
 
-    public void setGenre (String genre){ this.genre = genre; }
-
     @Override
     public String getGenre (){ return genre; }
 

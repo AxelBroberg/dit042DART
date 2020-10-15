@@ -45,12 +45,7 @@ public class Rentable implements Comparable<Rentable>{
         this.rentFrequency = 0;
     }
 
-    public void setID(){ ID = Tools.randomizeID(); }
     public String getID (){ return ID; }
-
-    public ArrayList<String> getReviews() {
-        return reviews;
-    }
 
     public void addReview(String review){
         this.reviews.add(review);
@@ -69,7 +64,6 @@ public class Rentable implements Comparable<Rentable>{
         this.ratings.add(rating);
     }
 
-    public void setDailyRent(double dailyRent){ this.dailyRent = dailyRent; }
     public double getDailyRent(){ return dailyRent; }
 
     public void setStatus (boolean status){ this.status = status; }
