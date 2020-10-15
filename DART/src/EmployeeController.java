@@ -19,11 +19,15 @@ import java.util.Scanner;
 // - viewAllUpgRequest, which is used to print all upgrade requests
 // We also added an ArrayList to hold all of the upgrade requests, which is named upgradeRequestsID
 
+//To implement epic feature 12, most methods now throw an exception to handle incorrect creation of games or song albums
+//registerItem() catches and handles any incorrect creation by printing the error to the user and letting them try again
+//this repeats until a game/song is created properly
+
 public class EmployeeController {
     static ArrayList<Customer> customerList = new ArrayList<>(); //creates ArrayList named 'customerList' containing Customers
     static ArrayList<String> upgradeRequestsID = new ArrayList<>();
 
-    public static void registerCustomer(){ // method that registers a customer
+    public static void registerCustomer() throws Exception { // method that registers a customer
         Customer c = new Customer(Tools.getString("Creating customer. Please type customer's: " + System.lineSeparator() + " Name: "));
         System.out.println("You have added customer: ");
         System.out.println(c.toString()); // prints all information about the customer created
@@ -31,7 +35,7 @@ public class EmployeeController {
         Screens.employeeScreen(); // returns the user to the employee screen
 }
 
-    public static void viewAllCustomer(boolean showScreen){
+    public static void viewAllCustomer(boolean showScreen) throws Exception {
         for (Customer customer : customerList) {
             System.out.println(customer.toString());
         }
@@ -40,7 +44,7 @@ public class EmployeeController {
         }
     } // for each Customer in the 'customerList', it will execute printCustomer
 
-    public static void viewAllUpgRequest(){
+    public static void viewAllUpgRequest() throws Exception {
         for (Customer customer : customerList) {
             if(upgradeRequestsID.contains(customer.getID())){
                 System.out.println(customer.toString());
@@ -50,7 +54,7 @@ public class EmployeeController {
     }
 
 
-    public static void upgradeCustomer() { // method that removes customers
+    public static void upgradeCustomer() throws Exception { // method that removes customers
         boolean upgraded = false;
         int i;
         String upgID = Tools.getString("Enter the ID of the customer you want to upgrade: ");
@@ -75,7 +79,7 @@ public class EmployeeController {
     }
 
 
-    public static void removeCustomer(){ // method that removes customers
+    public static void removeCustomer() throws Exception { // method that removes customers
         Scanner input = new Scanner(System.in);
         boolean removed = false; // declares a variable that will decide if the following for loop will continue looping
         int i; // initializes a variable 'i' so it can be used outside of the for loop
@@ -109,28 +113,36 @@ public class EmployeeController {
         Screens.employeeScreen();
     }*/
 
-    public static void registerItem(String item){
+    public static void registerItem(String item) throws Exception {
         Rentable x;
-        if(item.equals("game")){
-            x = new Game(
-                    Tools.getString("Enter game title: "),
-                    Tools.getString("Enter game genre: "),
-                    Tools.getDouble("Enter daily rent: "),
-                    Tools.getInt("Enter release year: ")); // OBJECT CREATION
-            GameController.gameList.add(x);
-        } else {
-            x = new Song(
-                    Tools.getString("Enter title: "),
-                    Tools.getString("Enter artist: "),
-                    Tools.getDouble("Enter daily rent: "),
-                    Tools.getInt("Enter release year: ")); // OBJECT CREATION
-            SongController.songList.add(x);
+        try {
+            if (item.equals("game")) {
+                x = new Game(
+                        Tools.getString("Enter game title: "),
+                        Tools.getString("Enter game genre: "),
+                        Tools.getDouble("Enter daily rent: "),
+                        Tools.getInt("Enter release year: ")); // OBJECT CREATION
+                GameController.gameList.add(x);
+                System.out.print("You have added game: ");
+                System.out.println(x.toString());
+            } else {
+                x = new Song(
+                        Tools.getString("Enter title: "),
+                        Tools.getString("Enter artist: "),
+                        Tools.getDouble("Enter daily rent: "),
+                        Tools.getInt("Enter release year: ")); // OBJECT CREATION
+                SongController.songList.add(x);
+                System.out.print("You have added song: ");
+                System.out.println(x.toString());
+            }
+        } catch (Exception exception){
+            System.out.println(exception);
+            registerItem(item);
         }
-        System.out.print("You have added game: ");
-        System.out.println(x.toString());
+
         Screens.employeeScreen();
     }
-    public static void autoRegisterGame(String title, String genre, double price, int year){ // Method for adding games, used for testing purposes
+    public static void autoRegisterGame(String title, String genre, double price, int year) throws Exception { // Method for adding games, used for testing purposes
         Game g = new Game(title, genre, price, year);
         System.out.print("You have added game: ");
         System.out.println(g.toString());
@@ -138,7 +150,7 @@ public class EmployeeController {
 
     }
 
-    public static void autoRegisterSong(String title, String artist, double price, int year){ // Method for adding games, used for testing purposes
+    public static void autoRegisterSong(String title, String artist, double price, int year) throws Exception { // Method for adding games, used for testing purposes
         Song s = new Song(title, artist, price, year);
         System.out.print("You have added game: ");
         System.out.println(s.toString());
@@ -146,7 +158,7 @@ public class EmployeeController {
 
     }
 
-    public static void fillGames(){ // Method for adding games, used for testing purposes
+    public static void fillGames() throws Exception { // Method for adding games, used for testing purposes
         String[] gameName = {"The Last of us Part 2", "The Witcher 3 Wild Hunt", "Red Dead Redemption 2"};
         String[] genre = {"action", "comedy", "family"};
         double[] price = {12, 13, 14};
@@ -164,7 +176,7 @@ public class EmployeeController {
         Screens.employeeScreen();
     }
 
-    public static void removeItem(String item){
+    public static void removeItem(String item) throws Exception {
         boolean removed = false;
         int i;
         Object itemO;

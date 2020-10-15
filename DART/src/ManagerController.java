@@ -7,16 +7,27 @@ import java.util.ArrayList;
 //
 // In here we have the bonus, calcNetSalary, registerEmployee, removeEmployee & viewAllEmployee originating from the Employee class
 
+//To implement epic feature 12, most methods now throw an exception to handle incorrect creation of employee
+//registerEmployee() catches and handles any incorrect creation by printing the error to the user and letting them try again
+//this repeats until an employee is created properly
+
 public class ManagerController {
     static ArrayList<Employee> employeeArrayList = new ArrayList<>();
     static ArrayList<RentHistoryItem> rentHistory = new ArrayList<>();
 
-    public static void registerEmployee() {
-        Employee employee = new Employee(
-            Tools.getString("Enter employee name: "),
-            Tools.getString("Enter employee address: "),
-            Tools.getInt("Enter employee birth year: "),
-            Tools.getDouble("Enter employee gross salary: "));
+    public static void registerEmployee() throws Exception {
+        Employee employee = null;
+        try {
+            employee = new Employee(
+                    Tools.getString("Enter employee name: "),
+                    Tools.getString("Enter employee address: "),
+                    Tools.getInt("Enter employee birth year: "),
+                    Tools.getDouble("Enter employee gross salary: "));
+        } catch (Exception exception){
+            System.out.println(exception);
+            registerEmployee();
+        }
+
         System.out.println("Random ID <" + employee.getID() + "> was assigned.");
 
         System.out.print("You have added employee: ");
@@ -25,7 +36,7 @@ public class ManagerController {
         Screens.managerScreen();
     }
 
-    public static void viewAllEmployee(boolean returnToMenu){
+    public static void viewAllEmployee(boolean returnToMenu) throws Exception {
         for (Employee manager : employeeArrayList) {
             System.out.println(manager.toString());
         }
@@ -34,7 +45,7 @@ public class ManagerController {
         }
     }
 
-    public static void removeEmployee(){
+    public static void removeEmployee() throws Exception {
         boolean removed = false;
         int i;
         System.out.println("Employees: ");
@@ -61,7 +72,7 @@ public class ManagerController {
         if(getNetSalary()!=0) System.out.println(" Net salary: " + getNetSalary() + " SEK");
     }*/
 
-    public static void calcNetSalary(){
+    public static void calcNetSalary() throws Exception {
         final double GROSS_SALARY_TAX = 0.7;
         final int TAX_CONDITION = 100000;
         boolean found = false;
@@ -84,7 +95,7 @@ public class ManagerController {
         Screens.managerScreen();
     }
 
-    public static void bonus(){
+    public static void bonus() throws Exception {
         final int[] BONUS = new int[]{4000, 6000, 7500};
         final int[] YEAR_CONDITION = new int[]{22, 30};
 
@@ -109,7 +120,7 @@ public class ManagerController {
     }
 
 
-    public static void mostProfitable(){
+    public static void mostProfitable() throws Exception {
         if(GameController.gameList.size() > 0 && SongController.songList.size() > 0) {
             Rentable mostProfit = GameController.gameList.get(0);
 
@@ -157,7 +168,7 @@ public class ManagerController {
     }
 
 
-    public static void viewRentFrequency(){
+    public static void viewRentFrequency() throws Exception {
         for (Rentable game : GameController.gameList) {
             if(game.getRentFrequency() > 0 ){
                 System.out.println(game.getTitle() + " : " + game.getRentFrequency());
@@ -171,7 +182,7 @@ public class ManagerController {
         Screens.managerScreen();
     }
 
-    public static void mostProfitableCustomer() {
+    public static void mostProfitableCustomer() throws Exception {
         if (EmployeeController.customerList.size() > 0) {
             Customer mostProfit = EmployeeController.customerList.get(0);
 

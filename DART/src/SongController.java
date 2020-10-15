@@ -20,7 +20,7 @@ public class SongController {
         }
     }
 
-    public static void empViewAllSongs(){
+    public static void empViewAllSongs() throws Exception {
         for ( Rentable song : songList) {
             System.out.println(song.toString());
         }

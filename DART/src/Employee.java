@@ -19,11 +19,19 @@ public class Employee {
     private double netSalary;
     private String name;
 
-    Employee(String name, String address, int birthyear, double grossSalary){
-        this.name = name;
+    Employee(String name, String address, int birthyear, double grossSalary) throws Exception{
+        if (name.isEmpty() || name.equals(" ") ){
+            throw new NameEmptyException("Empty name is not allowed.");
+        } else {
+            this.name = name;
+        }
+        if (grossSalary < 0) {
+            throw new NegativeSalaryException("Salary cannot be less than zero.");
+        } else {
+            this.grossSalary = grossSalary;
+        }
         this.address = address;
         this.birthyear = birthyear;
-        this.grossSalary = grossSalary;
         this.ID = Tools.randomizeID();
     }
 

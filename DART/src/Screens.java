@@ -4,7 +4,11 @@ public class Screens {
     // Based on the feedback from the last milestone we moved the screenChoice method to here
     // The only changes in this class is the addition of new methods that are used in the different epic features
 
-    public static void screenChoice(char x){
+    public static void addTotalProfit(double profit){
+        totalProfit = totalProfit + profit;
+    }
+
+    public static void screenChoice(char x) throws Exception {
         switch (x) {
             case 'm','M' -> {
                 if (Tools.password("admin1234")) managerScreen();
@@ -27,7 +31,7 @@ public class Screens {
         System.out.println("4. Enter “X” to exit system ");
     }
 
-    public static void preCustomerScreen(){
+    public static void preCustomerScreen() throws Exception {
         String ID = Tools.getString("Please enter your ID");
         for(int i = 0; i < EmployeeController.customerList.size(); i++){
             if(EmployeeController.customerList.get(i).getID().equals(ID)){
@@ -40,7 +44,7 @@ public class Screens {
         }
     }
 
-    public static void customerScreen(String ID){
+    public static void customerScreen(String ID) throws Exception {
         char choice;
         String screens = "123456789";
         System.out.println("Customer Screen - Type one of the options below:");
@@ -57,9 +61,9 @@ public class Screens {
         Tools.validateChar(choice, screens);
         switch(choice) {
             case '1' -> CustomerController.rentItem("Game", ID);
-            case '2' -> totalProfit += CustomerController.returnItem("Game", ID);
+            case '2' -> CustomerController.returnItem("Game", ID);
             case '3' -> CustomerController.rentItem("Song", ID);
-            case '4' -> totalProfit += CustomerController.returnItem("Song", ID);
+            case '4' -> CustomerController.returnItem("Song", ID);
             case '5' -> CustomerController.sendMessage(ID);
             case '6' -> {
                 EmployeeController.customerList.get(EmployeeController.findCustomer(ID)).viewUnread();
@@ -73,7 +77,7 @@ public class Screens {
     }
 
     //
-    public static void managerScreen(){
+    public static void managerScreen() throws Exception {
         String screens = "123456789";
         System.out.println("Manager Screen - Type one of the options below:");
         System.out.println("1. Add an employee");
@@ -101,7 +105,7 @@ public class Screens {
         }
     }
 
-    public static void employeeScreen(){
+    public static void employeeScreen() throws Exception {
         char choice;
         String screens = "1234567890a";
         System.out.println("Employee Screen - Type one of the options below:");

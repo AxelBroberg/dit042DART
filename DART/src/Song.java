@@ -4,7 +4,7 @@ public class Song extends Rentable{
 
     protected String artist;
 
-    Song(String title, String artist, double dailyRent, int year){
+    Song(String title, String artist, double dailyRent, int year) throws Exception {
         super(title, dailyRent, year);
         this.artist = artist;
     }

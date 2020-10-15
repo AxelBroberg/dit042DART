@@ -26,7 +26,7 @@ public class GameController {
         }
     }*/
 
-    public static void empViewAllGames(){
+    public static void empViewAllGames() throws Exception {
         for ( Rentable game : GameController.gameList) {
             System.out.println(game.toString());
         }

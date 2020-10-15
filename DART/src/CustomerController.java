@@ -52,20 +52,28 @@ public class CustomerController {
         }
     }
 
-    public static long calcDays(int i){ // a method that returns days between game was rented and returned
-        return ChronoUnit.DAYS.between(GameController.gameList.get(i).getRentDate(), GameController.gameList.get(i).getReturnDate());
+    public static long calcDays(int i, ArrayList<Rentable> array){ // a method that returns days between game was rented and returned
+        if(ChronoUnit.DAYS.between(array.get(i).getRentDate(), array.get(i).getReturnDate()) <= 0) {
+            throw new EarlyDateException("Invalid operation. Upon returning an item, the number of days rented must be positive.");
+        } else {
+            return ChronoUnit.DAYS.between(array.get(i).getRentDate(), array.get(i).getReturnDate());
+        }
     }
 
-    public static double calcRent(int i){
+    public static double calcRent(int i, ArrayList<Rentable> array, String ID){
         final double[] memDiscount = new double[]{1, 0.90, 0.85, 0.75};
-        double discount;
-        switch(EmployeeController.customerList.get(i).getMembership()) {
-            case "platinum" -> discount = memDiscount[3];
-            case "gold" -> discount = memDiscount[2];
-            case "silver" -> discount = memDiscount[1];
-            default -> discount = memDiscount[0];
+        double discount = 1;
+        for (int j = 0; j < EmployeeController.customerList.size(); j++) {
+            if (EmployeeController.customerList.get(j).getID().equals(ID)) {
+                switch(EmployeeController.customerList.get(j).getMembership()) {
+                    case "platinum" -> discount = memDiscount[3];
+                    case "gold" -> discount = memDiscount[2];
+                    case "silver" -> discount = memDiscount[1];
+                    default -> discount = memDiscount[0];
+                }
+            }
         }
-        return GameController.gameList.get(i).getDailyRent() * calcDays(i) * discount;
+        return array.get(i).getDailyRent() * calcDays(i, array) * discount;
     }
 
     // Chronounit: https://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
@@ -206,7 +214,7 @@ public class CustomerController {
         return 0;
     }*/
 
-    public static void requestUpgrade(String ID){
+    public static void requestUpgrade(String ID) throws Exception {
         String upgID = Tools.getString("Enter your id: "); //Declares a String variable, which is used to remove customers
         EmployeeController.upgradeRequestsID.add(upgID);
         Screens.customerScreen(ID);
@@ -216,7 +224,7 @@ public class CustomerController {
     // Milestone 2: Changed gameList and songList to an ArrayList of rentable
     // and with a few changes to this method allowed us to reuse this method for both  games and song albums
     // Fixed to that sorting is possible
-    public static void rentItem(String item, String ID){ // method to rent a game, by adding a game to a customers list
+    public static void rentItem(String item, String ID) throws Exception { // method to rent a game, by adding a game to a customers list
         if(!EmployeeController.customerExists(ID)) {
             System.out.println("Customer does not exist!");
             Screens.customerScreen(ID);
@@ -310,11 +318,10 @@ public class CustomerController {
     }
 
     //Changed so when returning creates a new RentHistoryItem object and adds to the arraylist in manager controller
-    public static double returnItem(String item, String ID){ // a method to return games to the store
+    public static void returnItem(String item, String ID) throws Exception { // a method to return games to the store
         if(!EmployeeController.customerExists(ID)) {
             System.out.println("Customer does not exist!");
             Screens.customerScreen(ID);
-            return 0;
         }
         boolean leftReview = false;
         int rating = 0;
@@ -341,9 +348,17 @@ public class CustomerController {
                     array.get(i).setStatus(true);
                     try {
                         array.get(i).setReturnDate(Tools.getString("What is the return date? (YYYY-MM-DD)"));
-                    } catch (Exception e) {
+                    } catch (Exception exception) {
                         System.out.println("Wrong format, assuming return date is today.");
                         array.get(i).setAutomaticReturnDate();
+                    }
+
+                    try {
+                        rent = calcRent(customerIndex, array, ID);
+                    } catch (Exception exception){
+                        System.out.println(exception);
+                        System.out.println("Return process was aborted, returning to menu");
+                        Screens.customerScreen(ID);
                     }
 
                     EmployeeController.customerList.get(customerIndex).addCredit();
@@ -364,30 +379,29 @@ public class CustomerController {
                     if (EmployeeController.customerList.get(customerIndex).getCredit() >= CREDIT_COST){
                         EmployeeController.customerList.get(customerIndex).removeCredit(CREDIT_COST);
                         System.out.println("5 credits have been deducted from your account to pay for this item");
+                        rent = 0;
                     } else {
-                        rent = calcRent(customerIndex);
-                        System.out.println("The cost for renting the song for " + calcDays(i) + " days is: " + rent);
+                        System.out.println("The cost for renting the song for " + calcDays(i, array) + " days is: " + rent);
                     }
                     if(leftReview) {
-                        ManagerController.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i), rentID, rating, review));
+                        ManagerController.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i, array), rentID, rating, review));
                     } else {
-                        ManagerController.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i), rentID));
+                        ManagerController.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i, array), rentID));
                     }
                     EmployeeController.customerList.get(customerIndex).addSpent(rent);
                     array.get(i).addProfit(rent);
+                    Screens.addTotalProfit(rent);
                     Screens.customerScreen(ID);
-                    return rent; // returns the rent cost
                 }
             if(i == array.size()){
                 System.out.println("Does not exist in your library");
             }
             }
         Screens.customerScreen(ID);
-        return 0;
     }
 
 
-    public static void sendMessage(String sender){
+    public static void sendMessage(String sender) throws Exception {
         EmployeeController.viewAllCustomer(false);
         String recipient = Tools.getString("Who do you want to send a message to?");
 

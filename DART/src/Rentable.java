@@ -21,9 +21,17 @@ public class Rentable implements Comparable<Rentable>{
     protected double profit;
     protected int rentFrequency;
 
-    Rentable(String title, double dailyRent, int year){
-        this.title = title;
-        this.dailyRent = dailyRent;
+    Rentable(String title, double dailyRent, int year) throws Exception{
+        if (title.isEmpty() || title.equals(" ") ){
+            throw new NameEmptyException("Empty title is not allowed.");
+        } else {
+            this.title = title;
+        }
+        if (dailyRent < 0){
+            throw new NegativeRentException("Negative rent is not allowed.");
+        } else {
+            this.dailyRent = dailyRent;
+        }
         this.status = true;
         this.ratings = new ArrayList<>();
         this.reviews = new ArrayList<>();
