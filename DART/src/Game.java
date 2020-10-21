@@ -1,16 +1,8 @@
-// Changes because of the feedback we got on the last milestone:
-// Moved the ArrayList gameList to the GameController
-// Moved most of the methods to the Rentable class
-//
-// We also added a toString, which we didnt have in the last milestone
-//
-// We did some modifications to the Constructor so that it doesn't only take a title as a parameter
-//
-// In order to implement Epic Feature 7 we modified the Game class to be a child class of Rentable
-
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Game extends Rentable {
+    static ArrayList<Rentable> gameList = new ArrayList<>();
 
     private String genre;
 
@@ -38,5 +30,29 @@ public class Game extends Rentable {
     }
 
 
+    public static void customerViewAllGames(){
+
+        for ( Rentable game : gameList) {
+            System.out.println(game.toString());
+        }
+    }
+
+    public static void viewGamesByGenre(String genre){
+        for (Rentable game : gameList) {
+            if(game.getGenre().equals(genre)) {
+                System.out.println(game.toString());
+            }
+        }
+    }
+
+
+
+
+
+
+
+
 
 }
+
+

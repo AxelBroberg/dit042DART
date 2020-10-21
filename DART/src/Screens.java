@@ -92,25 +92,25 @@ public class Screens {
         char choice = Tools.getChar("");
         Tools.validateChar(choice, screens);
         switch (choice) {
-            case '1' -> {
-                System.out.println(regEmployee());
-            }
+            case '1' -> System.out.println(regEmployee());
             case '2' -> System.out.println(Controller.viewAllEmployee());
             case '3' -> {
                 Controller.removeEmployee(Tools.getString("Enter the ID of employee you want to remove: "));
                 System.out.println("Successfully removed!");
             }
-            case '4' -> Manager.calcNetSalary();
-            case '5' -> Manager.bonus();
-            case '6' -> Manager.viewRentFrequency();
-            case '7' -> Manager.mostProfitable();
-            case '8' -> Manager.mostProfitableCustomer();
+            case '4' -> System.out.println("Employee net salary is: " + Controller.calcNetSalary(Tools.getString("Enter ID of employee to calculate net salary: ")));
+            case '5' -> System.out.println("Employee bonus is: " + Controller.bonus(Tools.getString("Enter ID of employee to see what bonus employee is eligible to: ")));
+            case '6' -> System.out.println(Controller.viewRentFrequency());
+            case '7' -> {
+                if(Controller.mostProfitable() != null) System.out.println("Most profitable item: " + Controller.mostProfitable());
+            }
+            case '8' -> System.out.println("Most valued customer: " + Controller.mostProfitableCustomer());
             case '9' -> {
             }
         }
     }
 
-    public static Employee regEmployee() throws Exception {
+    public static Employee regEmployee() {
         Employee printContainer = null;
         try {
             printContainer = Controller.registerEmployee(
@@ -136,7 +136,7 @@ public class Screens {
         System.out.println("3. Register a customer");
         System.out.println("4. Remove a customer");
         System.out.println("5. Show total rent profit");
-        System.out.println("6. View all games");
+        System.out.println("6. View all games & songs");
         System.out.println("7. View all customers");
         System.out.println("8. Fill games + songs");
         System.out.println("9. View upgrade requests");
@@ -150,7 +150,7 @@ public class Screens {
             case '3' -> Employee.registerCustomer();
             case '4' -> Employee.removeCustomer();
             case '5' -> {System.out.println("Total profit is: " + totalProfit); employeeScreen();}
-            case '6' -> GameController.empViewAllGames();
+            case '6' -> Controller.showItems();
             case '7' -> Employee.viewAllCustomer(true);
             case '8' -> Employee.fillGames();
             case '9' -> Employee.viewAllUpgRequest();

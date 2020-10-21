@@ -20,10 +20,8 @@ public class Employee {
     private double grossSalary;
     private double netSalary;
     private String name;
-    static ArrayList<Customer> customerList = new ArrayList<>(); //creates ArrayList named 'customerList' containing Customers
-    static ArrayList<String> upgradeRequestsID = new ArrayList<>();
 
-    Employee(String name, String address, int birthyear, double grossSalary) throws Exception{
+    public Employee(String name, String address, int birthyear, double grossSalary) throws Exception{
         if (name.isEmpty() || name.equals(" ") ){
             throw new NameEmptyException("Empty name is not allowed.");
         } else {
@@ -61,12 +59,8 @@ public class Employee {
         return s;
     }
 
-    public static void registerCustomer() throws Exception { // method that registers a customer
-        Customer c = new Customer(Tools.getString("Creating customer. Please type customer's: " + System.lineSeparator() + " Name: "));
-        System.out.println("You have added customer: ");
-        System.out.println(c.toString()); // prints all information about the customer created
-        customerList.add(c); // adds the object 'c' to the ArrayList
-        Screens.employeeScreen(); // returns the user to the employee screen
+    public static void registerCustomer(Customer customer) throws Exception {
+        Controller.customerList.add(customer);
     }
 
     public static void viewAllCustomer(boolean showScreen) throws Exception {

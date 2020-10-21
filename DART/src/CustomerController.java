@@ -77,141 +77,7 @@ public class CustomerController {
 
     // Chronounit: https://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
 
-    /*public static void rentGame(String ID){ // method to rent a game, by adding a game to a customers list
-        System.out.println("Current game library: ");
-        GameController.customerViewAllGames(); // executes viewAllGames from class Games
 
-        String rentID = Tools.getString("What game do you want to rent? "); //Declares a String variable, which is used to remove customers
-        for( int i = 0; i < GameController.gameList.size(); i++){
-            if(GameController.gameList.get(i).getID().equals(rentID)){
-                if(GameController.gameList.get(i).getStatus()) { // if the game is available
-                    addGame(GameController.gameList.get(i));
-                    GameController.gameList.get(i).setStatus(false); // makes the game no longer available from the stores game library
-                    try {
-                        GameController.gameList.get(i).setRentDate(Tools.getString("What is the rent date? (YYYY-MM-DD)"));
-                    } catch (Exception e) {
-                        System.out.println("Wrong format, assuming rent date is today.");
-                        GameController.gameList.get(i).setAutomaticRentDate();
-                    }
-                    for(int j = 0; j < Employee.customerList.size(); j++){
-                        if(Employee.customerList.get(j).getID().equals(ID)) {
-                            Employee.customerList.get(j).addToLibrary(GameController.gameList.get(i));
-                            System.out.println("Successfully rented");
-                            j = Employee.customerList.size();
-                        }
-                    }
-                    i = GameController.gameList.size();
-                } else {
-                    System.out.println("Game is not available");
-                }
-            }
-        }
-        Screens.customerScreen(ID);
-    }
-
-    public static double returnGame(String ID){ // a method to return games to the store
-        double rent; //initializes a variable local to the method
-        System.out.println("Current game library: ");
-        viewAllRented(customerGames); // prints all the games rented by the customer
-        String rentID = Tools.getString("What game do you want to return? ");
-        for( int i = 0; i < GameController.gameList.size(); i++){
-            if(GameController.gameList.get(i).getID().equals(rentID)){
-                if(!GameController.gameList.get(i).getStatus()) {
-                    removeGame(GameController.gameList.get(i));
-                    GameController.gameList.get(i).setStatus(true);
-                    try {
-                        GameController.gameList.get(i).setReturnDate(Tools.getString("What is the return date? (YYYY-MM-DD)"));
-                    } catch (Exception e) {
-                        System.out.println("Wrong format, assuming return date is today.");
-                        GameController.gameList.get(i).setAutomaticReturnDate();
-                    }
-                    for(int j = 0; j < Employee.customerList.size(); j++){
-                        if(Employee.customerList.get(j).getID().equals(ID)) {
-                            Employee.customerList.get(j).removeFromLibrary(GameController.gameList.get(i));
-                            System.out.println("Successfully returned");
-                            j = Employee.customerList.size();
-                        }
-                    }
-                    rent = calcRent(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
-                    System.out.println("The cost for renting the game for " + calcDays(i) + " days is: " + rent);
-                    Screens.customerScreen(ID);
-                    return rent; // returns the rent cost
-                } else System.out.println("Game is not available");
-            }
-        }
-        Screens.customerScreen(ID);
-        return 0;
-    }
-
-    public static void rentSong(String ID){ // method to rent a game, by adding a game to a customers list
-        System.out.println("Current song library: ");
-        SongController.customerViewAllSongs(); // executes viewAllGames from class Games
-
-        String rentID = Tools.getString("What song do you want to rent? "); //Declares a String variable, which is used to remove customers
-        for( int i = 0; i < SongController.songList.size(); i++){
-            if(SongController.songList.get(i).getID().equals(rentID)){
-                if(SongController.songList.get(i).getStatus()) { // if the game is available
-                    addSong(SongController.songList.get(i));
-                    SongController.songList.get(i).setStatus(false); // makes the game no longer available from the stores game library
-
-
-
-                    try {
-                        SongController.songList.get(i).setRentDate(Tools.getString("What is the rent date? (YYYY-MM-DD)"));
-                    } catch (Exception e) {
-                        System.out.println("Wrong format, assuming rent date is today.");
-                        SongController.songList.get(i).setAutomaticRentDate();
-                    }
-
-                    for(int j = 0; j < Employee.customerList.size(); j++){
-                        if(Employee.customerList.get(j).getID().equals(ID)) {
-                            Employee.customerList.get(j).addToLibrary(SongController.songList.get(i));
-                            System.out.println("Successfully rented");
-                            j = Employee.customerList.size();
-                        }
-                    }
-                    i = SongController.songList.size();
-                } else {
-                    System.out.println("Song is not available");
-                }
-            }
-        }
-        Screens.customerScreen(ID);
-    }
-
-    public static double returnSong(String ID){ // a method to return games to the store
-        double rent; //initializes a variable local to the method
-        System.out.println("Current song library: ");
-        viewAllRented(customerSongs); // prints all the games rented by the customer
-        String rentID = Tools.getString("What song do you want to return? ");
-        for( int i = 0; i < SongController.songList.size(); i++){
-            if(SongController.songList.get(i).getID().equals(rentID)){
-                if(!SongController.songList.get(i).getStatus()) {
-                    removeSong(SongController.songList.get(i));
-                    SongController.songList.get(i).setStatus(true);
-                    try {
-                        SongController.songList.get(i).setReturnDate(Tools.getString("What is the return date? (YYYY-MM-DD)"));
-                    } catch (Exception e) {
-                        System.out.println("Wrong format, assuming return date is today.");
-                        SongController.songList.get(i).setAutomaticReturnDate();
-                    }
-                    for(int j = 0; j < Employee.customerList.size(); j++){
-                        if(Employee.customerList.get(j).getID().equals(ID)) {
-                            Employee.customerList.get(j).removeFromLibrary(SongController.songList.get(i));
-                            System.out.println("Successfully rented");
-                            j = Employee.customerList.size();
-                        }
-                    }
-                    rent = SongController.songList.get(i).getDailyRent() * calcDays(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
-                    System.out.println("The cost for renting the song for " + calcDays(i) + " days is: " + rent);
-                    Screens.customerScreen(ID);
-                    return rent; // returns the rent cost
-                } else System.out.println("Song is not available");
-            }
-        }
-        Screens.customerScreen(ID);
-        return 0;
-    }*/
 
     public static void requestUpgrade(String ID) throws Exception {
         String upgID = Tools.getString("Enter your id: "); //Declares a String variable, which is used to remove customers
@@ -383,9 +249,9 @@ public class CustomerController {
                         System.out.println("The cost for renting the song for " + calcDays(i, array) + " days is: " + rent);
                     }
                     if(leftReview) {
-                        Manager.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i, array), rentID, rating, review));
+                        Controller.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i, array), rentID, rating, review));
                     } else {
-                        Manager.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i, array), rentID));
+                        Controller.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i, array), rentID));
                     }
                     Employee.customerList.get(customerIndex).addSpent(rent);
                     array.get(i).addProfit(rent);
