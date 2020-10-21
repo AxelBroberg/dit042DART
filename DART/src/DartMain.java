@@ -14,9 +14,6 @@ public class DartMain {
         }
     }
 
-
-
-
     public static void exitProgram(){
         System.exit(0);
     }

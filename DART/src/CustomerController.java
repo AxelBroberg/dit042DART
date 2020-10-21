@@ -1,7 +1,6 @@
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 // We created this class because we got feedback on the last milestone that we are supposed to have a controller.
 // We decided that we would have one controller per object class
@@ -63,9 +62,9 @@ public class CustomerController {
     public static double calcRent(int i, ArrayList<Rentable> array, String ID){
         final double[] memDiscount = new double[]{1, 0.90, 0.85, 0.75};
         double discount = 1;
-        for (int j = 0; j < EmployeeController.customerList.size(); j++) {
-            if (EmployeeController.customerList.get(j).getID().equals(ID)) {
-                switch(EmployeeController.customerList.get(j).getMembership()) {
+        for (int j = 0; j < Employee.customerList.size(); j++) {
+            if (Employee.customerList.get(j).getID().equals(ID)) {
+                switch(Employee.customerList.get(j).getMembership()) {
                     case "platinum" -> discount = memDiscount[3];
                     case "gold" -> discount = memDiscount[2];
                     case "silver" -> discount = memDiscount[1];
@@ -94,11 +93,11 @@ public class CustomerController {
                         System.out.println("Wrong format, assuming rent date is today.");
                         GameController.gameList.get(i).setAutomaticRentDate();
                     }
-                    for(int j = 0; j < EmployeeController.customerList.size(); j++){
-                        if(EmployeeController.customerList.get(j).getID().equals(ID)) {
-                            EmployeeController.customerList.get(j).addToLibrary(GameController.gameList.get(i));
+                    for(int j = 0; j < Employee.customerList.size(); j++){
+                        if(Employee.customerList.get(j).getID().equals(ID)) {
+                            Employee.customerList.get(j).addToLibrary(GameController.gameList.get(i));
                             System.out.println("Successfully rented");
-                            j = EmployeeController.customerList.size();
+                            j = Employee.customerList.size();
                         }
                     }
                     i = GameController.gameList.size();
@@ -126,11 +125,11 @@ public class CustomerController {
                         System.out.println("Wrong format, assuming return date is today.");
                         GameController.gameList.get(i).setAutomaticReturnDate();
                     }
-                    for(int j = 0; j < EmployeeController.customerList.size(); j++){
-                        if(EmployeeController.customerList.get(j).getID().equals(ID)) {
-                            EmployeeController.customerList.get(j).removeFromLibrary(GameController.gameList.get(i));
+                    for(int j = 0; j < Employee.customerList.size(); j++){
+                        if(Employee.customerList.get(j).getID().equals(ID)) {
+                            Employee.customerList.get(j).removeFromLibrary(GameController.gameList.get(i));
                             System.out.println("Successfully returned");
-                            j = EmployeeController.customerList.size();
+                            j = Employee.customerList.size();
                         }
                     }
                     rent = calcRent(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
@@ -164,11 +163,11 @@ public class CustomerController {
                         SongController.songList.get(i).setAutomaticRentDate();
                     }
 
-                    for(int j = 0; j < EmployeeController.customerList.size(); j++){
-                        if(EmployeeController.customerList.get(j).getID().equals(ID)) {
-                            EmployeeController.customerList.get(j).addToLibrary(SongController.songList.get(i));
+                    for(int j = 0; j < Employee.customerList.size(); j++){
+                        if(Employee.customerList.get(j).getID().equals(ID)) {
+                            Employee.customerList.get(j).addToLibrary(SongController.songList.get(i));
                             System.out.println("Successfully rented");
-                            j = EmployeeController.customerList.size();
+                            j = Employee.customerList.size();
                         }
                     }
                     i = SongController.songList.size();
@@ -196,11 +195,11 @@ public class CustomerController {
                         System.out.println("Wrong format, assuming return date is today.");
                         SongController.songList.get(i).setAutomaticReturnDate();
                     }
-                    for(int j = 0; j < EmployeeController.customerList.size(); j++){
-                        if(EmployeeController.customerList.get(j).getID().equals(ID)) {
-                            EmployeeController.customerList.get(j).removeFromLibrary(SongController.songList.get(i));
+                    for(int j = 0; j < Employee.customerList.size(); j++){
+                        if(Employee.customerList.get(j).getID().equals(ID)) {
+                            Employee.customerList.get(j).removeFromLibrary(SongController.songList.get(i));
                             System.out.println("Successfully rented");
-                            j = EmployeeController.customerList.size();
+                            j = Employee.customerList.size();
                         }
                     }
                     rent = SongController.songList.get(i).getDailyRent() * calcDays(i); // sets the variable 'rent' to the daily rent multiplied by the amount of days
@@ -216,7 +215,7 @@ public class CustomerController {
 
     public static void requestUpgrade(String ID) throws Exception {
         String upgID = Tools.getString("Enter your id: "); //Declares a String variable, which is used to remove customers
-        EmployeeController.upgradeRequestsID.add(upgID);
+        Employee.upgradeRequestsID.add(upgID);
         Screens.customerScreen(ID);
     }
 
@@ -225,13 +224,13 @@ public class CustomerController {
     // and with a few changes to this method allowed us to reuse this method for both  games and song albums
     // Fixed to that sorting is possible
     public static void rentItem(String item, String ID) throws Exception { // method to rent a game, by adding a game to a customers list
-        if(!EmployeeController.customerExists(ID)) {
+        if(!Employee.customerExists(ID)) {
             System.out.println("Customer does not exist!");
             Screens.customerScreen(ID);
         }
-        int customerIndex = EmployeeController.findCustomer(ID);
+        int customerIndex = Employee.findCustomer(ID);
         int selectionSorting;
-        if(!EmployeeController.customerList.get(customerIndex).libraryFull()) {
+        if(!Employee.customerList.get(customerIndex).libraryFull()) {
             ArrayList<Rentable> array;
             System.out.println("Current library: ");
             if (item.equals("Game")) {
@@ -297,12 +296,12 @@ public class CustomerController {
                             System.out.println("Wrong format, assuming rent date is today.");
                             array.get(i).setAutomaticRentDate();
                         }
-                        for (int j = 0; j < EmployeeController.customerList.size(); j++) {
-                            if (EmployeeController.customerList.get(j).getID().equals(ID)) {
-                                EmployeeController.customerList.get(j).addToLibrary(array.get(i));
+                        for (int j = 0; j < Employee.customerList.size(); j++) {
+                            if (Employee.customerList.get(j).getID().equals(ID)) {
+                                Employee.customerList.get(j).addToLibrary(array.get(i));
                                 array.get(i).addRentFrequency();
                                 System.out.println("Successfully rented");
-                                j = EmployeeController.customerList.size();
+                                j = Employee.customerList.size();
                             }
                         }
                         i = array.size();
@@ -319,14 +318,14 @@ public class CustomerController {
 
     //Changed so when returning creates a new RentHistoryItem object and adds to the arraylist in manager controller
     public static void returnItem(String item, String ID) throws Exception { // a method to return games to the store
-        if(!EmployeeController.customerExists(ID)) {
+        if(!Employee.customerExists(ID)) {
             System.out.println("Customer does not exist!");
             Screens.customerScreen(ID);
         }
         boolean leftReview = false;
         int rating = 0;
         String review = "";
-        int customerIndex = EmployeeController.findCustomer(ID);
+        int customerIndex = Employee.findCustomer(ID);
         final int CREDIT_COST = 5;
         ArrayList<Rentable> array;
         double rent = 0;
@@ -361,7 +360,7 @@ public class CustomerController {
                         Screens.customerScreen(ID);
                     }
 
-                    EmployeeController.customerList.get(customerIndex).addCredit();
+                    Employee.customerList.get(customerIndex).addCredit();
                     if(Tools.getString("Successfully returned, would you like to leave a review?(y/n)").equals("y")){
                         rating = Tools.getInt("Enter rating 1-5");
                         array.get(i).addRating(rating);
@@ -370,25 +369,25 @@ public class CustomerController {
                         leftReview = true;
                     }
 
-                    EmployeeController.customerList.get(customerIndex).removeFromLibrary(array.get(i));
+                    Employee.customerList.get(customerIndex).removeFromLibrary(array.get(i));
                     if(item.equals("Game")) {removeGame(array.get(i));}
                     if(item.equals("Song")) {removeSong(array.get(i));}
                     }
 
                     // sets the variable 'rent' to the daily rent multiplied by the amount of days
-                    if (EmployeeController.customerList.get(customerIndex).getCredit() >= CREDIT_COST){
-                        EmployeeController.customerList.get(customerIndex).removeCredit(CREDIT_COST);
+                    if (Employee.customerList.get(customerIndex).getCredit() >= CREDIT_COST){
+                        Employee.customerList.get(customerIndex).removeCredit(CREDIT_COST);
                         System.out.println("5 credits have been deducted from your account to pay for this item");
                         rent = 0;
                     } else {
                         System.out.println("The cost for renting the song for " + calcDays(i, array) + " days is: " + rent);
                     }
                     if(leftReview) {
-                        ManagerController.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i, array), rentID, rating, review));
+                        Manager.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i, array), rentID, rating, review));
                     } else {
-                        ManagerController.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i, array), rentID));
+                        Manager.rentHistory.add(new RentHistoryItem(rent, ID, (int) calcDays(i, array), rentID));
                     }
-                    EmployeeController.customerList.get(customerIndex).addSpent(rent);
+                    Employee.customerList.get(customerIndex).addSpent(rent);
                     array.get(i).addProfit(rent);
                     Screens.addTotalProfit(rent);
                     Screens.customerScreen(ID);
@@ -402,15 +401,15 @@ public class CustomerController {
 
 
     public static void sendMessage(String sender) throws Exception {
-        EmployeeController.viewAllCustomer(false);
+        Employee.viewAllCustomer(false);
         String recipient = Tools.getString("Who do you want to send a message to?");
 
-        if(EmployeeController.customerExists(recipient)){
+        if(Employee.customerExists(recipient)){
             String message = Tools.getString("Enter message: ");
 
             Message message1 = new Message(message, sender);
 
-            EmployeeController.customerList.get(EmployeeController.findCustomer(recipient)).addMessage(message1);
+            Employee.customerList.get(Employee.findCustomer(recipient)).addMessage(message1);
 
             System.out.println("Message sent!");
         } else {
@@ -420,12 +419,12 @@ public class CustomerController {
     }
 
     public static void removeMessage(String ID){
-        int customerIndex = EmployeeController.findCustomer(ID);
+        int customerIndex = Employee.findCustomer(ID);
 
-        EmployeeController.customerList.get(customerIndex).viewInbox();
+        Employee.customerList.get(customerIndex).viewInbox();
         int removeIndex = Tools.getInt("Which message do you want to remove? ") - 1;
         try {
-            EmployeeController.customerList.get(customerIndex).removeMessage(removeIndex);
+            Employee.customerList.get(customerIndex).removeMessage(removeIndex);
             System.out.println("Message has been deleted");
         } catch(Exception e){
             System.out.println("Message does not exist");

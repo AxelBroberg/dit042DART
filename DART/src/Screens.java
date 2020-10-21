@@ -33,11 +33,11 @@ public class Screens {
 
     public static void preCustomerScreen() throws Exception {
         String ID = Tools.getString("Please enter your ID");
-        for(int i = 0; i < EmployeeController.customerList.size(); i++){
-            if(EmployeeController.customerList.get(i).getID().equals(ID)){
+        for(int i = 0; i < Employee.customerList.size(); i++){
+            if(Employee.customerList.get(i).getID().equals(ID)){
                 customerScreen(ID);
             }
-            if(i == EmployeeController.customerList.size()){
+            if(i == Employee.customerList.size()){
                 System.out.println("Invalid ID. Sending you back to the main menu");
                 mainMenu();
             }
@@ -66,7 +66,7 @@ public class Screens {
             case '4' -> CustomerController.returnItem("Song", ID);
             case '5' -> CustomerController.sendMessage(ID);
             case '6' -> {
-                EmployeeController.customerList.get(EmployeeController.findCustomer(ID)).viewUnread();
+                Employee.customerList.get(Employee.findCustomer(ID)).viewUnread();
                 customerScreen(ID);
             }
             case '7' -> CustomerController.removeMessage(ID);
@@ -92,17 +92,39 @@ public class Screens {
         char choice = Tools.getChar("");
         Tools.validateChar(choice, screens);
         switch (choice) {
-            case '1' -> ManagerController.registerEmployee();
-            case '2' -> ManagerController.viewAllEmployee(true);
-            case '3' -> ManagerController.removeEmployee();
-            case '4' -> ManagerController.calcNetSalary();
-            case '5' -> ManagerController.bonus();
-            case '6' -> ManagerController.viewRentFrequency();
-            case '7' -> ManagerController.mostProfitable();
-            case '8' -> ManagerController.mostProfitableCustomer();
+            case '1' -> {
+                System.out.println(regEmployee());
+            }
+            case '2' -> System.out.println(Controller.viewAllEmployee());
+            case '3' -> {
+                Controller.removeEmployee(Tools.getString("Enter the ID of employee you want to remove: "));
+                System.out.println("Successfully removed!");
+            }
+            case '4' -> Manager.calcNetSalary();
+            case '5' -> Manager.bonus();
+            case '6' -> Manager.viewRentFrequency();
+            case '7' -> Manager.mostProfitable();
+            case '8' -> Manager.mostProfitableCustomer();
             case '9' -> {
             }
         }
+    }
+
+    public static Employee regEmployee() throws Exception {
+        Employee printContainer = null;
+        try {
+            printContainer = Controller.registerEmployee(
+                    Tools.getString("Enter employee name: "),
+                    Tools.getString("Enter employee address: "),
+                    Tools.getInt("Enter employee birth year: "),
+                    Tools.getDouble("Enter employee gross salary: "));
+            System.out.println("Random ID <" + printContainer.getID() + "> was assigned.");
+        } catch (Exception exception){
+            System.out.println(exception);
+            regEmployee();
+        }
+        System.out.println("Successfully added employee: ");
+        return printContainer;
     }
 
     public static void employeeScreen() throws Exception {
@@ -123,16 +145,16 @@ public class Screens {
         choice = Tools.getChar("");
         Tools.validateChar(choice, screens);
         switch (choice) {
-            case '1' -> EmployeeController.registerItem("game");
-            case '2' -> EmployeeController.removeItem("game");
-            case '3' -> EmployeeController.registerCustomer();
-            case '4' -> EmployeeController.removeCustomer();
+            case '1' -> Employee.registerItem("game");
+            case '2' -> Employee.removeItem("game");
+            case '3' -> Employee.registerCustomer();
+            case '4' -> Employee.removeCustomer();
             case '5' -> {System.out.println("Total profit is: " + totalProfit); employeeScreen();}
             case '6' -> GameController.empViewAllGames();
-            case '7' -> EmployeeController.viewAllCustomer(true);
-            case '8' -> EmployeeController.fillGames();
-            case '9' -> EmployeeController.viewAllUpgRequest();
-            case 'a' -> EmployeeController.upgradeCustomer();
+            case '7' -> Employee.viewAllCustomer(true);
+            case '8' -> Employee.fillGames();
+            case '9' -> Employee.viewAllUpgRequest();
+            case 'a' -> Employee.upgradeCustomer();
             case '0' -> {
             }
         }
