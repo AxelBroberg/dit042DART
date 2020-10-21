@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Game extends Rentable {
-    static ArrayList<Rentable> gameList = new ArrayList<>();
 
     private String genre;
 
@@ -28,28 +27,6 @@ public class Game extends Rentable {
         }
         return s;
     }
-
-
-    public static void customerViewAllGames(){
-
-        for ( Rentable game : gameList) {
-            System.out.println(game.toString());
-        }
-    }
-
-    public static void viewGamesByGenre(String genre){
-        for (Rentable game : gameList) {
-            if(game.getGenre().equals(genre)) {
-                System.out.println(game.toString());
-            }
-        }
-    }
-
-
-
-
-
-
 
 
 

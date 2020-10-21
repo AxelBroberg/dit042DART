@@ -1,3 +1,4 @@
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -39,6 +40,14 @@ public class Tools {
         double userInput = input.nextDouble();
         input.nextLine();
         return userInput;
+    }
+
+    public static long calcDays(Rentable item){ // a method that returns days between game was rented and returned
+        if(ChronoUnit.DAYS.between(item.getRentDate(), item.getReturnDate()) <= 0) {
+            throw new EarlyDateException("Invalid operation. Upon returning an item, the number of days rented must be positive.");
+        } else {
+            return ChronoUnit.DAYS.between(item.getRentDate(), item.getReturnDate());
+        }
     }
 
     // The UUID suggested for creating unique ID's creates a long string of numbers, letters and dashes.

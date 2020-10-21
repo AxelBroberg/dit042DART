@@ -18,8 +18,8 @@ public class Manager {
         Controller.employeeArrayList.add(employee);
     }
 
-    public static void removeEmployee(Employee removeEmployee) {
-        Controller.employeeArrayList.remove(removeEmployee);
+    public static boolean removeEmployee(Employee removeEmployee) {
+        return Controller.employeeArrayList.remove(removeEmployee);
     }
 
     public static double calcNetSalary(Employee employee) {
