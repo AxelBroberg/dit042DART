@@ -55,4 +55,8 @@ public class RentHistoryItem {
 
         return str;
     }
+
+    public double getRentExpense() {
+        return rentExpense;
+    }
 }

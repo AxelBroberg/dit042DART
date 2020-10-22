@@ -6,8 +6,7 @@ import java.util.Comparator;
 //To implement Epic Feature 7, we modified the class Game by
 //creating a new class called Rentable and having both games and songs inherit from it.
 
-public class Rentable implements Comparable<Rentable>{
-
+public abstract class Rentable implements Comparable<Rentable>{
     //Added profit and rentFrequency to implement Epic Feature 11 - Rent history
     protected String title;
     protected String ID;
@@ -21,7 +20,7 @@ public class Rentable implements Comparable<Rentable>{
     protected double profit;
     protected int rentFrequency;
 
-    Rentable(String title, double dailyRent, int year) throws Exception{
+    public Rentable(String title, double dailyRent, int year) throws Exception{
         if (title.isEmpty() || title.equals(" ") ){
             throw new NameEmptyException("Empty title is not allowed.");
         } else {

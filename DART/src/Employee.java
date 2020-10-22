@@ -19,7 +19,7 @@ public class Employee {
     private double netSalary;
     private final String name;
 
-    public Employee(String name, String address, int birthyear, double grossSalary) throws Exception{
+    public Employee(String name, String address, int birthyear, double grossSalary){
         if (name.isEmpty() || name.equals(" ") ){
             throw new NameEmptyException("Empty name is not allowed.");
         } else {
@@ -57,16 +57,16 @@ public class Employee {
         return s;
     }
 
-    public static Customer registerCustomer(Customer customer) throws Exception {
+    public static Customer registerCustomer(Customer customer){
         Controller.customerList.add(customer);
         return customer;
     }
 
-    public static boolean removeCustomer(Customer customer) throws Exception { // method that removes customers
+    public static boolean removeCustomer(Customer customer){ // method that removes customers
         return Controller.customerList.remove(customer);
     }
 
-    public static boolean upgradeCustomer(Customer customer) throws Exception { // method that removes customers
+    public static boolean upgradeCustomer(Customer customer){ // method that removes customers
         return customer.upgradeMembership();
     }
 
@@ -74,7 +74,7 @@ public class Employee {
         Game g = new Game(title, genre, price, year);
         System.out.print("You have added game: ");
         System.out.println(g.toString());
-        GameController.gameList.add(g);
+        Controller.gameList.add(g);
 
     }
 
@@ -82,7 +82,7 @@ public class Employee {
         Song s = new Song(title, artist, price, year);
         System.out.print("You have added game: ");
         System.out.println(s.toString());
-        SongController.songList.add(s);
+        Controller.songList.add(s);
 
     }
 
@@ -101,10 +101,10 @@ public class Employee {
             autoRegisterGame(gameName[i], genre[i], price[i], year[i]);
             autoRegisterSong(songName[i], artist[i], priceS[i], year[i]);
         }
-        Screens.employeeScreen();
+        //Screens.employeeScreen();
     }
 
-    public static boolean removeItem(Rentable item, int type) throws Exception {
+    public static boolean removeItem(Rentable item, int type){
         if(type == 1){
             return Controller.gameList.remove(item);
         } else

@@ -1,4 +1,5 @@
 import java.time.Year;
+import java.util.ArrayList;
 
 // We created this class because we got feedback on the last milestone that we are supposed to have a controller.
 // We decided that we would have one controller per object class
@@ -14,15 +15,34 @@ import java.time.Year;
 
 public class Manager {
 
-    public static void registerEmployee(Employee employee) {
-        Controller.employeeArrayList.add(employee);
+
+
+    public ArrayList<Employee> registerEmployee(ArrayList<Employee> employees, String name, String address, int bYear, double salary) {
+        Employee employee = new Employee(name, address, bYear, salary);
+        employees.add(employee);
+        return employees;
+    }
+    public String viewAllEmployee(ArrayList<Employee> employeeArrayList) {
+        String empStr = "";
+        for (Employee manager : employeeArrayList) {
+            empStr = empStr.concat(manager.toString() + System.lineSeparator());
+        }
+        return empStr;
     }
 
-    public static boolean removeEmployee(Employee removeEmployee) {
-        return Controller.employeeArrayList.remove(removeEmployee);
+    public boolean removeEmployee(ArrayList<Employee> employeeArrayList, Employee removeEmployee) {
+        return employeeArrayList.remove(removeEmployee);
     }
 
-    public static double calcNetSalary(Employee employee) {
+    public Employee findEmployee(ArrayList<Employee> employeeArrayList, String ID) {
+        for (int i = 0; i < employeeArrayList.size(); i++)
+            if (employeeArrayList.get(i).getID().equals(ID))
+                return employeeArrayList.get(i);
+        System.out.println("Employee with id " + ID + " not found.");
+        return null;
+    }
+
+    public double calcNetSalary(Employee employee) {
         if (employee == null) return 0;
 
         final double GROSS_SALARY_TAX = 0.7;
@@ -35,7 +55,7 @@ public class Manager {
         return employee.getNetSalary();
     }
 
-    public static int bonus(Employee employee) {
+    public int bonus(Employee employee) {
         final int[] BONUS = new int[]{4000, 6000, 7500};
         final int[] YEAR_CONDITION = new int[]{22, 30};
 
@@ -50,37 +70,37 @@ public class Manager {
     }
 
 
-    public static Rentable mostProfitable() {
+    public Rentable mostProfitable() {
         Rentable mostProfit = null;
-        if(GameController.gameList.size() > 0 && SongController.songList.size() > 0) {
-            mostProfit = GameController.gameList.get(0);
+        if(Controller.gameList.size() > 0 && Controller.songList.size() > 0) {
+            mostProfit = Controller.gameList.get(0);
 
-            for (Rentable game : GameController.gameList) {
+            for (Rentable game : Controller.gameList) {
                 if (game.getProfit() > mostProfit.getProfit()) {
                     mostProfit = game;
                 }
             }
 
-            for (Rentable song : SongController.songList) {
+            for (Rentable song : Controller.songList) {
                 if (song.getProfit() > mostProfit.getProfit()) {
                     mostProfit = song;
                 }
             }
         }
         //If no songs
-        else if(GameController.gameList.size() > 0){
-            mostProfit = GameController.gameList.get(0);
+        else if(Controller.gameList.size() > 0){
+            mostProfit = Controller.gameList.get(0);
 
-            for (Rentable game : GameController.gameList) {
+            for (Rentable game : Controller.gameList) {
                 if (game.getProfit() > mostProfit.getProfit()) {
                     mostProfit = game;
                 }
             }
         }
         //If no games
-        else if(SongController.songList.size() > 0){
-            mostProfit = SongController.songList.get(0);
-            for (Rentable song : SongController.songList) {
+        else if(Controller.songList.size() > 0){
+            mostProfit = Controller.songList.get(0);
+            for (Rentable song : Controller.songList) {
                 if (song.getProfit() > mostProfit.getProfit()) {
                     mostProfit = song;
                 }
@@ -89,7 +109,7 @@ public class Manager {
         return mostProfit;
     }
 
-    public static Customer mostProfitableCustomer() {
+    public Customer mostProfitableCustomer() {
         if (Controller.customerList.size() > 0) {
             Customer mostProfit = Controller.customerList.get(0);
             for (Customer customer : Controller.customerList)

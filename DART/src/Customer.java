@@ -34,6 +34,10 @@ public class Customer {
     private ArrayList<Message> inbox = new ArrayList<>();
     private double amountSpent;
 
+    public ArrayList<Rentable> getLibrary() {
+        return library;
+    }
+
     Customer(String name){
         this.name = name;
         this.membership = "regular";
@@ -194,12 +198,14 @@ public class Customer {
     public void addToLibrary(Rentable item){ library.add(item); }
     public void removeFromLibrary(Rentable item){ library.remove(item); }
 
-    public void upgradeMembership(){
-        switch (membership){
+    public boolean upgradeMembership(){
+        switch (membership) {
             case "regular" -> membership = "silver";
             case "silver" -> membership = "gold";
             case "gold" -> membership = "platinum";
         }
+
+        return false;
     }
 
     public String toString(){

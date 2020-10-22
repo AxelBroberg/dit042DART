@@ -11,9 +11,10 @@ import java.util.Scanner;
 // These are used inside of the code instead of every input, so that it will be clearer where we have scanners
 
 public class Tools {
+    private static Scanner input = new Scanner(System.in);
 
     public static String getString(String message){
-        Scanner input = new Scanner(System.in);
+        //Scanner input = new Scanner(System.in);
         System.out.println(message);
         String userInput = input.nextLine();
         return userInput;

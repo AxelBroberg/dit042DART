@@ -5,7 +5,7 @@ public class Game extends Rentable {
 
     private String genre;
 
-    Game(String title, String genre, double dailyRent, int year) throws Exception {
+    public Game(String title, String genre, double dailyRent, int year) throws Exception {
         super(title, dailyRent, year);
         this.genre = genre;
     }
