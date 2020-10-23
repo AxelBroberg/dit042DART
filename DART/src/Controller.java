@@ -4,21 +4,50 @@ import java.util.Collections;
 public class Controller {
     private ArrayList<Employee> employeeArrayList;
     private ArrayList<RentHistoryItem> rentHistory;
-    static ArrayList<Customer> customerList = new ArrayList<>();//creates ArrayList named 'customerList' containing Customers
-    static ArrayList<Customer> upgradeRequests = new ArrayList<Customer>();
+    private ArrayList<Customer> customerList;//creates ArrayList named 'customerList' containing Customers
+    private ArrayList<Customer> upgradeRequests;
     private ArrayList<Rentable> itemsList;// adapt!
-    static ArrayList<Rentable> songList = new ArrayList();
-    static ArrayList<Rentable> gameList = new ArrayList<>();
+    /*static ArrayList<Rentable> songList = new ArrayList();
+    static ArrayList<Rentable> gameList = new ArrayList<>();*/
     private static double totalRentProfit = 0;
-    private static Manager manager = new Manager();
+    //private static Manager manager = new Manager();
 
     public Controller(){
         this.employeeArrayList = new ArrayList<>();
         this.rentHistory = new ArrayList<>();
         this.itemsList = new ArrayList<>();
-
+        this.customerList = new ArrayList<>();
+        this.upgradeRequests = new ArrayList<>();
     }
 
+    public void screenChoice(char x) throws Exception {
+        switch (x) {
+            case 'm','M' -> {
+                // if (Tools.password("admin1234")) managerScreen();
+                boolean verified = Tools.password("admin1234");
+                if(verified){
+                    managerLoggedIn();
+                }
+            }
+            case 'e','E' -> {
+                //if (Tools.password("password123")) employeeScreen();
+                boolean verified = Tools.password("password123");
+                if(verified){
+                    employeeLoggedIn();
+                }
+            }
+            case 'c','C' -> {
+                //preCustomerScreen();
+                String ID = Tools.getString("Enter customer ID");
+                for (Customer customer : customerList) {
+                    if (customer.getID().equals(ID)) {
+                        customerLoggedIn(customer);
+                    }
+                }
+            }
+            case 'x','X' -> DartMain.exitProgram();
+        }
+    }
 
     public void managerLoggedIn(){
         Manager manager = new Manager();
@@ -63,13 +92,19 @@ public class Controller {
                     System.out.println("Employee net salary is: " + manager.calcNetSalary(toFind));
                 }
                 case '5' -> {
-                }//System.out.println("Employee bonus is: " + Controller.bonus(Tools.getString("Enter ID of employee to see what bonus employee is eligible to: ")));
-                case '6' -> {
-                }//System.out.println(Controller.viewRentFrequency());
-                case '7' -> {
-                    // if(Controller.mostProfitable() != null) System.out.println("Most profitable item: " + Controller.mostProfitable());
+                    String empId = Tools.getString("Enter ID of employee to get their bonus");
+                    Employee toFind = manager.findEmployee(employeeArrayList, empId);
+                    System.out.println("Employee bonus is: " + manager.bonus(toFind));
                 }
-                case '8' ->{} //System.out.println("Most valued customer: " + controller.mostProfitableCustomer());
+                case '6' -> {
+                    System.out.println(manager.viewRentFrequency(itemsList));
+                }
+                case '7' -> {
+                     if(manager.mostProfitable(itemsList) != null) System.out.println("Most profitable item: " + manager.mostProfitable(itemsList));
+                }
+                case '8' ->{
+                     if(manager.mostProfitable(itemsList) != null) System.out.println("Most valued customer: " + manager.mostProfitableCustomer(customerList));
+                }
                 case '9' -> {
                 }
             }
@@ -77,6 +112,84 @@ public class Controller {
     }
 
 
+
+    public void customerLoggedIn(Customer customer){
+        char choice;
+        do {
+            String screens = "1234567";
+            System.out.println("Customer Screen - Type one of the options below:");
+            System.out.println("1. Rent an item");
+            System.out.println("2. Return an item");
+            System.out.println("3. Send message");
+            System.out.println("4. View unread messages");
+            System.out.println("5. Remove a message");
+            System.out.println("6. Request membership upgrade");
+            System.out.println("7. Return to Main Menu");
+            choice = Tools.getChar("");
+            Tools.validateChar(choice, screens);
+            switch (choice) {
+                case '1' -> {
+                    int sorting;
+                    int rentItem = Tools.getInt("1. Game" + System.lineSeparator() + "2. Song Album");
+                    if (rentItem == 1) {
+                        sorting = Tools.getInt("1. Show all games" + System.lineSeparator() + "2. Search by genre" + System.lineSeparator() + "3. Sort by ratings" + System.lineSeparator() + "4. Sort by year");
+                    } else {
+                        sorting = Tools.getInt("1. Show all songs" + System.lineSeparator() + "2. Search by year" + System.lineSeparator() + "3. Sort by ratings" + System.lineSeparator() + "4. Sort by year");
+                    }
+                    if (sorting == 2 && rentItem == 1) { //Shows games, searched by genre
+                        System.out.println(customer.showItems(itemsList, rentItem, sorting, Tools.getString("Enter genre: ")));
+                    } else if (sorting == 2 && rentItem == 2) { //Shows songs, searched by year
+                        System.out.println(customer.showItems(itemsList, rentItem, sorting, Tools.getString("Enter year:")));
+                    } else { //Shows selected item, sorted by selected sorting
+                        System.out.println(customer.showItems(itemsList, rentItem, sorting, ""));
+                    }
+
+                    if (customer.rentItem(customer.findItem(itemsList, rentItem, Tools.getString("Enter ID of item to rent")), Tools.getString("What is the rent date? (YYYY-MM-DD)"))) {
+                        System.out.println("Successfully rented");
+                    } else {
+                        System.out.println("Item could not be rented");
+                    }
+
+                }
+
+                case '2' -> {
+                    System.out.println("Current library" + System.lineSeparator() + customer.viewRented());
+                    RentHistoryItem results = customer.returnItem(rentHistory, totalRentProfit,
+                            Tools.getString("Enter ID of item to return"),
+                            Tools.getString("Leave a review? (leave blank otherwise): "),
+                            Tools.getInt("Rating?: (1-5) 0 to skip"),
+                            Tools.getString("What is the return date? (YYYY-MM-DD)"),
+                            customer);
+                    if (results == null) {
+                        System.out.println("Unable to return item");
+                    } else {
+                        System.out.println("Successfully returned");
+                        System.out.println(results);
+                    }
+                }
+
+                case '3' -> {
+                    customer.sendMessage(customerList, Tools.getString("Enter Message: "), Tools.getString("Enter id of recipient: "), customer);
+                    // customerScreen(customer);
+                }
+                case '4' -> {
+                    System.out.println(customer.viewUnread(customer));
+                    // customerScreen(customer);
+                }
+                case '5' -> {
+                    System.out.println(customer.viewInbox(customer));
+                    customer.removeMessage(Tools.getInt("Enter index of message to remove: ") - 1, customer);
+                    // customerScreen(customer);
+                }
+                case '6' -> {
+                    customer.requestUpgrade(upgradeRequests, customer);
+                    // customerScreen(customer);
+                }
+                case '7' -> {
+                }
+            }
+        }while(choice != 7);
+    }
 
 
 
@@ -124,39 +237,15 @@ public class Controller {
         return manager.mostProfitable();
     }
 */
-    public String viewRentFrequency() {
-        String rentFreq = "";
-        for (Rentable game : gameList) {
-            if(game.getRentFrequency() > 0 ){
-                rentFreq = rentFreq.concat(game.getTitle() + " : " + game.getRentFrequency()) + System.lineSeparator();
-            }
-        }
-        for (Rentable song : songList) {
-            if(song.getRentFrequency() > 0 ){
-                rentFreq = rentFreq.concat(song.getTitle() + " : " + song.getRentFrequency());
-            }
-        }
-        return rentFreq;
-    }
-
-    public Customer mostProfitableCustomer() {
-        return manager.mostProfitableCustomer();
-    }
 
 
 
-    public String showItems(){
-        String itemStr = "";
-        for (Rentable game : gameList) {
-            itemStr = itemStr.concat(game.toString() + System.lineSeparator());
-        }
-        for (Rentable song  : songList) {
-            itemStr = itemStr.concat(song.toString() + System.lineSeparator());
-        }
-        return itemStr;
-    }
 
-    public static Customer registerCustomer(String name) throws Exception{
+
+
+
+
+    /*public static Customer registerCustomer(String name) throws Exception{
         Customer customer = new Customer(name);
         return Employee.registerCustomer(customer);
     }
@@ -191,14 +280,14 @@ public class Controller {
         return false;
     }
 
-    public static Rentable registerItem(int type, String title, String genreArtist, double rent, int releaseYear) throws Exception {
+    public Rentable registerItem(int type, String title, String genreArtist, double rent, int releaseYear) throws Exception {
         Rentable item;
         if(type == 1){
             item = new Game(title, genreArtist, rent, releaseYear);
-            gameList.add(item);
+            itemsList.add(item);
         } else {
             item = new Song(title, genreArtist, rent, releaseYear);
-            songList.add(item);
+            itemsList.add(item);
         }
         return item;
     }
@@ -211,17 +300,17 @@ public class Controller {
         return null;
     }
 
-    public static boolean removeItem(int item, String ID) throws Exception{
+    public boolean removeItem(int item, String ID) throws Exception{
         return Employee.removeItem(findItem(item, ID), item);
     }
 
-    public static Rentable findItem(int item, String ID){
+    public Rentable findItem(int item, String ID){
         ArrayList<Rentable> array;
         int i;
         if(item == 1){
-            array = gameList;
+            array = itemsList;
         } else {
-            array = songList;
+            array = itemsList;
         }
 
         for(i = 0; i < array.size(); i++){
@@ -234,7 +323,7 @@ public class Controller {
 
     public static void addCustomer(Customer c){ // <- FOR TESTING
         customerList.add(c);
-    }
+    }*/
 
     //--------------------------------------------------------------------------------------
     /*
@@ -260,119 +349,22 @@ public class Controller {
      */
     //---------------------------- METHODS RELATED TO CUSTOMER -----------------------------
 
-    public static Customer getCustomer(String ID){
-        for (Customer customer : customerList) {
-            if (customer.getID().equals(ID)) {
-                return customer;
-            }
-        }
-        return null;
-    }
 
-    public static String viewAllSongs(){
+
+    /*public String viewAllSongs(){
         String songStr = "";
-        for ( Rentable song : songList) {
+        for ( Rentable song : itemsList) {
             songStr = songStr.concat(song.toString() + System.lineSeparator());
         }
         return songStr;
     }
 
-    public static String viewSongByYear(int year){
-        String songStr = "";
-        for (Rentable song : songList) {
-            if(song.getYear() == year) {
-                songStr = songStr.concat(song.toString() + System.lineSeparator());
-            }
-        }
-        return songStr;
-    }
-
-    private static String viewAllGames(){
+    private String viewAllGames(){
         String gameStr = "";
-        for (Rentable game : gameList) {
+        for (Rentable game : itemsList) {
             gameStr = gameStr.concat(game.toString() + System.lineSeparator());
         }
         return gameStr;
-    }
-
-    public static String viewGamesByGenre(String genre){
-        String gameStr = "";
-        for (Rentable game : gameList) {
-            if(game.getGenre().equals(genre)) {
-                gameStr = gameStr.concat(game.toString() + System.lineSeparator());
-            }
-        }
-        return gameStr;
-    }
-    //CHANGED TO TAKE NO INPUTS AND PRINT NO OUTPUTS.
-    //TAKES NECESSARY INFO AS PARAMETERS FROM SCREENS-CLASS(MAIN) AND RETURNS RESULTS
-    public static String showItems(int itemType, int selectionSorting, String optionalGenreOrYear){
-        String itemStr = "";
-        if (itemType == 1) {
-            ArrayList<Rentable> array = gameList;
-            if(selectionSorting == 1) {
-                return viewAllGames();
-            } else if (selectionSorting == 2) {
-                return viewGamesByGenre(optionalGenreOrYear);
-            } else if (selectionSorting == 3){
-                array.sort(new RatingsComparator());
-                Collections.reverse(array);
-                for (Rentable game: array) {
-                    itemStr = itemStr.concat(game.toString() + System.lineSeparator());
-                }
-                return itemStr;
-            } else if (selectionSorting == 4){
-                array.sort(new YearComparator());
-                Collections.reverse(array);
-                for (Rentable game: array) {
-                    itemStr = itemStr.concat(game.toString() + System.lineSeparator());
-                }
-                return itemStr;
-            }
-
-        } else {
-            ArrayList<Rentable> array = songList;
-            if(selectionSorting == 1) {
-                return viewAllSongs();
-            } else if (selectionSorting == 2){
-                try {
-                    int year = Integer.parseInt(optionalGenreOrYear);
-                    return viewSongByYear(year);
-                } catch (Exception exception){
-                    return ("Year entered in wrong format (should be YYYY), aborting rent process");
-                }
-            } else if (selectionSorting == 3){
-                array.sort(new RatingsComparator());
-                Collections.reverse(array);
-                for ( Rentable song: array) {
-                    itemStr = itemStr.concat(song.toString() + System.lineSeparator());
-                }
-                return itemStr;
-            } else if (selectionSorting == 4){
-                array.sort(new YearComparator()); // was Collections.sort(array, new YearComparator());
-                Collections.reverse(array);
-                for ( Rentable song: array) {
-                    itemStr = itemStr.concat(song.toString() + System.lineSeparator());
-                }
-                return itemStr;
-            }
-        }
-        return "Could not find any items";
-    }
-
-    public static boolean rentItem(int itemType, String itemID, String rentDate, Customer customer) {
-        ArrayList<Rentable> array = gameList;
-        if(itemType == 1){
-            array = gameList;
-        } else if (itemType == 2){
-            array = songList;
-        }
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getID().equals(itemID)) {
-                return customer.rentItem(array.get(i), rentDate);
-            }
-        }
-        return false;
     }
 
     public RentHistoryItem returnItem(String returnID, String review, int rating, String returnDate, Customer customer){
@@ -384,35 +376,9 @@ public class Controller {
             totalRentProfit = totalRentProfit + returnResults.getRentExpense();
             return returnResults;
         }
-    }
-
-    public static boolean sendMessage(String message, String recipientID, Customer sender){
-        Customer recipient = getCustomer(recipientID);
-        if (recipient == null){
-            return false;
-        } else {
-            recipient.addMessage(new Message(message, sender.getID()));
-            return true;
-        }
-    }
-
-    public static String viewInbox(Customer customer){
-        return customer.viewInbox();
-    }
-
-    public static String viewUnread(Customer customer){
-        return customer.viewUnread();
-    }
-
-    public static void removeMessage(int index, Customer customer){
-        if(index <= customer.getInboxSize()) {
-            customer.removeMessage(index);
-        }
-    }
+    }*/
 
 
-    public static void requestUpgrade(Customer customer){
-        upgradeRequests.add(customer);
-    }
+
 
 }

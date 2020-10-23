@@ -16,22 +16,7 @@ public class Screens {
         totalProfit = totalProfit + profit;
     }
 
-    public void screenChoice(char x) throws Exception {
-        switch (x) {
-            case 'm','M' -> {
-               // if (Tools.password("admin1234")) managerScreen();
-                boolean verified = Tools.password("admin1234");
-                if(verified){
-                    controller.managerLoggedIn();
-                }
-            }
-            case 'e','E' -> { 
-                if (Tools.password("password123")) employeeScreen();
-            }
-            case 'c','C' -> preCustomerScreen();
-            case 'x','X' -> DartMain.exitProgram();
-        }
-    }
+
 
     public void mainMenu(){ //Wall of text function
         System.out.println("Main Menu:");
@@ -44,16 +29,20 @@ public class Screens {
         
     }
 
-    public void preCustomerScreen() throws Exception {
+    public void screenChoice(char x){
+        controller.screenChoice(x);
+    }
+
+    /*public void preCustomerScreen() throws Exception {
         Customer customer = controller.getCustomer(Tools.getString("Enter ID to log in"));
         if (customer == null){
             System.out.println("ID does not exist");
         } else {
             customerScreen(customer);
         }
-    }
+    }*/
 
-    public void customerScreen(Customer customer) throws Exception {
+    /*public void customerScreen(Customer customer) throws Exception {
         char choice;
         do {
             String screens = "1234567";
@@ -84,7 +73,7 @@ public class Screens {
                         System.out.println(controller.showItems(rentItem, sorting, ""));
                     }
 
-                    if (controller.rentItem(rentItem, Tools.getString("Enter ID of item to rent"), Tools.getString("What is the rent date? (YYYY-MM-DD)"), customer)) {
+                    if (controller.rentItem(Tools.getString("Enter ID of item to rent"), Tools.getString("What is the rent date? (YYYY-MM-DD)"), customer)) {
                         System.out.println("Successfully rented");
                     } else {
                         System.out.println("Item could not be rented");
@@ -126,7 +115,7 @@ public class Screens {
                 }
             }
         }while(choice != 7);
-    }
+    }*/
 
     //
    /* public void managerScreen() throws Exception {
@@ -229,7 +218,7 @@ public class Screens {
                     System.out.println("Error removing customer.");
             }
             case '5' -> {System.out.println("Total profit is: " + totalProfit); employeeScreen();}
-            case '6' -> System.out.println(controller.showItems());
+            case '6' -> {}//System.out.println(controller.showItems());
             case '7' -> System.out.println(controller.viewAllCustomer());
             case '8' -> Employee.fillGames();
             case '9' -> System.out.println(controller.viewAllUpgRequest());

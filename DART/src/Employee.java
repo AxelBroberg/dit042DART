@@ -57,14 +57,14 @@ public class Employee {
         return s;
     }
 
-    public static Customer registerCustomer(Customer customer){
+    /*public static Customer registerCustomer(Customer customer){
         Controller.customerList.add(customer);
         return customer;
     }
 
     public static boolean removeCustomer(Customer customer){ // method that removes customers
         return Controller.customerList.remove(customer);
-    }
+    }*/
 
     public static boolean upgradeCustomer(Customer customer){ // method that removes customers
         return customer.upgradeMembership();

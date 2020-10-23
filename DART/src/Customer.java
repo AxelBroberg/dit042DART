@@ -1,4 +1,6 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 // Changes because of the feedback we got on the last milestone:
 // Moved the ArrayLists customerGames & customerList to the CustomerController
@@ -36,6 +38,89 @@ public class Customer {
 
     public ArrayList<Rentable> getLibrary() {
         return library;
+    }
+
+    public String viewGamesByGenre(ArrayList<Rentable> itemsList, String genre){
+        String gameStr = "";
+        for (Rentable game : itemsList) {
+            if(game.getGenre().equals(genre)) {
+                gameStr = gameStr.concat(game.toString() + System.lineSeparator());
+            }
+        }
+        return gameStr;
+    }
+
+    public String viewSongByYear(ArrayList<Rentable> itemsList, int year){
+        String songStr = "";
+        for (Rentable song : itemsList) {
+            if(song.getYear() == year) {
+                songStr = songStr.concat(song.toString() + System.lineSeparator());
+            }
+        }
+        return songStr;
+    }
+
+    public String showItems(ArrayList<Rentable> itemsList, int itemType, int selectionSorting, String optionalGenreOrYear){
+        String itemStr = "";
+        if (itemType == 1) {
+            ArrayList<Rentable> array = itemsList;
+            if(selectionSorting == 1) {
+                return showItems(itemsList);
+            } else if (selectionSorting == 2) {
+                return viewGamesByGenre(itemsList, optionalGenreOrYear);
+            } else if (selectionSorting == 3){
+                array.sort(new RatingsComparator());
+                Collections.reverse(array);
+                for (Rentable game: array) {
+                    itemStr = itemStr.concat(game.toString() + System.lineSeparator());
+                }
+                return itemStr;
+            } else if (selectionSorting == 4){
+                array.sort(new YearComparator());
+                Collections.reverse(array);
+                for (Rentable game: array) {
+                    itemStr = itemStr.concat(game.toString() + System.lineSeparator());
+                }
+                return itemStr;
+            }
+
+        } else {
+            ArrayList<Rentable> array = itemsList;
+            if(selectionSorting == 1) {
+                return showItems(itemsList);
+            } else if (selectionSorting == 2){
+                try {
+                    int year = Integer.parseInt(optionalGenreOrYear);
+                    return viewSongByYear(itemsList, year);
+                } catch (Exception exception){
+                    return ("Year entered in wrong format (should be YYYY), aborting rent process");
+                }
+            } else if (selectionSorting == 3){
+                array.sort(new RatingsComparator());
+                Collections.reverse(array);
+                for ( Rentable song: array) {
+                    itemStr = itemStr.concat(song.toString() + System.lineSeparator());
+                }
+                return itemStr;
+            } else if (selectionSorting == 4){
+                array.sort(new YearComparator()); // was Collections.sort(array, new YearComparator());
+                Collections.reverse(array);
+                for ( Rentable song: array) {
+                    itemStr = itemStr.concat(song.toString() + System.lineSeparator());
+                }
+                return itemStr;
+            }
+        }
+        return "Could not find any items";
+    }
+    public String showItems(ArrayList<Rentable> itemsList){
+
+        String itemStr = "";
+        for (Rentable rentable : itemsList) {
+            itemStr = itemStr.concat(rentable.toString() + System.lineSeparator());
+        }
+
+        return itemStr;
     }
 
     Customer(String name){
@@ -80,6 +165,71 @@ public class Customer {
 
     public void removeCredit(int remove){
         this.credit -= remove;
+    }
+
+    public Rentable findItem(ArrayList<Rentable> itemsList, int item, String ID){
+        ArrayList<Rentable> array;
+        int i;
+        if(item == 1){
+            array = itemsList;
+        } else {
+            array = itemsList;
+        }
+
+        for(i = 0; i < array.size(); i++){
+            if(array.get(i).getID().equals(ID)){
+                return array.get(i);
+            }
+        }
+        return null;
+    }
+
+    public RentHistoryItem returnItem(ArrayList<RentHistoryItem> rentHistory, double totalRentProfit, String returnID, String review, int rating, String returnDate, Customer customer){
+        RentHistoryItem returnResults = customer.returnItem(returnID, review, rating, returnDate);
+        if (returnResults == null){
+            return null;
+        } else {
+            rentHistory.add(returnResults);
+            totalRentProfit = totalRentProfit + returnResults.getRentExpense();
+            return returnResults;
+        }
+    }
+
+    public static String viewInbox(Customer customer){
+        return customer.viewInbox();
+    }
+
+    public static void removeMessage(int index, Customer customer){
+        if(index <= customer.getInboxSize()) {
+            customer.removeMessage(index);
+        }
+    }
+
+    public static void requestUpgrade(ArrayList<Customer> upgradeRequests, Customer customer){
+        upgradeRequests.add(customer);
+    }
+
+    public static boolean sendMessage(ArrayList<Customer> customerList, String message, String recipientID, Customer sender){
+        Customer recipient = getCustomer(customerList, recipientID);
+        if (recipient == null){
+            return false;
+        } else {
+            recipient.addMessage(new Message(message, sender.getID()));
+            return true;
+        }
+    }
+
+    public static Customer getCustomer(ArrayList<Customer> customerList, String ID){
+        for (Customer customer : customerList) {
+            if (customer.getID().equals(ID)) {
+                return customer;
+            }
+        }
+        return null;
+    }
+
+    public static String viewUnread(Customer customer){
+        return customer.viewUnread();
     }
 
     //---------------

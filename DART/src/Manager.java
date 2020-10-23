@@ -17,10 +17,24 @@ public class Manager {
 
 
 
-    public ArrayList<Employee> registerEmployee(ArrayList<Employee> employees, String name, String address, int bYear, double salary) {
-        Employee employee = new Employee(name, address, bYear, salary);
+    public void registerEmployee(ArrayList<Employee> employees, String name, String address, int bYear, double salary) {
+        Employee employee = null;
+        boolean correct;
+
+        do{
+            try {
+                employee = new Employee(name, address, bYear, salary);
+                correct = true;
+            } catch (NameEmptyException e) {
+                correct = false;
+                name = Tools.getString("Please input name again: ");
+            } catch (NegativeSalaryException e){
+                correct = false;
+                salary = Tools.getDouble("Please input salary again: ");
+            }
+        } while (correct || employee == null);
+
         employees.add(employee);
-        return employees;
     }
     public String viewAllEmployee(ArrayList<Employee> employeeArrayList) {
         String empStr = "";
@@ -35,9 +49,9 @@ public class Manager {
     }
 
     public Employee findEmployee(ArrayList<Employee> employeeArrayList, String ID) {
-        for (int i = 0; i < employeeArrayList.size(); i++)
-            if (employeeArrayList.get(i).getID().equals(ID))
-                return employeeArrayList.get(i);
+        for (Employee employee : employeeArrayList)
+            if (employee.getID().equals(ID))
+                return employee;
         System.out.println("Employee with id " + ID + " not found.");
         return null;
     }
@@ -69,50 +83,40 @@ public class Manager {
         return bonus;
     }
 
+    public String viewRentFrequency(ArrayList<Rentable> itemsList) {
+        String rentFreq = "";
 
-    public Rentable mostProfitable() {
+        for (Rentable game : itemsList) {
+            if(game.getRentFrequency() > 0 ){
+                rentFreq = rentFreq.concat(game.getTitle() + " : " + game.getRentFrequency()) + System.lineSeparator();
+            }
+        }
+        for (Rentable song : itemsList) {
+            if(song.getRentFrequency() > 0 ){
+                rentFreq = rentFreq.concat(song.getTitle() + " : " + song.getRentFrequency());
+            }
+        }
+        return rentFreq;
+    }
+
+
+    public Rentable mostProfitable(ArrayList<Rentable> itemsList) {
         Rentable mostProfit = null;
-        if(Controller.gameList.size() > 0 && Controller.songList.size() > 0) {
-            mostProfit = Controller.gameList.get(0);
-
-            for (Rentable game : Controller.gameList) {
-                if (game.getProfit() > mostProfit.getProfit()) {
-                    mostProfit = game;
-                }
-            }
-
-            for (Rentable song : Controller.songList) {
-                if (song.getProfit() > mostProfit.getProfit()) {
-                    mostProfit = song;
-                }
-            }
-        }
-        //If no songs
-        else if(Controller.gameList.size() > 0){
-            mostProfit = Controller.gameList.get(0);
-
-            for (Rentable game : Controller.gameList) {
-                if (game.getProfit() > mostProfit.getProfit()) {
-                    mostProfit = game;
-                }
-            }
-        }
-        //If no games
-        else if(Controller.songList.size() > 0){
-            mostProfit = Controller.songList.get(0);
-            for (Rentable song : Controller.songList) {
-                if (song.getProfit() > mostProfit.getProfit()) {
-                    mostProfit = song;
+        if(itemsList.size() > 0) {
+            mostProfit = itemsList.get(0);
+            for (Rentable rentable : itemsList) {
+                if (rentable.getProfit() > mostProfit.getProfit()) {
+                    mostProfit = rentable;
                 }
             }
         }
         return mostProfit;
     }
 
-    public Customer mostProfitableCustomer() {
-        if (Controller.customerList.size() > 0) {
-            Customer mostProfit = Controller.customerList.get(0);
-            for (Customer customer : Controller.customerList)
+    public Customer mostProfitableCustomer(ArrayList<Customer> customerList) {
+        if (customerList.size() > 0) {
+            Customer mostProfit = customerList.get(0);
+            for (Customer customer : customerList)
                 if (customer.getAmountSpent() > customer.getAmountSpent())
                     mostProfit = customer;
 
