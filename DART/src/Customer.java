@@ -113,6 +113,9 @@ public class Customer {
         }
         return "Could not find any items";
     }
+
+
+
     public String showItems(ArrayList<Rentable> itemsList){
 
         String itemStr = "";
@@ -195,21 +198,21 @@ public class Customer {
         }
     }
 
-    public static String viewInbox(Customer customer){
+    public String viewInbox(Customer customer){
         return customer.viewInbox();
     }
 
-    public static void removeMessage(int index, Customer customer){
+    public void removeMessage(int index, Customer customer){
         if(index <= customer.getInboxSize()) {
             customer.removeMessage(index);
         }
     }
 
-    public static void requestUpgrade(ArrayList<Customer> upgradeRequests, Customer customer){
+    public void requestUpgrade(ArrayList<Customer> upgradeRequests, Customer customer){
         upgradeRequests.add(customer);
     }
 
-    public static boolean sendMessage(ArrayList<Customer> customerList, String message, String recipientID, Customer sender){
+    public boolean sendMessage(ArrayList<Customer> customerList, String message, String recipientID, Customer sender){
         Customer recipient = getCustomer(customerList, recipientID);
         if (recipient == null){
             return false;
@@ -219,7 +222,7 @@ public class Customer {
         }
     }
 
-    public static Customer getCustomer(ArrayList<Customer> customerList, String ID){
+    public Customer getCustomer(ArrayList<Customer> customerList, String ID){
         for (Customer customer : customerList) {
             if (customer.getID().equals(ID)) {
                 return customer;
@@ -228,7 +231,7 @@ public class Customer {
         return null;
     }
 
-    public static String viewUnread(Customer customer){
+    public String viewUnread(Customer customer){
         return customer.viewUnread();
     }
 

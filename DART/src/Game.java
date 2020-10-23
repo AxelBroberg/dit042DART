@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-
 public class Game extends Rentable {
 
     private String genre;

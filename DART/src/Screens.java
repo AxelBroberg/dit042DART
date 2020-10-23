@@ -1,8 +1,6 @@
-import javafx.stage.Screen;
 
-import javax.tools.Tool;
 
-public class Screens {
+/*public class Screens {
     private static double totalProfit;
     private Controller controller;
     // Based on the feedback from the last milestone we moved the screenChoice method to here
@@ -170,7 +168,7 @@ public class Screens {
         return printContainer;
     } */
 
-    public void employeeScreen() throws Exception {
+  /*  public void employeeScreen() throws Exception {
         char choice;
         String screens = "1234567890a";
         System.out.println("Employee Screen - Type one of the options below:");
@@ -220,7 +218,7 @@ public class Screens {
             case '5' -> {System.out.println("Total profit is: " + totalProfit); employeeScreen();}
             case '6' -> {}//System.out.println(controller.showItems());
             case '7' -> System.out.println(controller.viewAllCustomer());
-            case '8' -> Employee.fillGames();
+            case '8' -> employee.fillGames(itemsList);
             case '9' -> System.out.println(controller.viewAllUpgRequest());
             case 'a' -> {
                 if(controller.upgradeCustomer(Tools.getString("Enter the ID of the customer you want to upgrade: "))){
@@ -234,4 +232,4 @@ public class Screens {
     }
 }
 
-
+*/

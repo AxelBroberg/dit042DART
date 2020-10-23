@@ -86,13 +86,14 @@ public class Tools {
         return sb.toString(); // Returns the sb variable as a string
     }
 
-    public static char validateChar(char x, String correct){ //Creates a function that has the purpose to check if the input is correct
+    public static boolean validateChar(char x, String correct){ //Creates a function that has the purpose to check if the input is correct
         Scanner valChar = new Scanner(System.in); //Creates a new Scanner, which is only used inside of this function
         boolean programRunning = true; //Used so we can exit the entire while loop
         while(programRunning) {
             for (int i = 0; i < correct.length(); i++) { //A for loop that loops the same amount of times as the length of the correct(correctAnswers) string
                 if (x == correct.charAt(i)) { //An if statement that is used to check whether the character x(mainMenu) is in the correct(correctAnswers) string
                     programRunning = false;
+                    return true;
                 }
             }
             if(programRunning) {
@@ -100,7 +101,7 @@ public class Tools {
                 x = valChar.next().charAt(0); //Makes the user input their menu choice again, if the earlier choice wasn't a valid character
             }
         }
-        return x; //Returns a char from the function
+        return false;
     }
 
     public static boolean password(String correctPassword){

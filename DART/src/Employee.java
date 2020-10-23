@@ -1,5 +1,6 @@
 
 import java.time.Year;
+import java.util.ArrayList;
 
 // Changes because of the feedback we got on the last milestone:
 // Moved the ArrayList employeeArrayList to the EmployeeController
@@ -35,6 +36,8 @@ public class Employee {
         this.ID = Tools.randomizeID();
     }
 
+    public String getName() { return name; }
+
     public void setBirthyear(int birthyear){ this.birthyear = birthyear; }
     public int getBirthyear(){ return birthyear; }
 
@@ -66,27 +69,127 @@ public class Employee {
         return Controller.customerList.remove(customer);
     }*/
 
-    public static boolean upgradeCustomer(Customer customer){ // method that removes customers
-        return customer.upgradeMembership();
-    }
-
-    public static void autoRegisterGame(String title, String genre, double price, int year) throws Exception { // Method for adding games, used for testing purposes
+    public void autoRegisterGame(ArrayList<Rentable> itemsList, String title, String genre, double price, int year) throws Exception { // Method for adding games, used for testing purposes
         Game g = new Game(title, genre, price, year);
         System.out.print("You have added game: ");
         System.out.println(g.toString());
-        Controller.gameList.add(g);
+        itemsList.add(g);
 
     }
 
-    public static void autoRegisterSong(String title, String artist, double price, int year) throws Exception { // Method for adding games, used for testing purposes
+    public void autoRegisterSong(ArrayList<Rentable> itemsList, String title, String artist, double price, int year) throws Exception { // Method for adding games, used for testing purposes
         Song s = new Song(title, artist, price, year);
         System.out.print("You have added game: ");
         System.out.println(s.toString());
-        Controller.songList.add(s);
+        itemsList.add(s);
 
     }
 
-    public static void fillGames() throws Exception { // Method for adding games, used for testing purposes
+    public void fillGames(ArrayList<Rentable> itemsList) throws Exception { // Method for adding games, used for testing purposes
+        String[] gameName = {"The Last of us Part 2", "The Witcher 3 Wild Hunt", "Red Dead Redemption 2"};
+        String[] genre = {"action", "comedy", "family"};
+        double[] price = {12, 13, 14};
+
+        String[] songName = {"Song A", "Song B", "Song C"};
+        String[] artist = {"Artist A", "Artist B", "Artist C"};
+        double[] priceS = {12, 13, 14};
+        int[] year = {1970, 2030, 2000};
+
+
+        for(int i = 0; i < gameName.length; i++){
+            autoRegisterGame(itemsList,
+                    gameName[i],
+                    genre[i],
+                    price[i],
+                    year[i]);
+            autoRegisterSong(itemsList,
+                    songName[i],
+                    artist[i],
+                    priceS[i],
+                    year[i]);
+        }
+        //Screens.employeeScreen();
+    }
+
+    public boolean removeItem(ArrayList<Rentable> itemsList, Rentable item){
+        return itemsList.remove(item);
+    }
+
+    public Customer registerCustomer(ArrayList<Customer> customerArrayList, String name){
+
+        Customer customer = null;
+        do{
+            try{
+                customer = new Customer(name);
+            }catch (NameEmptyException e){
+                name = Tools.getString("Enter the customer's name: ");
+            }
+        }while(customer == null);
+
+        customerArrayList.add(customer);
+        return customer;
+    }
+
+    public Rentable findItem(ArrayList<Rentable> itemsList, String ID){
+        ArrayList<Rentable> array;
+        int i;
+        array = itemsList;
+
+        for(i = 0; i < array.size(); i++){
+            if(array.get(i).getID().equals(ID)){
+                return array.get(i);
+            }
+        }
+        return null;
+    }
+
+    public boolean removeCustomer(ArrayList<Customer> customerArrayList, Customer customer){ // method that removes customers
+        return customerArrayList.remove(customer);
+    }
+
+    public boolean upgradeCustomer(Customer customer){ // method that removes customers
+        return customer.upgradeMembership();
+    }
+
+    public Customer getCustomer(ArrayList<Customer> customerList, String ID){
+        for (Customer customer : customerList) {
+            if (customer.getID().equals(ID)) {
+                return customer;
+            }
+        }
+        return null;
+    }
+
+    public String showItems(ArrayList<Rentable> itemsList){
+        String itemStr = "";
+        for (Rentable game : itemsList) {
+            itemStr = itemStr.concat(game.toString() + System.lineSeparator());
+        }
+        for (Rentable song  : itemsList) {
+            itemStr = itemStr.concat(song.toString() + System.lineSeparator());
+        }
+        return itemStr;
+    }
+
+    public String viewAllCustomer(ArrayList<Customer> customerList) {
+        String cusStr = "";
+        for (Customer customer : customerList) {
+            cusStr = cusStr.concat(customer.toString() + System.lineSeparator());
+        }
+        return cusStr;
+    }
+
+    public String viewAllUpgRequest(ArrayList<Customer> upgradeRequests) {
+        String upgReqStr = "";
+        for (Customer customer : upgradeRequests) {
+            if(upgradeRequests.contains(customer.getID())){
+                upgReqStr = upgReqStr.concat(customer.toString() + System.lineSeparator());
+            }
+        }
+        return upgReqStr;
+    }
+
+   /* public static void fillGames() throws Exception { // Method for adding games, used for testing purposes
         String[] gameName = {"The Last of us Part 2", "The Witcher 3 Wild Hunt", "Red Dead Redemption 2"};
         String[] genre = {"action", "comedy", "family"};
         double[] price = {12, 13, 14};
@@ -102,12 +205,17 @@ public class Employee {
             autoRegisterSong(songName[i], artist[i], priceS[i], year[i]);
         }
         //Screens.employeeScreen();
-    }
+    }*/
 
-    public static boolean removeItem(Rentable item, int type){
+    public Rentable registerItem(ArrayList<Rentable> itemsList, int type, String title, String genreArtist, double rent, int releaseYear) throws Exception {
+
+        Rentable item;
         if(type == 1){
-            return Controller.gameList.remove(item);
-        } else
-            return Controller.songList.remove(item);
+            item = new Game(title, genreArtist, rent, releaseYear);
+        } else {
+            item = new Song(title, genreArtist, rent, releaseYear);
+        }
+        itemsList.add(item);
+        return item;
     }
 }

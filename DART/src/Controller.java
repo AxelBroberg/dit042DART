@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Controller {
     private ArrayList<Employee> employeeArrayList;
@@ -20,8 +19,16 @@ public class Controller {
         this.upgradeRequests = new ArrayList<>();
     }
 
-    public void screenChoice(char x) throws Exception {
-        switch (x) {
+    public void mainMenu() throws Exception {
+        char choice = Tools.getChar("Main Menu: \n " +
+                        "Welcome to DART, your good old game rental system. The competition has no steam to keep up! \n" +
+                        "Please specify your role by entering one of the options given: \n" +
+                        "1. Enter “M” for Manager \n" +
+                        "2. Enter “E” for Employee \n" +
+                        "3. Enter “C” for Customer \n" +
+                        "4. Enter “X” to exit system \n");
+        if(Tools.validateChar(choice, "MECXmecx"))
+        switch (choice) {
             case 'm','M' -> {
                 // if (Tools.password("admin1234")) managerScreen();
                 boolean verified = Tools.password("admin1234");
@@ -33,20 +40,26 @@ public class Controller {
                 //if (Tools.password("password123")) employeeScreen();
                 boolean verified = Tools.password("password123");
                 if(verified){
-                    employeeLoggedIn();
+                    String name = Tools.getString("Enter employee name: ");
+                    for (Employee employee : employeeArrayList)
+                        if(employee.getName().equals(name))
+                            employeeLoggedIn(employee);
                 }
             }
             case 'c','C' -> {
                 //preCustomerScreen();
                 String ID = Tools.getString("Enter customer ID");
-                for (Customer customer : customerList) {
-                    if (customer.getID().equals(ID)) {
+                for (Customer customer : customerList)
+                    if (customer.getID().equals(ID))
                         customerLoggedIn(customer);
-                    }
-                }
             }
-            case 'x','X' -> DartMain.exitProgram();
+            case 'x','X' -> Controller.exitProgram();
         }
+    }
+
+
+    public static void exitProgram(){
+        System.exit(0);
     }
 
     public void managerLoggedIn(){
@@ -65,7 +78,7 @@ public class Controller {
             System.out.println("8. Most valued customer");
             System.out.println("9. Return to Main Menu");
             choice = Tools.getChar("");
-            Tools.validateChar(choice, screens);
+            if(Tools.validateChar(choice, screens))
             switch (choice) {
                 case '1' -> {
 
@@ -111,7 +124,72 @@ public class Controller {
         }while(choice != 9);
     }
 
+    public void employeeLoggedIn(Employee employee) throws Exception {
+        char choice;
+        String screens = "1234567890a";
+        System.out.println("Employee Screen - Type one of the options below:");
+        System.out.println("1. Register a game");
+        System.out.println("2. Remove a game");
+        System.out.println("3. Register a customer");
+        System.out.println("4. Remove a customer");
+        System.out.println("5. Show total rent profit");
+        System.out.println("6. View all games & songs");
+        System.out.println("7. View all customers");
+        System.out.println("8. Fill games + songs");
+        System.out.println("9. View upgrade requests");
+        System.out.println("a. Upgrade member");
+        System.out.println("0. Return to Main Menu");
+        choice = Tools.getChar("");
+        if(Tools.validateChar(choice, screens))
 
+        switch (choice) {
+            case '1' -> {
+                int type = Tools.getInt("What would you like to register? \n 1. Game \n 2. Song");
+                if(type == 1){
+                    System.out.println("Added game: " +
+                            employee.registerItem(itemsList,
+                                    type, Tools.getString("Enter game title: "),
+                                    Tools.getString("Enter game genre: "),
+                                    Tools.getDouble("Enter game rent cost: "),
+                                    Tools.getInt("Enter game release year: ")));
+                } else {
+                    System.out.println("Added song: " +
+                            employee.registerItem(itemsList,
+                                    type, Tools.getString("Enter song title: "),
+                                    Tools.getString("Enter artist: "),
+                                    Tools.getDouble("Enter song rent cost: "),
+                                    Tools.getInt("Enter song release year: ")));
+                }
+
+            }
+            case '2' -> {
+                if(employee.removeItem(itemsList, employee.findItem(itemsList, Tools.getString("Please enter the ID of this item: "))))
+                    System.out.println("Successfully removed!");
+                else
+                    System.out.println("Error removing item.");
+            }
+            case '3' -> System.out.println("Successfully registered customer: " + employee.registerCustomer(customerList, Tools.getString("Enter the customer's name: ")));
+            case '4' -> {
+                if(employee.removeCustomer(customerList, employee.getCustomer(customerList, Tools.getString("Enter the ID of the customer you want to remove: "))))
+                    System.out.println("Successfully removed!");
+                else
+                    System.out.println("Error removing customer.");
+            }
+            case '5' -> {System.out.println("Total profit is: " + totalRentProfit);}
+            case '6' -> System.out.println(employee.showItems(itemsList));
+            case '7' -> System.out.println(employee.viewAllCustomer(customerList));
+            case '8' -> employee.fillGames(itemsList);
+            case '9' -> System.out.println(employee.viewAllUpgRequest(upgradeRequests));
+            case 'a' -> {
+                if(employee.upgradeCustomer(employee.getCustomer(customerList, Tools.getString("Enter the ID of the customer you want to upgrade: ")))){
+                    System.out.println("Successfully ugpraded!");
+                } else
+                    System.out.println("Error upgrading customer.");
+            }
+            case '0' -> {
+            }
+        }
+    }
 
     public void customerLoggedIn(Customer customer){
         char choice;
@@ -126,7 +204,7 @@ public class Controller {
             System.out.println("6. Request membership upgrade");
             System.out.println("7. Return to Main Menu");
             choice = Tools.getChar("");
-            Tools.validateChar(choice, screens);
+            if(Tools.validateChar(choice, screens))
             switch (choice) {
                 case '1' -> {
                     int sorting;
@@ -202,8 +280,10 @@ public class Controller {
     * for the sub-menu, don't forget the do-while loops that break when choice!=()
     * call methods though object!!
     * private attributes EVERYWHERE, why? encapsulation!
-    * membership via inheritance
     * adapt to the itemsList
+
+
+    * membership via inheritance
     * close scanner
     * double-check with the feedback!
     * */

@@ -1,10 +1,8 @@
-import java.util.ArrayList;
-
 public class Song extends Rentable{
 
     // In order to implement epic feature 7 we created a new class Song, which extends Rentable
 
-    protected String artist;
+    private String artist;
 
     Song(String title, String artist, double dailyRent, int year) throws Exception {
         super(title, dailyRent, year);
