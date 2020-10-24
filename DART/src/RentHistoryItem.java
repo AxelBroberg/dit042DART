@@ -2,13 +2,15 @@ public class RentHistoryItem {
 
     private double rentExpense;
     private String customerID;
+    private String itemTitle;
     private int daysRented;
     private String itemID;
     private int score;
     private String review;
 
 
-    public RentHistoryItem(double rentExpense, String customerID, int daysRented, String itemID, int score, String review) {
+    public RentHistoryItem(String itemTitle, double rentExpense, String customerID, int daysRented, String itemID, int score, String review) {
+        this.itemTitle = itemTitle;
         this.rentExpense = rentExpense;
         this.customerID = customerID;
         this.daysRented = daysRented;
@@ -17,7 +19,8 @@ public class RentHistoryItem {
         this.review = review;
     }
 
-    public RentHistoryItem(double rentExpense, String customerID, int daysRented, String itemID, int score) {
+    public RentHistoryItem(String itemTitle, double rentExpense, String customerID, int daysRented, String itemID, int score) {
+        this.itemTitle = itemTitle;
         this.rentExpense = rentExpense;
         this.customerID = customerID;
         this.daysRented = daysRented;
@@ -25,7 +28,8 @@ public class RentHistoryItem {
         this.score = score;
     }
 
-    public RentHistoryItem(double rentExpense, String customerID, int daysRented, String itemID) {
+    public RentHistoryItem(String itemTitle, double rentExpense, String customerID, int daysRented, String itemID) {
+        this.itemTitle = itemTitle;
         this.rentExpense = rentExpense;
         this.customerID = customerID;
         this.daysRented = daysRented;
@@ -55,6 +59,11 @@ public class RentHistoryItem {
 
         return str;
     }
+
+    public String toFileString(){
+        return customerID + ";" + itemID + ";" + itemTitle + ";" + rentExpense;
+    }
+
 
     public double getRentExpense() {
         return rentExpense;

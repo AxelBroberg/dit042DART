@@ -1,3 +1,4 @@
+import java.io.*;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -17,6 +18,43 @@ import java.util.Scanner;
 public class Manager {
 
 
+    public void readFile(ArrayList<Employee> employees, ArrayList<Customer> customers, ArrayList<Rentable> items, Scanner input){
+        try {
+            //FileWriter write = new FileWriter("dartData.txt");
+            File dartData = new File("dartData.txt");
+            FileReader fr = new FileReader(dartData);
+            BufferedReader br = new BufferedReader(fr);
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] dartInfo = line.split(";");
+                if(dartInfo[0].equals("Employee")) {
+                    registerEmployee(employees, dartInfo[1], dartInfo[2], Integer.parseInt(dartInfo[3]), Double.parseDouble(dartInfo[4]), input);
+                }
+                else if(dartInfo[0].equals("Game")) { //Game(String title, String genre, double dailyRent, int year)
+                    items.add(new Game(dartInfo[1], dartInfo[2], Double.parseDouble(dartInfo[3]), Integer.parseInt(dartInfo[4])));
+                }
+                else if(dartInfo[0].equals("Song")){ //Song(String title, String artist, double dailyRent, int year)
+                    items.add(new Song(dartInfo[1], dartInfo[2], Double.parseDouble(dartInfo[3]), Integer.parseInt(dartInfo[4])));
+                }
+                else if(dartInfo[0].equals("Customer")){ //Customer(String name, String password)
+                    customers.add(new Customer(dartInfo[1], dartInfo[2]));
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void writeFile(ArrayList<RentHistoryItem> rentHistoryItems) throws IOException {
+        BufferedWriter bfWriter = new BufferedWriter(new FileWriter(new File("rentTransactions.txt")));
+        for (RentHistoryItem rentHistoryItem : rentHistoryItems) {
+
+            bfWriter.write(rentHistoryItem.toFileString() + "\n");
+
+        }
+        bfWriter.close();
+    }
 
     public void registerEmployee(ArrayList<Employee> employees, String name, String address, int bYear, double salary, Scanner input) {
         Employee employee = null;

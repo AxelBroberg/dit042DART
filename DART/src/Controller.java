@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -61,10 +62,10 @@ public class Controller {
         }
     }
 
-    public void managerLoggedIn(){
+    public void managerLoggedIn() throws IOException {
         Manager manager = new Manager();
         char choice;
-        String screens = "123456789";
+        String screens = "1234567890a";
         do {
             System.out.println("Manager Screen - Type one of the options below:");
             System.out.println("1. Add an employee");
@@ -75,7 +76,10 @@ public class Controller {
             System.out.println("6. View rent frequency");
             System.out.println("7. Most profitable item");
             System.out.println("8. Most valued customer");
-            System.out.println("9. Return to Main Menu");
+            System.out.println("9. Load from file");
+            System.out.println("a. Save rent history");
+            System.out.println("0. Return to Main Menu");
+
             choice = Tools.getChar("");
             if(Tools.validateChar(choice, screens))
             switch (choice) {
@@ -119,9 +123,15 @@ public class Controller {
                      if(manager.mostProfitable(itemsList) != null) System.out.println("Most valued customer: " + manager.mostProfitableCustomer(customerList));
                 }
                 case '9' -> {
+                    manager.readFile(employeeArrayList, customerList, itemsList, input);
+                }
+                case 'a' -> {
+                    manager.writeFile(rentHistory);
+                }
+                case '0' -> {
                 }
             }
-        }while(choice != '9');
+        }while(choice != '0');
     }
 
     public void employeeLoggedIn(Employee employee) throws Exception {
@@ -248,7 +258,8 @@ public class Controller {
                     } else {
                         System.out.println("Successfully returned");
                         totalRentProfit = totalRentProfit + results.getRentExpense();
-                        System.out.println(results);
+                        rentHistory.add(results);
+                        System.out.println(results.toString());
                     }
                 }
 

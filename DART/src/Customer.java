@@ -42,8 +42,10 @@ public class Customer {
     public String viewGamesByGenre(ArrayList<Rentable> itemsList, String genre){
         String gameStr = "";
         for (Rentable game : itemsList) {
-            if(game.getGenre().equals(genre)) {
-                gameStr = gameStr.concat(game.toString() + System.lineSeparator());
+            if(game instanceof Game) {
+                if (game.getGenre().equals(genre)) {
+                    gameStr = gameStr.concat(game.toString() + System.lineSeparator());
+                }
             }
         }
         return gameStr;
@@ -52,8 +54,10 @@ public class Customer {
     public String viewSongByYear(ArrayList<Rentable> itemsList, int year){
         String songStr = "";
         for (Rentable song : itemsList) {
-            if(song.getYear() == year) {
-                songStr = songStr.concat(song.toString() + System.lineSeparator());
+            if(song instanceof Song) {
+                if (song.getYear() == year) {
+                    songStr = songStr.concat(song.toString() + System.lineSeparator());
+                }
             }
         }
         return songStr;
@@ -64,21 +68,25 @@ public class Customer {
         if (itemType == 1) {
             ArrayList<Rentable> array = itemsList;
             if(selectionSorting == 1) {
-                return showItems(itemsList);
+                return showItemsOfType(itemsList, 1);
             } else if (selectionSorting == 2) {
                 return viewGamesByGenre(itemsList, optionalGenreOrYear);
             } else if (selectionSorting == 3){
                 array.sort(new RatingsComparator());
                 Collections.reverse(array);
                 for (Rentable game: array) {
-                    itemStr = itemStr.concat(game.toString() + System.lineSeparator());
+                    if(game instanceof Game) {
+                        itemStr = itemStr.concat(game.toString() + System.lineSeparator());
+                    }
                 }
                 return itemStr;
             } else if (selectionSorting == 4){
                 array.sort(new YearComparator());
                 Collections.reverse(array);
                 for (Rentable game: array) {
-                    itemStr = itemStr.concat(game.toString() + System.lineSeparator());
+                    if(game instanceof Game) {
+                        itemStr = itemStr.concat(game.toString() + System.lineSeparator());
+                    }
                 }
                 return itemStr;
             }
@@ -86,7 +94,7 @@ public class Customer {
         } else {
             ArrayList<Rentable> array = itemsList;
             if(selectionSorting == 1) {
-                return showItems(itemsList);
+                return showItemsOfType(itemsList, 2);
             } else if (selectionSorting == 2){
                 try {
                     int year = Integer.parseInt(optionalGenreOrYear);
@@ -98,14 +106,18 @@ public class Customer {
                 array.sort(new RatingsComparator());
                 Collections.reverse(array);
                 for ( Rentable song: array) {
-                    itemStr = itemStr.concat(song.toString() + System.lineSeparator());
+                    if(song instanceof Song) {
+                        itemStr = itemStr.concat(song.toString() + System.lineSeparator());
+                    }
                 }
                 return itemStr;
             } else if (selectionSorting == 4){
                 array.sort(new YearComparator()); // was Collections.sort(array, new YearComparator());
                 Collections.reverse(array);
                 for ( Rentable song: array) {
-                    itemStr = itemStr.concat(song.toString() + System.lineSeparator());
+                    if(song instanceof Song) {
+                        itemStr = itemStr.concat(song.toString() + System.lineSeparator());
+                    }
                 }
                 return itemStr;
             }
@@ -115,11 +127,21 @@ public class Customer {
 
 
 
-    public String showItems(ArrayList<Rentable> itemsList){
+    public String showItemsOfType(ArrayList<Rentable> itemsList, int type){
 
         String itemStr = "";
-        for (Rentable rentable : itemsList) {
-            itemStr = itemStr.concat(rentable.toString() + System.lineSeparator());
+        if(type == 1) {
+            for (Rentable rentable : itemsList) {
+                if (rentable instanceof Game) {
+                    itemStr = itemStr.concat(rentable.toString() + System.lineSeparator());
+                }
+            }
+        } else {
+            for (Rentable rentable : itemsList) {
+                if (rentable instanceof Song) {
+                    itemStr = itemStr.concat(rentable.toString() + System.lineSeparator());
+                }
+            }
         }
 
         return itemStr;
@@ -321,7 +343,7 @@ public class Customer {
     //---------------
     public boolean rentItem(Rentable item, String rentDate){
         boolean wasRented = false;
-        if (item.status && !libraryFull()){
+        if (item!= null && item.status && !libraryFull()){
             //SETTING RENT
             try {
                 item.setRentDate(rentDate);
@@ -343,6 +365,7 @@ public class Customer {
         boolean returned = false;
         long calcDaysResult = 0;
         double rent = 0;
+        String itemTitle = "";
         for (int i = 0; i < customerLibrary.size(); i++) {
             if (customerLibrary.get(i).getID().equals(itemID)) {
                 item = customerLibrary.get(i);
@@ -369,6 +392,7 @@ public class Customer {
                     ratingLeft = true;
                 }
                 customerLibrary.remove(item);
+                itemTitle = item.getTitle();
                 item.setStatus(true);
                 item.addRentFrequency();
                 returned = true;
@@ -378,13 +402,13 @@ public class Customer {
         //and can easily be added to list of renthistory in the controller
 
         if (reviewLeft) {
-            return (new RentHistoryItem(rent, ID, (int)calcDaysResult, itemID, rating, review));
+            return (new RentHistoryItem(itemTitle, rent, ID, (int)calcDaysResult, itemID, rating, review));
         }
         else if (ratingLeft) {
-            return (new RentHistoryItem(rent, ID, (int) calcDaysResult, itemID, rating));
+            return (new RentHistoryItem(itemTitle, rent, ID, (int) calcDaysResult, itemID, rating));
         }
         else if (returned){
-            return (new RentHistoryItem(rent, ID, (int)calcDaysResult, itemID));
+            return (new RentHistoryItem(itemTitle, rent, ID, (int)calcDaysResult, itemID));
         } else {
             return null;
         }
