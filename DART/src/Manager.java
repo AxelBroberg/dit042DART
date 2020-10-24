@@ -1,5 +1,6 @@
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 // We created this class because we got feedback on the last milestone that we are supposed to have a controller.
 // We decided that we would have one controller per object class
@@ -17,17 +18,17 @@ public class Manager {
 
 
 
-    public void registerEmployee(ArrayList<Employee> employees, String name, String address, int bYear, double salary) {
+    public void registerEmployee(ArrayList<Employee> employees, String name, String address, int bYear, double salary, Scanner input) {
         Employee employee = null;
-        boolean correct;
+        boolean correct = true;
 
         do{
             try {
                 employee = new Employee(name, address, bYear, salary);
-                correct = true;
+                correct = false;
             } catch (NameEmptyException e) {
                 correct = false;
-                name = Tools.getString("Please input name again: ");
+                name = Tools.getString("Please input name again: ", input);
             } catch (NegativeSalaryException e){
                 correct = false;
                 salary = Tools.getDouble("Please input salary again: ");
@@ -36,6 +37,7 @@ public class Manager {
 
         employees.add(employee);
     }
+
     public String viewAllEmployee(ArrayList<Employee> employeeArrayList) {
         String empStr = "";
         for (Employee manager : employeeArrayList) {

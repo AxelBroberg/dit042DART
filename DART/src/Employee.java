@@ -1,6 +1,7 @@
 
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 // Changes because of the feedback we got on the last milestone:
 // Moved the ArrayList employeeArrayList to the EmployeeController
@@ -60,14 +61,7 @@ public class Employee {
         return s;
     }
 
-    /*public static Customer registerCustomer(Customer customer){
-        Controller.customerList.add(customer);
-        return customer;
-    }
 
-    public static boolean removeCustomer(Customer customer){ // method that removes customers
-        return Controller.customerList.remove(customer);
-    }*/
 
     public void autoRegisterGame(ArrayList<Rentable> itemsList, String title, String genre, double price, int year) throws Exception { // Method for adding games, used for testing purposes
         Game g = new Game(title, genre, price, year);
@@ -115,14 +109,14 @@ public class Employee {
         return itemsList.remove(item);
     }
 
-    public Customer registerCustomer(ArrayList<Customer> customerArrayList, String name){
+    public Customer registerCustomer(ArrayList<Customer> customerArrayList, String name, String password, Scanner input){
 
         Customer customer = null;
         do{
             try{
-                customer = new Customer(name);
+                customer = new Customer(name, password);
             }catch (NameEmptyException e){
-                name = Tools.getString("Enter the customer's name: ");
+                name = Tools.getString("Enter the customer's name: ", input);
             }
         }while(customer == null);
 
@@ -147,8 +141,31 @@ public class Employee {
         return customerArrayList.remove(customer);
     }
 
-    public boolean upgradeCustomer(Customer customer){ // method that removes customers
-        return customer.upgradeMembership();
+    public boolean upgradeCustomer(ArrayList<Customer> customers, Customer customer){
+
+        if (customer instanceof CustomerSilver){
+            customers.remove(customer);
+            customer = new CustomerGold(customer.getName(), customer.getCustomerLibrary(), customer.getID(), customer.getCredit(), customer.getAmountSpent(), customer.getInbox(), customer.getPassword());
+            customers.add(customer);
+            return true;
+        }
+        else if (customer instanceof CustomerGold){
+            customers.remove(customer);
+            customer = new CustomerPlatinum(customer.getName(), customer.getCustomerLibrary(), customer.getID(), customer.getCredit(), customer.getAmountSpent(), customer.getInbox(), customer.getPassword());
+            customers.add(customer);
+            return true;
+        }
+        else if (customer instanceof CustomerPlatinum){
+            //do nothing
+            return false;
+        }
+        else if (customer != null) {
+            customers.remove(customer);
+            customer = new CustomerSilver(customer.getName(), customer.getCustomerLibrary(), customer.getID(), customer.getCredit(), customer.getAmountSpent(), customer.getInbox(), customer.getPassword());
+            customers.add(customer);
+            return true;
+        }
+        return false;
     }
 
     public Customer getCustomer(ArrayList<Customer> customerList, String ID){
@@ -182,7 +199,7 @@ public class Employee {
     public String viewAllUpgRequest(ArrayList<Customer> upgradeRequests) {
         String upgReqStr = "";
         for (Customer customer : upgradeRequests) {
-            if(upgradeRequests.contains(customer.getID())){
+            if(upgradeRequests.contains(customer)){
                 upgReqStr = upgReqStr.concat(customer.toString() + System.lineSeparator());
             }
         }
