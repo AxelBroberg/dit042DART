@@ -53,13 +53,8 @@ public class Controller {
                     if (customer.getID().equals(ID))
                         customerLoggedIn(customer);
             }
-            case 'x','X' -> Controller.exitProgram();
+            case 'x','X' -> Tools.exitProgram();
         }
-    }
-
-
-    public static void exitProgram(){
-        System.exit(0);
     }
 
     public void managerLoggedIn(){

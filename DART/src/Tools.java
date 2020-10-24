@@ -13,22 +13,24 @@ import java.util.Scanner;
 public class Tools {
     private static Scanner input = new Scanner(System.in);
 
+    public static void exitProgram(){
+        input.close();
+        System.exit(0);
+    }
+
     public static String getString(String message){
-        //Scanner input = new Scanner(System.in);
         System.out.println(message);
         String userInput = input.nextLine();
         return userInput;
     }
 
     public static char getChar(String message){
-        Scanner input = new Scanner(System.in);
         System.out.println(message);
         char userInput = input.next().charAt(0);
         return userInput;
     }
 
     public static int getInt(String message){
-        Scanner input = new Scanner(System.in);
         System.out.println(message);
         int userInput = input.nextInt();
         input.nextLine();
@@ -36,7 +38,6 @@ public class Tools {
     }
 
     public static double getDouble(String message){
-        Scanner input = new Scanner(System.in);
         System.out.println(message);
         double userInput = input.nextDouble();
         input.nextLine();
