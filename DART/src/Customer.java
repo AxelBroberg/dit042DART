@@ -70,24 +70,23 @@ public class Customer {
     public String showItems(ArrayList<Rentable> itemsList, int itemType, int selectionSorting, String optionalGenreOrYear){
         String itemStr = "";
         if (itemType == 1) {
-            ArrayList<Rentable> array = itemsList;
             if(selectionSorting == 1) {
                 return showItemsOfType(itemsList, 1);
             } else if (selectionSorting == 2) {
                 return viewGamesByGenre(itemsList, optionalGenreOrYear);
             } else if (selectionSorting == 3){
-                array.sort(new RatingsComparator());
-                Collections.reverse(array);
-                for (Rentable game: array) {
+                itemsList.sort(new RatingsComparator());
+                Collections.reverse(itemsList);
+                for (Rentable game: itemsList) {
                     if(game instanceof Game) {
                         itemStr = itemStr.concat(game.toString() + System.lineSeparator());
                     }
                 }
                 return itemStr;
             } else if (selectionSorting == 4){
-                array.sort(new YearComparator());
-                Collections.reverse(array);
-                for (Rentable game: array) {
+                itemsList.sort(new YearComparator());
+                Collections.reverse(itemsList);
+                for (Rentable game: itemsList) {
                     if(game instanceof Game) {
                         itemStr = itemStr.concat(game.toString() + System.lineSeparator());
                     }
@@ -95,7 +94,6 @@ public class Customer {
                 return itemStr;
             }
         } else {
-            ArrayList<Rentable> array = itemsList;
             if(selectionSorting == 1) {
                 return showItemsOfType(itemsList, 2);
             } else if (selectionSorting == 2){
@@ -106,18 +104,18 @@ public class Customer {
                     return ("Year entered in wrong format (should be YYYY), aborting rent process");
                 }
             } else if (selectionSorting == 3){
-                array.sort(new RatingsComparator());
-                Collections.reverse(array);
-                for ( Rentable song: array) {
+                itemsList.sort(new RatingsComparator());
+                Collections.reverse(itemsList);
+                for ( Rentable song: itemsList) {
                     if(song instanceof Song) {
                         itemStr = itemStr.concat(song.toString() + System.lineSeparator());
                     }
                 }
                 return itemStr;
             } else if (selectionSorting == 4){
-                array.sort(new YearComparator());
-                Collections.reverse(array);
-                for ( Rentable song: array) {
+                itemsList.sort(new YearComparator());
+                Collections.reverse(itemsList);
+                for ( Rentable song: itemsList) {
                     if(song instanceof Song) {
                         itemStr = itemStr.concat(song.toString() + System.lineSeparator());
                     }
@@ -225,14 +223,11 @@ public class Customer {
         this.credit -= remove;
     }
 
-    public Rentable findItem(ArrayList<Rentable> itemsList, int item, String ID){
+    public Rentable findItem(ArrayList<Rentable> itemsList, String ID){
         ArrayList<Rentable> array;
         int i;
-        if(item == 1){
-            array = itemsList;
-        } else {
-            array = itemsList;
-        }
+        array = itemsList;
+
 
         for(i = 0; i < array.size(); i++){
             if(array.get(i).getID().equals(ID)){

@@ -59,45 +59,6 @@ public class Employee {
         return s;
     }
 
-    public void autoRegisterGame(ArrayList<Rentable> itemsList, String title, String genre, double price, int year) throws Exception { // Method for adding games, used for testing purposes
-        Game g = new Game(title, genre, price, year);
-        System.out.print("You have added game: ");
-        System.out.println(g.toString());
-        itemsList.add(g);
-    }
-
-    public void autoRegisterSong(ArrayList<Rentable> itemsList, String title, String artist, double price, int year) throws Exception { // Method for adding games, used for testing purposes
-        Song s = new Song(title, artist, price, year);
-        System.out.print("You have added game: ");
-        System.out.println(s.toString());
-        itemsList.add(s);
-    }
-
-    public void fillGames(ArrayList<Rentable> itemsList) throws Exception { // Method for adding games, used for testing purposes
-        String[] gameName = {"The Last of us Part 2", "The Witcher 3 Wild Hunt", "Red Dead Redemption 2"};
-        String[] genre = {"action", "comedy", "family"};
-        double[] price = {12, 13, 14};
-
-        String[] songName = {"Song A", "Song B", "Song C"};
-        String[] artist = {"Artist A", "Artist B", "Artist C"};
-        double[] priceS = {12, 13, 14};
-        int[] year = {1970, 2030, 2000};
-
-
-        for(int i = 0; i < gameName.length; i++){
-            autoRegisterGame(itemsList,
-                    gameName[i],
-                    genre[i],
-                    price[i],
-                    year[i]);
-            autoRegisterSong(itemsList,
-                    songName[i],
-                    artist[i],
-                    priceS[i],
-                    year[i]);
-        }
-    }
-
     public boolean removeItem(ArrayList<Rentable> itemsList, Rentable item){
         return itemsList.remove(item);
     }
@@ -172,11 +133,8 @@ public class Employee {
 
     public String showItems(ArrayList<Rentable> itemsList){
         String itemStr = "";
-        for (Rentable game : itemsList) {
-            itemStr = itemStr.concat(game.toString() + System.lineSeparator());
-        }
-        for (Rentable song  : itemsList) {
-            itemStr = itemStr.concat(song.toString() + System.lineSeparator());
+        for (Rentable item : itemsList) {
+            itemStr = itemStr.concat(item.toString() + System.lineSeparator());
         }
         return itemStr;
     }

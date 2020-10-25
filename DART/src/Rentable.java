@@ -1,6 +1,5 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 
 // ---------------------------------------Milestone 2-------------------------------------------
@@ -118,7 +117,7 @@ public abstract class Rentable implements Comparable<Rentable>{
     public int compareTo(Rentable o) {
         if(this.getAverageRating() < o.getAverageRating()){
             return -1;
-        } else if(this.getAverageRating() < o.getAverageRating()){
+        } else if(this.getAverageRating() == o.getAverageRating()){
             return 0;
         } else {
             return 1;

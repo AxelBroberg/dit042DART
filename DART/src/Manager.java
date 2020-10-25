@@ -31,14 +31,14 @@ public class Manager {
             while ((line = br.readLine()) != null) {
                 String[] dartInfo = line.split(";");
                 switch (dartInfo[0]) {
-                    case "Employee" -> registerEmployee(employees, dartInfo[1], dartInfo[2], Integer.parseInt(dartInfo[3]), Double.parseDouble(dartInfo[4]), input);
-                    case "Game" -> items.add(new Game(dartInfo[1], dartInfo[2], Double.parseDouble(dartInfo[3]), Integer.parseInt(dartInfo[4])));
-                    case "Song" -> items.add(new Song(dartInfo[1], dartInfo[2], Double.parseDouble(dartInfo[3]), Integer.parseInt(dartInfo[4])));
-                    case "Customer" -> customers.add(new Customer(dartInfo[1], dartInfo[2]));
+                    case "Employee" -> registerEmployee(employees, dartInfo[1], dartInfo[2], Integer.parseInt(dartInfo[3]), Double.parseDouble(dartInfo[4]), input); //Employee;Name;Address;BirthYear;Salary
+                    case "Game" -> items.add(new Game(dartInfo[1], dartInfo[2], Double.parseDouble(dartInfo[3]), Integer.parseInt(dartInfo[4]))); //Game;Title;Genre;RentPrice;ReleaseYear
+                    case "Song" -> items.add(new Song(dartInfo[1], dartInfo[2], Double.parseDouble(dartInfo[3]), Integer.parseInt(dartInfo[4]))); //Song;Title;Artist;RentPrice;ReleaseYear
+                    case "Customer" -> customers.add(new Customer(dartInfo[1], dartInfo[2])); //Customer;Name;Password
                 }
             }
         }catch(Exception e){
-            e.printStackTrace();
+            System.out.println("File does not exist");
         }
     }
 

@@ -126,7 +126,7 @@ public class Controller {
 
     public void employeeLoggedIn(Employee employee) throws Exception {
         char choice;
-        String screens = "1234567890a";
+        String screens = "1234567890";
         do {
         System.out.println("Employee Screen - Type one of the options below:");
         System.out.println("1. Register a game");
@@ -136,9 +136,8 @@ public class Controller {
         System.out.println("5. Show total rent profit");
         System.out.println("6. View all games & songs");
         System.out.println("7. View all customers");
-        System.out.println("8. Fill games + songs");
-        System.out.println("9. View upgrade requests");
-        System.out.println("a. Upgrade member");
+        System.out.println("8. View upgrade requests");
+        System.out.println("9. Upgrade member");
         System.out.println("0. Return to Main Menu");
         choice = Tools.getChar("");
         if(Tools.validateChar(choice, screens))
@@ -180,9 +179,8 @@ public class Controller {
                 }
                 case '6' -> System.out.println(employee.showItems(itemsList));
                 case '7' -> System.out.println(employee.viewAllCustomer(customerList));
-                case '8' -> employee.fillGames(itemsList);
-                case '9' -> System.out.println(employee.viewAllUpgRequest(upgradeRequests)); //DOESNT WORK
-                case 'a' -> {
+                case '8' -> System.out.println(employee.viewAllUpgRequest(upgradeRequests));
+                case '9' -> {
                     if (employee.upgradeCustomer(customerList, employee.getCustomer(customerList, Tools.getString("Enter the ID of the customer you want to upgrade: ", input)))) {
                         System.out.println("Successfully upgraded!");
                     } else
@@ -226,7 +224,7 @@ public class Controller {
                         System.out.println(customer.showItems(itemsList, rentItem, sorting, ""));
                     }
 
-                    if (customer.rentItem(customer.findItem(itemsList, rentItem, Tools.getString("Enter ID of item to rent", input)), Tools.getString("What is the rent date? (YYYY-MM-DD)", input))) {
+                    if (customer.rentItem(customer.findItem(itemsList, Tools.getString("Enter ID of item to rent", input)), Tools.getString("What is the rent date? (YYYY-MM-DD)", input))) {
                         System.out.println("Successfully rented");
                     } else {
                         System.out.println("Item could not be rented");

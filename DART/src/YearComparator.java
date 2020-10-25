@@ -2,6 +2,7 @@ import java.util.Comparator;
 
 public class YearComparator implements Comparator<Rentable>
 {
+
     public int compare(Rentable o1, Rentable o2)
     {
         return compareTo(o1, o2);

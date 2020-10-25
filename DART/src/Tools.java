@@ -50,7 +50,7 @@ public class Tools {
     }
 
     public static long calcDays(Rentable item){
-        if(ChronoUnit.DAYS.between(item.getRentDate(), item.getReturnDate()) <= 0) {
+        if(ChronoUnit.DAYS.between(item.getRentDate(), item.getReturnDate()) < 0) {
             throw new EarlyDateException("Invalid operation. Upon returning an item, the number of days rented must be positive.");
         } else {
             return ChronoUnit.DAYS.between(item.getRentDate(), item.getReturnDate());
