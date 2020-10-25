@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
+// ---------------------------------------Milestone 2-------------------------------------------
+//
 // Changes because of the feedback we got on the last milestone:
 // Moved the ArrayLists customerGames & customerList to the CustomerController
 // Moved the methods addGame & removeGame to the CustomerController
@@ -16,21 +18,23 @@ import java.util.Collections;
 // a membership String variable, which will hold what membership the Customer has, the default being "regular"
 // In order for the membership to get upgraded we added an upgradeMembership method
 // which will upgrade the membership to the next tier
-
+// Added amountspent variable to implement Epic Feature 11 - Rent history
+//
+// ---------------------------------------Milestone 3-------------------------------------------
+//
+// Got FEEDBACK that customerLibrary (was called "library") should not be part of customer class, which seems
+// odd since each individual customer object should have their own
+// private and unique library with the games they are currently renting
+// This is NOT a library of all games/songs on the platform, only the games/songs
+// a certain specific customer currently is renting
 
 public class Customer {
 
-    //Added amountspent to implement Epic Feature 11 - Rent history
-    private String ID; //creates String variable named 'ID'
-    private String name; //creates String variable named 'name'
+    private String ID;
+    private String name;
     private int credit;
     private String password;
 
-    //Got FEEDBACK that customerLibrary (was called "library") should not be part of customer class, which seems
-    //odd since each individual customer object should have their own
-    //private and unique library with the games they are currently renting
-    //This is NOT a library of all games/songs on the platform, only the games/songs
-    //a certain specific customer currently is renting
     private ArrayList<Rentable> customerLibrary = new ArrayList<>();
     private ArrayList<Message> inbox = new ArrayList<>();
     private double amountSpent;
@@ -90,7 +94,6 @@ public class Customer {
                 }
                 return itemStr;
             }
-
         } else {
             ArrayList<Rentable> array = itemsList;
             if(selectionSorting == 1) {
@@ -112,7 +115,7 @@ public class Customer {
                 }
                 return itemStr;
             } else if (selectionSorting == 4){
-                array.sort(new YearComparator()); // was Collections.sort(array, new YearComparator());
+                array.sort(new YearComparator());
                 Collections.reverse(array);
                 for ( Rentable song: array) {
                     if(song instanceof Song) {
@@ -124,8 +127,6 @@ public class Customer {
         }
         return "Could not find any items";
     }
-
-
 
     public String showItemsOfType(ArrayList<Rentable> itemsList, int type){
 
@@ -143,7 +144,6 @@ public class Customer {
                 }
             }
         }
-
         return itemStr;
     }
 
@@ -152,7 +152,7 @@ public class Customer {
         this.ID = Tools.randomizeID();
         this.amountSpent = 0;
         this.password = password;
-    } //Creates a constructor with takes a name
+    }
 
     public String getPassword() {
         return password;
@@ -182,7 +182,7 @@ public class Customer {
         return inbox;
     }
 
-    public String getID(){ return ID; } // returns the id created by the method above
+    public String getID(){ return ID; }
 
     public double getAmountSpent() {
         return amountSpent;
@@ -206,12 +206,6 @@ public class Customer {
         this.credit+= credits;
     }
 
-
-    //----------------------------------------------------------------------------------------------------------------------------
-    //GET DIFFERENT CREDITS
-    //LARGER LIBRARY
-    //DISCOUNT
-
     public void addCredit() {
         final int REG_CREDITS = 0;
         addCreditAmount(REG_CREDITS);
@@ -226,50 +220,6 @@ public class Customer {
         final int MAX_LIBRARY_REG = 1;
         return getCustomerLibrary().size() >= MAX_LIBRARY_REG;
     }
-
-
-    /*
-    public void addCredit() {
-        switch (membership){
-            case "regular" -> this.credit+= 0;
-            case "silver" -> this.credit+= 1;
-            case "gold" -> this.credit+= 2;
-            case "platinum" -> this.credit+= 3;
-        }
-    }
-
-    public double memberDiscount() {
-        double discount = 1.0;
-        switch (membership){
-            case "regular" -> discount = 1.0;
-            case "silver" -> discount = 0.90;
-            case "gold" -> discount = 0.85;
-            case "platinum" -> discount = 0.75;
-        }
-        return discount;
-    }
-
-    public boolean libraryFull(){
-        boolean full = false;
-        switch (membership){
-            case "regular" -> full = (this.library.size() >= 1);
-            case "silver" -> full = (this.library.size() >= 3);
-            case "gold" -> full = (this.library.size() >= 5);
-            case "platinum" -> full = (this.library.size() >= 7);
-        }
-        return full;
-    }
-
-    public boolean upgradeMembership(){
-        switch (membership) {
-            case "regular" -> membership = "silver";
-            case "silver" -> membership = "gold";
-            case "gold" -> membership = "platinum";
-        }
-
-        return false;
-    }*/
-    //-------------------------------------------------------------------------------------------------------------------------------
 
     public void removeCredit(int remove){
         this.credit -= remove;
@@ -291,17 +241,6 @@ public class Customer {
         }
         return null;
     }
-
-    /*public RentHistoryItem returnItem(ArrayList<RentHistoryItem> rentHistory, double totalRentProfit, String returnID, String review, int rating, String returnDate, Customer customer){
-        RentHistoryItem returnResults = customer.returnItem(returnID, review, rating, returnDate);
-        if (returnResults == null){
-            return null;
-        } else {
-            rentHistory.add(returnResults);
-            totalRentProfit = totalRentProfit + returnResults.getRentExpense();
-            return returnResults;
-        }
-    }*/
 
     public String viewInbox(Customer customer){
         return customer.viewInbox();
@@ -340,7 +279,6 @@ public class Customer {
         return customer.viewUnread();
     }
 
-    //---------------
     public boolean rentItem(Rentable item, String rentDate){
         boolean wasRented = false;
         if (item!= null && item.status && !libraryFull()){
@@ -356,7 +294,7 @@ public class Customer {
         }
         return wasRented;
     }
-    //---------------
+
     public RentHistoryItem returnItem(String itemID, String review, int rating, String returnDate){
         int CREDIT_COST = 5;
         Rentable item;
@@ -375,7 +313,6 @@ public class Customer {
                     System.out.println("ERROR: Wrong format, assuming return date is today.");
                     item.setAutomaticReturnDate();
                 }
-                //Lines below is instead of calcRent, which is now unused.
                 calcDaysResult = Tools.calcDays(item);
                 rent = calcDaysResult * memberDiscount() * item.getDailyRent();
                 if (getCredit() >= CREDIT_COST){
@@ -392,14 +329,13 @@ public class Customer {
                     ratingLeft = true;
                 }
                 customerLibrary.remove(item);
+                addSpent(rent);
                 itemTitle = item.getTitle();
                 item.setStatus(true);
                 item.addRentFrequency();
                 returned = true;
             }
         }
-        //Returning a renthistoryitem since it has all info we need
-        //and can easily be added to list of renthistory in the controller
 
         if (reviewLeft) {
             return (new RentHistoryItem(itemTitle, rent, ID, (int)calcDaysResult, itemID, rating, review));
@@ -414,11 +350,6 @@ public class Customer {
         }
     }
 
-
-
-    //-------------
-
-
     public String viewRented(){
         String rentedItems = "";
         for ( Rentable item : customerLibrary) {
@@ -426,8 +357,6 @@ public class Customer {
         }
         return rentedItems;
     }
-
-
 
     public String viewInbox(){
         String inboxStr = "";
@@ -456,13 +385,8 @@ public class Customer {
     }
     public int getInboxSize(){ return inbox.size(); }
     public void addToLibrary(Rentable item){ customerLibrary.add(item); }
-    public void removeFromLibrary(Rentable item){ customerLibrary.remove(item); }
-
-
 
     public String toString(){
         return getID() + " : " + this.name + System.lineSeparator();
     }
-
-
 }

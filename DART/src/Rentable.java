@@ -3,11 +3,24 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 
+// ---------------------------------------Milestone 2-------------------------------------------
+//
 //To implement Epic Feature 7, we modified the class Game by
 //creating a new class called Rentable and having both games and songs inherit from it.
+// In order to implement Epic feature 10 we added two arraylists; ratings and reviews
+// Each Rentable object gets their own arraylists of ratings and reviews
+// We also added the addRating, getAverageRating and addReview methods
+//
+// In order to implement Epic feature 11 we added the variable rentFrequency,
+// Which increases by the call of the addRentFrequency method, and can be returned with the getRentFrequency method
+//
+// ---------------------------------------Milestone 3-------------------------------------------
+//
+// In order to implement Epic feature 12 we modified the constructor to throw an exception
+
 
 public abstract class Rentable implements Comparable<Rentable>{
-    //Added profit and rentFrequency to implement Epic Feature 11 - Rent history
+
     protected String title;
     protected String ID;
     protected double dailyRent;
@@ -20,7 +33,7 @@ public abstract class Rentable implements Comparable<Rentable>{
     protected double profit;
     protected int rentFrequency;
 
-    public Rentable(String title, double dailyRent, int year) throws Exception{
+    public Rentable(String title, double dailyRent, int year){
         if (title.isEmpty() || title.equals(" ") ){
             throw new NameEmptyException("Empty title is not allowed.");
         } else {
@@ -52,7 +65,7 @@ public abstract class Rentable implements Comparable<Rentable>{
 
     public double getAverageRating() {
         int sum = 0;
-        int size = ratings.size() > 0 ? ratings.size() : 1; //Ensures we are not dividing by zero
+        int size = ratings.size() > 0 ? ratings.size() : 1;
         for(Integer value : ratings){
             sum += value;
         }
@@ -68,12 +81,12 @@ public abstract class Rentable implements Comparable<Rentable>{
     public void setStatus (boolean status){ this.status = status; }
     public boolean getStatus(){ return status; }
 
-    public void setRentDate(String rentADate){ rentDate = LocalDate.parse(rentADate); } // Method for assigning a date input to the rentDate variable
-    public void setAutomaticRentDate(){ rentDate = LocalDate.now(); } //Method for automatically assigning a date to the rentDate variable
+    public void setRentDate(String rentADate){ rentDate = LocalDate.parse(rentADate); }
+    public void setAutomaticRentDate(){ rentDate = LocalDate.now(); }
     public LocalDate getRentDate(){ return rentDate; }
 
-    public void setReturnDate(String returnADate){ returnDate = LocalDate.parse(returnADate); } // Method for assigning a date input to the returnDate variable
-    public void setAutomaticReturnDate(){ returnDate = LocalDate.now(); } //Method for automatically assigning a date to the returnDate variable
+    public void setReturnDate(String returnADate){ returnDate = LocalDate.parse(returnADate); }
+    public void setAutomaticReturnDate(){ returnDate = LocalDate.now(); }
     public LocalDate getReturnDate(){ return returnDate; }
 
     public String getTitle() {
@@ -82,10 +95,6 @@ public abstract class Rentable implements Comparable<Rentable>{
 
     public double getProfit() {
         return profit;
-    }
-
-    public void addProfit(double profit){
-        this.profit = this.profit + profit;
     }
 
     public int getRentFrequency() {

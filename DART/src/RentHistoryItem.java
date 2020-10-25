@@ -1,3 +1,11 @@
+
+// ---------------------------------------Milestone 2-------------------------------------------
+// In order to implement Epic feature 11 we added the RentHistoryItem class
+//
+// ---------------------------------------Milestone 3-------------------------------------------
+// In order to implement Epic feature 13 we added the toFileString method,
+// which is used to get the right format for exporting
+
 public class RentHistoryItem {
 
     private double rentExpense;
@@ -36,10 +44,6 @@ public class RentHistoryItem {
         this.itemID = itemID;
     }
 
-    public String getCustomerID() { return customerID; }
-    public int getDaysRented() { return daysRented; }
-    public String getItemID() { return itemID; }
-    public int getScore() { return score; }
     public String getReview() { return review; }
 
 

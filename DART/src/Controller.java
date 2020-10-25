@@ -5,13 +5,10 @@ import java.util.Scanner;
 public class Controller {
     private ArrayList<Employee> employeeArrayList;
     private ArrayList<RentHistoryItem> rentHistory;
-    private ArrayList<Customer> customerList;//creates ArrayList named 'customerList' containing Customers
+    private ArrayList<Customer> customerList;
     private ArrayList<Customer> upgradeRequests;
-    private ArrayList<Rentable> itemsList;// adapt!
-    /*static ArrayList<Rentable> songList = new ArrayList();
-    static ArrayList<Rentable> gameList = new ArrayList<>();*/
+    private ArrayList<Rentable> itemsList;
     private static double totalRentProfit = 0;
-    //private static Manager manager = new Manager();
     Scanner input = new Scanner(System.in);
 
     public Controller(){
@@ -33,14 +30,12 @@ public class Controller {
         if(Tools.validateChar(choice, "MECXmecx"))
         switch (choice) {
             case 'm','M' -> {
-                // if (Tools.password("admin1234")) managerScreen();
                 boolean verified = Tools.password("admin1234");
                 if(verified){
                     managerLoggedIn();
                 }
             }
             case 'e','E' -> {
-                //if (Tools.password("password123")) employeeScreen();
                 boolean verified = Tools.password("password123");
                 if(verified){
                     String name = Tools.getString("Enter employee name: ", input);
@@ -50,7 +45,6 @@ public class Controller {
                 }
             }
             case 'c','C' -> {
-                //preCustomerScreen();
                 String ID = Tools.getString("Enter customer ID", input);
                 for (Customer customer : customerList)
                     if (customer.getID().equals(ID))
@@ -84,16 +78,12 @@ public class Controller {
             if(Tools.validateChar(choice, screens))
             switch (choice) {
                 case '1' -> {
-
                     String name = Tools.getString("Enter employee name: ", input);
                     String address = Tools.getString("Enter employee address: ", input);
                     int bYear = Tools.getInt("Enter employee birth year: ");
                     double gross = Tools.getDouble("Enter employee gross salary: ");
-
                     manager.registerEmployee(employeeArrayList, name, address, bYear, gross, input);
-
                 }
-
                 case '2' -> System.out.println(manager.viewAllEmployee(employeeArrayList));
                 case '3' -> {
                     String empId = Tools.getString("Enter the ID of employee you want to remove: ", input);
@@ -117,10 +107,10 @@ public class Controller {
                     System.out.println(manager.viewRentFrequency(itemsList));
                 }
                 case '7' -> {
-                     if(manager.mostProfitable(itemsList) != null) System.out.println("Most profitable item: " + manager.mostProfitable(itemsList));
+                    if(manager.mostProfitable(itemsList) != null) System.out.println("Most profitable item: " + manager.mostProfitable(itemsList));
                 }
                 case '8' ->{
-                     if(manager.mostProfitable(itemsList) != null) System.out.println("Most valued customer: " + manager.mostProfitableCustomer(customerList));
+                    if(manager.mostProfitable(itemsList) != null) System.out.println("Most valued customer: " + manager.mostProfitableCustomer(customerList));
                 }
                 case '9' -> {
                     manager.readFile(employeeArrayList, customerList, itemsList, input);
@@ -228,11 +218,11 @@ public class Controller {
                     } else {
                         sorting = Tools.getInt("1. Show all songs" + System.lineSeparator() + "2. Search by year" + System.lineSeparator() + "3. Sort by ratings" + System.lineSeparator() + "4. Sort by year");
                     }
-                    if (sorting == 2 && rentItem == 1) { //Shows games, searched by genre
+                    if (sorting == 2 && rentItem == 1) {
                         System.out.println(customer.showItems(itemsList, rentItem, sorting, Tools.getString("Enter genre: ", input)));
-                    } else if (sorting == 2 && rentItem == 2) { //Shows songs, searched by year
+                    } else if (sorting == 2 && rentItem == 2) {
                         System.out.println(customer.showItems(itemsList, rentItem, sorting, Tools.getString("Enter year:", input)));
-                    } else { //Shows selected item, sorted by selected sorting
+                    } else {
                         System.out.println(customer.showItems(itemsList, rentItem, sorting, ""));
                     }
 
@@ -246,13 +236,11 @@ public class Controller {
 
                 case '2' -> {
                     System.out.println("Current library" + System.lineSeparator() + customer.viewRented());
-
                     RentHistoryItem results = customer.returnItem(
                             Tools.getString("Enter ID of item to return", input),
                             Tools.getString("Leave a review? (leave blank otherwise): ", input),
                             Tools.getInt("Rating?: (1-5) 0 to skip"),
                             Tools.getString("What is the return date? (YYYY-MM-DD)", input));
-
                     if (results == null) {
                         System.out.println("Unable to return item");
                     } else {
@@ -265,20 +253,16 @@ public class Controller {
 
                 case '3' -> {
                     customer.sendMessage(customerList, Tools.getString("Enter Message: ", input), Tools.getString("Enter id of recipient: ", input), customer);
-                    // customerScreen(customer);
                 }
                 case '4' -> {
                     System.out.println(customer.viewUnread(customer));
-                    // customerScreen(customer);
                 }
                 case '5' -> {
                     System.out.println(customer.viewInbox(customer));
                     customer.removeMessage(Tools.getInt("Enter index of message to remove: ") - 1, customer);
-                    // customerScreen(customer);
                 }
                 case '6' -> {
                     customer.requestUpgrade(upgradeRequests, customer);
-                    // customerScreen(customer);
                 }
                 case '7' -> {
                     System.out.println(customer.getStrMembership());
@@ -288,198 +272,4 @@ public class Controller {
             }
         }while(choice != '8');
     }
-
-
-
-
-        //TODO
-    /*
-    * move the methods from controller to the right business class
-    * remove all statics
-    * inside the controller, don't forget to decalre the lists in the class then initialize them in the controller's constructor
-    * for the sub-menu, don't forget the do-while loops that break when choice!=()
-    * call methods though object!!
-    * private attributes EVERYWHERE, why? encapsulation!
-    * adapt to the itemsList
-    * close scanner
-    * membership via inheritance
-
-
-
-    * double-check with the feedback!
-    * */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
-    public double calcNetSalary(String ID) {
-        double netSalary = manager.calcNetSalary(findEmployee(ID));
-        return netSalary;
-    }
-
-    public int bonus(String ID) {
-        return manager.bonus(findEmployee(ID));
-    }
-
-    public Rentable mostProfitable() {
-        return manager.mostProfitable();
-    }
-*/
-
-
-
-
-
-
-
-
-    /*public static Customer registerCustomer(String name) throws Exception{
-        Customer customer = new Customer(name);
-        return Employee.registerCustomer(customer);
-    }
-
-    public static boolean removeCustomer(String ID) throws Exception {
-        return Employee.removeCustomer(findCustomer(ID));
-    }
-
-    public static String viewAllCustomer() {
-        String cusStr = "";
-        for (Customer customer : customerList) {
-            cusStr = cusStr.concat(customer.toString() + System.lineSeparator());
-        }
-        return cusStr;
-    }
-
-    public static String viewAllUpgRequest() {
-        String upgReqStr = "";
-        for (Customer customer : customerList) {
-            if(upgradeRequests.contains(customer.getID())){
-                upgReqStr = upgReqStr.concat(customer.toString() + System.lineSeparator());
-            }
-        }
-        return upgReqStr;
-    }
-
-    public static boolean upgradeCustomer(String ID) throws Exception{
-        if(Employee.upgradeCustomer(findCustomer(ID))){
-            upgradeRequests.remove(findCustomer(ID));
-            return true;
-        }
-        return false;
-    }
-
-    public Rentable registerItem(int type, String title, String genreArtist, double rent, int releaseYear) throws Exception {
-        Rentable item;
-        if(type == 1){
-            item = new Game(title, genreArtist, rent, releaseYear);
-            itemsList.add(item);
-        } else {
-            item = new Song(title, genreArtist, rent, releaseYear);
-            itemsList.add(item);
-        }
-        return item;
-    }
-
-    public static Customer findCustomer(String ID){
-        for (int i = 0; i < Controller.customerList.size(); i++)
-            if (Controller.customerList.get(i).getID().equals(ID))
-                return Controller.customerList.get(i);
-        System.out.println("Customer with id " + ID + " not found.");
-        return null;
-    }
-
-    public boolean removeItem(int item, String ID) throws Exception{
-        return Employee.removeItem(findItem(item, ID), item);
-    }
-
-    public Rentable findItem(int item, String ID){
-        ArrayList<Rentable> array;
-        int i;
-        if(item == 1){
-            array = itemsList;
-        } else {
-            array = itemsList;
-        }
-
-        for(i = 0; i < array.size(); i++){
-            if(array.get(i).getID().equals(ID)){
-                return array.get(i);
-            }
-        }
-        return null;
-    }
-
-    public static void addCustomer(Customer c){ // <- FOR TESTING
-        customerList.add(c);
-    }*/
-
-    //--------------------------------------------------------------------------------------
-    /*
-    Main, UI or "Screens" (Get all input and print all output)
-        |
-        V
-    Controller (Interpret user request and pass on, interpret results and pass to user)
-        |
-        V
-    Business Classes (Actually perform operations, rentGame etc.)
-
-    Changes after feedback from milestone 2:
-    1. All methods from CustomerController have been moved here, to Controller, and modified
-    to work as controller methods between customerScreen() and mainly the Customer class
-    2. Customer class updated to have all methods it is responsible for,
-    returnItem(), rentItem() etc.
-    3. songList and gameList moved to the Controller
-    4. calcRent() method unused, Customer class handles these calculations now
-    5. customerScreen() passes the actual customer object around, rather than just the id
-    6. totalRentProfit fixed and now actually accumulates total rent profit
-    7. CustomerController, SongController, GameController is now empty and unused, all
-    purposes they had have been moved to Controller and no longer need to exist
-     */
-    //---------------------------- METHODS RELATED TO CUSTOMER -----------------------------
-
-
-
-    /*public String viewAllSongs(){
-        String songStr = "";
-        for ( Rentable song : itemsList) {
-            songStr = songStr.concat(song.toString() + System.lineSeparator());
-        }
-        return songStr;
-    }
-
-    private String viewAllGames(){
-        String gameStr = "";
-        for (Rentable game : itemsList) {
-            gameStr = gameStr.concat(game.toString() + System.lineSeparator());
-        }
-        return gameStr;
-    }
-
-    public RentHistoryItem returnItem(String returnID, String review, int rating, String returnDate, Customer customer){
-        RentHistoryItem returnResults = customer.returnItem(returnID, review, rating, returnDate);
-        if (returnResults == null){
-            return null;
-        } else {
-            rentHistory.add(returnResults);
-            totalRentProfit = totalRentProfit + returnResults.getRentExpense();
-            return returnResults;
-        }
-    }*/
-
-
-
-
 }
