@@ -1,0 +1,83 @@
+import java.time.Year;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Games {
+
+    int gameID;
+    String gameTitle;
+    String gameGenre;
+    double dailyRent;
+    String status;
+    static ArrayList<Games> GameArrayList = new ArrayList();
+
+    Games(String name){ this.gameTitle = name; }
+
+    public void setGameID(int gameID){ this.gameID = gameID; }
+    public int getGameID(){ return gameID; }
+
+    public void setGameTitle(String gameTitle){ this.gameTitle = gameTitle; }
+    public String getGameTitle(){ return gameTitle; }
+
+    public void setGameGenre(String gameGenre){ this.gameGenre = gameGenre; }
+    public String getGameGenre(){ return gameGenre; }
+
+    public void setDailyRent(double dailyRent){ this.dailyRent = dailyRent; }
+    public double getDailyRent(){ return dailyRent; }
+
+    public void setStatus(String status){ this.status= status; }
+    public String getStatus(){ return status; }
+
+
+    public static void registerGame(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Enter the game ID: "); Games gam = new Games(input.nextLine());
+        System.out.println("Enter the game title : "); gam.setGameTitle(input.nextLine());
+        System.out.println("Enter the game genre: "); gam.setGameGenre(input.nextLine());
+        input.nextLine();
+        System.out.println("Enter them game daily rent: "); gam.setDailyRent(input.nextDouble());
+        System.out.println("Enter the game rent status: "); gam.setStatus(input.nextLine());
+
+        System.out.print("You have added a game: ");
+
+        GameArrayList.add(gam);
+        gam.printGames();
+        Screens.managerScreen();
+    }
+    public static void viewAllGames(){
+        GameArrayList.forEach(Games::printGames);
+        Screens.managerScreen();
+    }
+    public static void removeGames(){
+        Scanner input = new Scanner(System.in);
+        boolean removed = false;
+        int i;
+        System.out.println("Game ID: ");
+        GameArrayList.forEach(Employee::printGames);
+        System.out.print("Enter the ID of employee you want to remove: ");
+
+        int removeID = input.nextInt();
+        for(i = 0; i < GameArrayList.size(); i++){
+            if(GameArrayList.get(i).gameID == removeID){
+                GameArrayList.remove(i);
+                System.out.println("Successfully removed!");
+                removed = true;
+                i = GameArrayList.size();
+            }
+        }
+        if(!removed){
+            System.out.println("Game with id " + i + " not found.");
+        }
+
+    }
+    public void printGames(){
+        System.out.print(getGameID() + " ");
+        System.out.print(this.gameTitle +  " - " );
+        System.out.print(getGameGenre() +  " - ");
+        System.out.print(getStatus() +  " - ");
+        System.out.println("Daily Rent : " + getDailyRent() + " SEK");
+
+    }
+
+}
